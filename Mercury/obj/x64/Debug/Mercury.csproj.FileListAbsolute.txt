@@ -1,0 +1,16 @@
+D:\Программирование\С#\C# Project\Mercury\Mercury\bin\x64\Debug\Mercury.exe.config
+D:\Программирование\С#\C# Project\Mercury\Mercury\bin\x64\Debug\Mercury.exe
+D:\Программирование\С#\C# Project\Mercury\Mercury\bin\x64\Debug\Mercury.pdb
+D:\Программирование\С#\C# Project\Mercury\Mercury\bin\x64\Debug\pivyLab.dll
+D:\Программирование\С#\C# Project\Mercury\Mercury\bin\x64\Debug\pivyLab.pdb
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.csprojAssemblyReference.cache
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.CustomControls.ErrorForm.resources
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.CustomControls.Login.resources
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.Main.resources
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.Properties.Resources.resources
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.Registration.resources
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.csproj.GenerateResource.cache
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.csproj.CoreCompileInputs.cache
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.csproj.CopyComplete
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.exe
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\x64\Debug\Mercury.pdb

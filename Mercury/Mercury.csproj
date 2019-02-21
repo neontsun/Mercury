@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{235EE53D-2C2B-407B-A0C9-154FAB56867D}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Mercury</RootNamespace>
+    <AssemblyName>Mercury</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="pivyLab">
+      <HintPath>..\..\..\Библиотеки\pivyLab\pivyLab\bin\Debug\pivyLab.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Animation\Placeholder.cs" />
+    <Compile Include="Case\Safe.cs" />
+    <Compile Include="CustomControls\CreateSafeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\CreateSafeForm.Designer.cs">
+      <DependentUpon>CreateSafeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\ErrorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\ErrorForm.Designer.cs">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\Login.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\RightSideMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\RightSideMenu.Designer.cs">
+      <DependentUpon>RightSideMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\ScrollBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CustomControls\Registration.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControls\Registration.Designer.cs">
+      <DependentUpon>Registration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WorkingScripts\NewSafe.cs" />
+    <Compile Include="WorkingScripts\DateBase.cs" />
+    <Compile Include="WorkingScripts\ValidateEmail.cs" />
+    <EmbeddedResource Include="CustomControls\CreateSafeForm.resx">
+      <DependentUpon>CreateSafeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\ErrorForm.resx">
+      <DependentUpon>ErrorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\RightSideMenu.resx">
+      <DependentUpon>RightSideMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="CustomControls\Registration.resx">
+      <DependentUpon>Registration.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\galkaGreen.png" />
+    <None Include="Resources\eyeView.png" />
+    <None Include="Resources\eyeHide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\searchIconGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\searchTextBreak.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emailIconGrayUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emailIconGrayDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emailIconGreenUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emailIconGreenDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconPlusGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconPlusGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hideSafeListIconGrayRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hideSafeListIconGrayDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hideSafeListIconGreenRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hideSafeListIconGreenDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\createSafeButtonIconGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\createSafeButtonIconGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconPlusDarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hideSafeListIconDarkGrayRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hideSafeListIconDarkGrayDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emailIconDarkGrayDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emailIconDarkGrayUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addFieldDarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\removeFieldDarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\removeFieldGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\removeFieldGray.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
