@@ -442,12 +442,6 @@ namespace Mercury.CustomControls
 
 
 
-
-
-
-
-
-
         // Конструктор
         public CreateSafeForm()
         {
@@ -685,13 +679,6 @@ namespace Mercury.CustomControls
                 }
             };
         }
-
-
-
-
-
-
-
 
 
 

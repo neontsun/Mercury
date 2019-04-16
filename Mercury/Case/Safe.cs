@@ -14,6 +14,8 @@ namespace Mercury.Case
         // Массив полей
         public string[] Fields { get; set; }
 
+
+
         public Safe(string SafeName, string[] Fields)
         {
             this.SafeName = SafeName;

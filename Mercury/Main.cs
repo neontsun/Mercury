@@ -760,16 +760,13 @@ namespace Mercury
         public Main()
         {
             InitializeComponent();
-
-
+            
             // Используем шрифты
             UseFonts();
-
-
+            
             // Сохраняем путь к папке со шрифтами
             Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
             Properties.Settings.Default.Save();
-
             
             // Строим верхнее меню
             CreateTopMenu();
@@ -777,7 +774,7 @@ namespace Mercury
             // Строим левое меню
             CreateLeftSide();
 
-
+        
 
             #region Минимальные действия при нажатии на кнопки и т.д
 
@@ -1029,14 +1026,20 @@ namespace Mercury
         // Метод, который открывает панель создания сейфа
         private void OpenSafePanel()
         {
+            // Если не октрыто ни одной панели создания сейфа
             if (countOpenMenuCreateSafe == 0)
             {
+                // Создаем экземпляр панели
                 createSafe = new CustomControls.CreateSafeForm();
+                // Ставим права
                 createSafe.Owner = this;
+                // Показываем
                 createSafe.Show();
+                // Меняем позицию
                 createSafe.Location = new Point(this.Location.X + (this.Width / 2 - createSafe.Width / 2),
                     this.Location.Y + (this.Height / 2 - createSafe.Height / 2));
             }
+            // Инкерементируем счетчик открытых панелей
             countOpenMenuCreateSafe++;
         }
     }
