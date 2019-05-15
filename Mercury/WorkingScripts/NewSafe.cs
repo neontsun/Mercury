@@ -11,8 +11,15 @@ namespace Mercury.WorkingScripts
 {
     public class NewSafe
     {
+        /// <summary>
+        /// Создает экземпляр сейфа для показа на панели сейфов
+        /// </summary>
+        /// <param name="SafeName">Наименование сейфа</param>
+        /// <param name="LocationY">Позиция сейфа</param>
+        /// <returns>Созданный контрол</returns>
         public Control CreateNewSafe(string SafeName, int LocationY)
         {
+            // Создаем контрол
             var control = new Label
             {
                 ForeColor = Color.White,
@@ -22,6 +29,7 @@ namespace Mercury.WorkingScripts
                 Width = 150
             };
 
+            // Возвращаем контрол
             return control;
         }
     }

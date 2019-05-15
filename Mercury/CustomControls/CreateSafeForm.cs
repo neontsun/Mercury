@@ -1,5 +1,4 @@
-﻿using Mercury.Case;
-using pivyLab.Animation;
+﻿using pivyLab.Animation;
 using pivyLab.UserForms;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Mercury.WorkingScripts;
 
 namespace Mercury.CustomControls
 {
@@ -92,23 +92,20 @@ namespace Mercury.CustomControls
 
         #endregion
 
+        #region Хуки и глобальные переменные
 
         // Хук количества созданных полей
         int countAddsField = 0;
-
-
+        // Наименование сейфа
         string NameSafe = string.Empty;
+        // Массив полей
         string[] FieldsSafe = new string[6];
-
-
-
-
-
         // Создаем коллекцию шрифтов
         PrivateFontCollection pr = new PrivateFontCollection();
 
-
-
+        #endregion
+        
+        #region Вспомогательные методы
 
         /// <summary>
         /// Показывает сообщение с ошибкой.
@@ -119,7 +116,7 @@ namespace Mercury.CustomControls
             // Показываем форму ошибку
             ErrorForm error = new ErrorForm(message);
 
-            error.Location = new Point((this.Owner as Main).Location.X + ((this.Owner as Main).Width / 2 - error.Width / 2), 
+            error.Location = new Point((this.Owner as Main).Location.X + ((this.Owner as Main).Width / 2 - error.Width / 2),
                 (this.Owner as Main).Location.Y + ((this.Owner as Main).Height / 2 - error.Height / 2));
 
             error.ShowDialog();
@@ -158,7 +155,9 @@ namespace Mercury.CustomControls
             fieldText6.Font = new Font(fontFamilies[2], 12);
         }
 
-        // Метод, создающий поля
+        /// <summary>
+        /// Метод, создающий поля
+        /// </summary>
         private void createField()
         {
 
@@ -296,16 +295,18 @@ namespace Mercury.CustomControls
                 // Показываем ошибку
                 ShowError("Введите название сейфа");
             }
-            
+
 
             // Перерисовываем
             this.Invalidate();
         }
 
-        // Метод, который удаляет поле
+        /// <summary>
+        /// Метод, который удаляет поле
+        /// </summary>
         private void hideField()
         {
-            
+
             switch (countAddsField)
             {
                 case 1:
@@ -432,16 +433,19 @@ namespace Mercury.CustomControls
             countAddsField--;
         }
 
-        // Добавляем сейф
+        /// <summary>
+        /// Добавляем сейф
+        /// </summary>
+        /// <param name="safeName">Наименование сейфа</param>
+        /// <param name="fields">Массив полей</param>
         private void addSafe(string safeName, string[] fields)
         {
             (this.Owner as Main).CreateSafe(new Safe(safeName, fields));
         }
 
+        #endregion
 
-
-
-
+        
         // Конструктор
         public CreateSafeForm()
         {
@@ -679,9 +683,8 @@ namespace Mercury.CustomControls
                 }
             };
         }
-
-
-
+        
+        #region Методы
 
         // Событие при загрузке формы
         private void CreateSafeForm_Load(object sender, EventArgs e)
@@ -749,5 +752,8 @@ namespace Mercury.CustomControls
                 }
             }
         }
+
+        #endregion
+        
     }
 }

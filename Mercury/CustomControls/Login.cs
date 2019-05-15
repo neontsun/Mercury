@@ -9,21 +9,19 @@ namespace Mercury.CustomControls
     public partial class Login : UserControl
     {
 
+        #region Хуки и глобальные переменные
+
         // Создаем коллекцию шрифтов
         PrivateFontCollection pr = new PrivateFontCollection();
-
         // Переменная, которая говорит о том, нажата ли иконка
         // показа пароля (глаз) (eyeIcon)
         bool showPassword = false;
-        
         // Количество правильныйх условий
         int allFactorsIsTrue = 0;
 
+        #endregion
 
-
-
-
-
+        #region Вспомогательные методы
 
         /// <summary>
         /// Использует шрифт из файла.
@@ -41,7 +39,7 @@ namespace Mercury.CustomControls
 
             // Надпись "Авторизироваться"
             loginPanelLabel.Font = new Font(fontFamilies[3], 20);
-            
+
             // Поле "Email"
             emailData.Font = new Font(fontFamilies[1], 12);
 
@@ -61,12 +59,12 @@ namespace Mercury.CustomControls
         /// <param name="message">Сообщение</param>
         public void ShowError(string message)
         {
-            // Показываем форму ошибку
+            // Показываем форму ошибки и передаем сообщение ошибки
             ErrorForm error = new ErrorForm(message);
-
+            // Меняем позицию ошибки
             error.Location = new Point(this.Parent.Parent.Location.X + (this.Parent.Parent.Width / 2 - error.Width / 2) + 2,
                     this.Parent.Parent.Location.Y + (this.Parent.Parent.Height / 2 - error.Height / 2) - 30);
-
+            // Показываем ошибку
             error.ShowDialog();
         }
 
@@ -78,25 +76,23 @@ namespace Mercury.CustomControls
             // Ставим плейсхолдеры
             emailData.Text = "Email";
             passwordData.Text = "Пароль";
-
             // Меняем цвета текста
             emailData.ForeColor = Color.FromArgb(120, 120, 120);
             passwordData.ForeColor = Color.FromArgb(120, 120, 120);
-
             // Обнуляем защиту пароля
             passwordData.PasswordChar = char.Parse("\0");
-
             // Меняем иконку глаза (eyeIcon)
             eyeIcon.Image = Properties.Resources.eyeView;
-
             // Меняем иконку "Отаваться в системе"
             loginCheck.Image = null;
         }
 
+        #endregion
 
-
-
-        // Конструктор
+        
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public Login()
         {
             InitializeComponent();
@@ -231,13 +227,18 @@ namespace Mercury.CustomControls
             };
         }
 
+        
+        #region Методы
 
-
-        // Клик по кнопке "Войти"
-        private async void signinButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Клик по кнопке "Войти"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void signinButton_Click(object sender, EventArgs e)
         {
             // Собираем данные для проверки
-            string[] data = 
+            string[] data =
             {
                 emailData.Text,
                 passwordData.Text
@@ -247,32 +248,25 @@ namespace Mercury.CustomControls
             // Если поня не заполнены
             // Уровень работы с интерфейсом
             if (emailData.Text == "Email" || passwordData.Text == "Пароль")
-            {
+                // Сообщение с ошибкой
                 ShowError("Вы заполнили не все поля");
-            }
             else
             {
                 // Проверяем валидность пароля
                 if (WorkingScripts.ValidateEmail.IsValidEmail(emailData.Text))
-                {
                     // Инкрементируем количество верных условий
                     allFactorsIsTrue++;
-                }
                 else
-                {
+                    // Сообщение с ошибкой
                     ShowError("Неправильный email");
-                }
 
                 // Если пароль не совпадает с допустимой длиной
                 if (passwordData.Text.Length < 6 || passwordData.Text.Length > 32)
-                {
+                    // Сообщение с ошибкой
                     ShowError("Пароль должен быть длиной от 6 до 32 символов");
-                }
                 else
-                {
                     // Инкрементируем количество верных условий
                     allFactorsIsTrue++;
-                }
 
 
                 // Если все условия соблюдены
@@ -288,49 +282,42 @@ namespace Mercury.CustomControls
 
                     if (WorkingScripts.DateBase.ExistenceCheck("UserH", "Email", data[0]))
                     {
-                        // Новый поток
-                        await Task.Factory.StartNew(() => 
+                        // Проверяем данные
+                        if (WorkingScripts.DateBase.CheckData("UserH", new string[] { "Email", "Password" }, data))
                         {
-                            // Проверяем данные
-                            if (WorkingScripts.DateBase.CheckData("UserH", new string[] { "Email", "Password" }, data))
+                            // Сохраняем сессию
+                            Properties.Settings.Default.userEmail = data[0];
+                            Properties.Settings.Default.userPassword = data[1];
+                            Properties.Settings.Default.Save();
+
+                            // Если стоит галка, то ставим соответствующий хук
+                            if (loginCheck.Image != null)
                             {
-                                // Сохраняем сессию
-                                Properties.Settings.Default.userEmail = data[0];
-                                Properties.Settings.Default.userPassword = data[1];
+                                Properties.Settings.Default.saveSession = true;
                                 Properties.Settings.Default.Save();
-
-                                // Если стоит галка, то ставим соответствующий хук
-                                if (loginCheck.Image != null)
-                                {
-                                    Properties.Settings.Default.saveSession = true;
-                                    Properties.Settings.Default.Save();
-                                }
-
-                                // Скрываем панель входа и регистрации,
-                                // тем самым предоставляя пользователю доступ к приложению
-                                // Все действия в новом потоке.
-                                parent.Invoke(new Action(() => 
-                                {
-                                    this.Parent.Visible = false;
-                                    this.Parent.Location = new Point(1124, 28);
-                                }));
-
-                                // Очищаем поля
-                                this.Invoke(new Action(ClearControl));
-                                //ClearControl();
                             }
-                            else { ShowError("Неправильный логин или пароль"); }
-                        });
+
+                            // Скрываем панель входа и регистрации,
+                            // тем самым предоставляя пользователю доступ к приложению
+                            // Все действия в новом потоке.
+                            this.Parent.Visible = false;
+                            this.Parent.Location = new Point(1124, 28);
+
+                            // Очищаем поля
+                            ClearControl();
+                        }
+                        else
+                            ShowError("Неправильный логин или пароль");
                     }
                     else
-                    {
                         ShowError("Такого аккаунта не существует");
-                    }
                 }
 
                 // Обнуляем количество верных условий
                 allFactorsIsTrue = 0;
-            } 
+            }
         }
+
+        #endregion
     }
 }

@@ -4,9 +4,9 @@ using pivyLab.UserForms;
 using System.IO;
 using System.Windows.Forms;
 using System;
-using Mercury.Case;
 using System.Collections.Generic;
 using System.Linq;
+using Mercury.WorkingScripts;
 
 namespace Mercury
 {
@@ -18,19 +18,7 @@ namespace Mercury
     public partial class Main : FormTwo
     {
 
-
-
-
-
-
-
-        //
-        //
-        // Хуки
-        //
-        //
-
-
+        #region Хуки
 
         // Создаем коллекцию
         PrivateFontCollection pr = new PrivateFontCollection();
@@ -44,193 +32,12 @@ namespace Mercury
         int countOpenMenu = 0;
         // Количество панелей создания сейфа
         public int countOpenMenuCreateSafe = 0;
-
-
         // Список созданных сейфов
         List<Safe> safeCollection = new List<Safe>();
 
+        #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //
-        //
-        // Вспомагательные методы
-        //
-        //
-
-
-
-        /// <summary>
-        ////Метод, который записывает email пользователя на верхнюю панель
-        /// </summary>
-        private void WriteEmail()
-        {
-            // Показываем email в нижнем регистре
-            emailText.Text = Properties.Settings.Default.userEmail.ToLower();
-            // Меняем положение email'a
-            emailText.Location = new Point(emailIcon.Location.X - emailText.Width, emailText.Location.Y);
-            // Привязываем email к верхнему правому краю
-            emailText.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-        }
-
-        /// <summary>
-        /// Открываем правое меню из верхней панели
-        /// </summary>
-        private void OpenRightSideMenu()
-        {
-            // Выдаем права на форму
-            rightSideMenu.Owner = this;
-
-            // Показываем меню
-            rightSideMenu.Show();
-
-            // Меняем позицию правого меню
-            rightSideMenu.Location = new Point(this.Location.X + (emailIcon.Location.X + emailIcon.Width - rightSideMenu.Width), 
-                this.Location.Y + (emailIcon.Location.Y + emailIcon.Height + 10));
-        }
-
-        /// <summary>
-        /// Закрываем правое меню из верхней панели
-        /// </summary>
-        private void CloseRightSideMenu()
-        {
-            rightSideMenu.Hide();
-        }
-
-        /// <summary>
-        /// Выполняет выход их аккаунта
-        /// </summary>
-        public void Logout()
-        {
-            // Показываем панель входа / регистрации
-            startPanel.Location = new Point(1, 33);
-            startPanel.Visible = true;
-            // Меняем цвет текста email'a
-            emailText.ForeColor = Color.FromArgb(120, 120, 120);
-            // Меняем иконку
-            emailIcon.Image = Properties.Resources.emailIconGrayDown;
-            // Обнуляем хук
-            emailRightSideMenu = false;
-            // Обнуляем хук количества элементов меню
-            countOpenMenu = 0;
-
-            // Обнуляем данные пользователя
-            Properties.Settings.Default.userEmail = string.Empty;
-            Properties.Settings.Default.userPassword = string.Empty;
-            Properties.Settings.Default.Save();
-            // Обнуляем хук
-            Properties.Settings.Default.saveSession = false;
-
-            // Разворачиваем контролы на весь экран
-            login.Size = new Size(this.Width, this.Height - 80);
-            registration.Size = new Size(this.Width, this.Height - 80);
-            separator1.Size = new Size(this.Width, 1);
-        }
-
-        /// <summary>
-        /// Метод, который обнуляет хук количества открытых панелей создания сейфа
-        /// </summary>
-        public void ZeroingCountCreateSafeMenu()
-        {
-            this.countOpenMenuCreateSafe = 0;
-        }
-
-        /// <summary>
-        /// Метод, который закрывает все окна
-        /// </summary>
-        public void ClearScreenOfWindow()
-        {
-            // Закрываем окно создания сейфа
-            createSafe.Close();
-            // Чистим хук количества открытых меню
-            ZeroingCountCreateSafeMenu();
-        }
-
-        /// <summary>
-        ///  Получаем числовой показателя для следующего лейбла
-        ///  Объекта сейфа
-        /// </summary>
-        /// <returns></returns>
-        private int GetLocationForSafe()
-        {
-            if (safeList.Controls.Count == 0)
-            {
-                return 20;
-            }
-            else
-            {
-                var count = safeList.Controls.Count;
-                return safeList.Controls[count - 1].Location.Y + 35;
-            }
-        }
-
-        /// <summary>
-        /// Возвращает количество сейфов
-        /// </summary>
-        private int GetCountSafe => safeCollection.Count;
-
-        /// <summary>
-        /// Возвращает шрифт для сейфа
-        /// </summary>
-        /// <returns>Объект шрифта</returns>
-        private Font GetFontForSafe()
-        {
-            return new Font(pr.Families[2], 11);
-        }
-
-        /// <summary>
-        ///  Метод, который добавяет сейф на панель и добавляет его в список сейфов
-        /// </summary>
-        /// <param name="safe">Сейф</param>
-        public void CreateSafe(Safe safe)
-        {
-            Control control = new WorkingScripts.NewSafe().CreateNewSafe
-                             (safe.SafeName, GetLocationForSafe());
-
-            // Ставим имя и шрифт
-            control.Name = "Safe_" + GetCountSafe;
-            control.Font = GetFontForSafe();
-
-            // Добавляем в панель контролы
-            safeList.Controls.Add(control);
-
-            // Добавляем сейф в список
-            safeCollection.Add(safe);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //
-        //
-        // Построение интефейса
-        //
-        //
-
-
+        #region Вспомагательные методы
 
         /// <summary>
         /// Использует шрифт из файла.
@@ -266,15 +73,141 @@ namespace Mercury
         }
 
         /// <summary>
+        /// Метод, который записывает email пользователя на верхнюю панель
+        /// </summary>
+        private void WriteEmail()
+        {
+            // Показываем email в нижнем регистре
+            emailText.Text = Properties.Settings.Default.userEmail.ToLower();
+            // Меняем положение email'a
+            emailText.Location = new Point(emailIcon.Location.X - emailText.Width, emailText.Location.Y);
+            // Привязываем email к верхнему правому краю
+            emailText.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+        }
+
+        /// <summary>
+        /// Открываем правое меню из верхней панели
+        /// </summary>
+        private void OpenRightSideMenu()
+        {
+            // Выдаем права на форму
+            rightSideMenu.Owner = this;
+            // Показываем меню
+            rightSideMenu.Show();
+            // Меняем позицию правого меню
+            rightSideMenu.Location = new Point(this.Location.X + (emailIcon.Location.X + emailIcon.Width - rightSideMenu.Width),
+                this.Location.Y + (emailIcon.Location.Y + emailIcon.Height + 10));
+        }
+
+        /// <summary>
+        /// Закрываем правое меню из верхней панели
+        /// </summary>
+        private void CloseRightSideMenu() => rightSideMenu.Hide();
+
+        /// <summary>
+        /// Выполняет выход их аккаунта
+        /// </summary>
+        public void Logout()
+        {
+            // Показываем панель входа / регистрации
+            startPanel.Location = new Point(1, 33);
+            startPanel.Visible = true;
+            // Меняем цвет текста email'a
+            emailText.ForeColor = Color.FromArgb(120, 120, 120);
+            // Меняем иконку
+            emailIcon.Image = Properties.Resources.emailIconGrayDown;
+            // Обнуляем хук
+            emailRightSideMenu = false;
+            // Обнуляем хук количества элементов меню
+            countOpenMenu = 0;
+
+            // Обнуляем данные пользователя
+            Properties.Settings.Default.userEmail = string.Empty;
+            Properties.Settings.Default.userPassword = string.Empty;
+            Properties.Settings.Default.Save();
+            // Обнуляем хук
+            Properties.Settings.Default.saveSession = false;
+
+            // Разворачиваем контролы на весь экран
+            login.Size = new Size(this.Width, this.Height - 80);
+            registration.Size = new Size(this.Width, this.Height - 80);
+            separator1.Size = new Size(this.Width, 1);
+        }
+
+        /// <summary>
+        /// Метод, который обнуляет хук количества открытых панелей создания сейфа
+        /// </summary>
+        public void ZeroingCountCreateSafeMenu() => this.countOpenMenuCreateSafe = 0;
+
+        /// <summary>
+        /// Метод, который закрывает все окна
+        /// </summary>
+        public void ClearScreenOfWindow()
+        {
+            // Закрываем окно создания сейфа
+            createSafe.Close();
+            // Чистим хук количества открытых меню
+            ZeroingCountCreateSafeMenu();
+        }
+
+        /// <summary>
+        ///  Получаем числовой показателя для следующего лейбла
+        ///  Объекта сейфа
+        /// </summary>
+        /// <returns></returns>
+        private int GetLocationForSafe()
+        {
+            // Если количество элементов в списке контролов
+            // равно нулю, то возвращаем позицию первого контрола
+            if (safeList.Controls.Count == 0)
+                return 20;
+            // Иначе возвращаем позицию в результате расчета
+            // позиции последнего контрола в списке
+            else
+                return safeList.Controls[safeList.Controls.Count - 1].Location.Y + 35;
+        }
+
+        /// <summary>
+        /// Возвращает количество сейфов
+        /// </summary>
+        private int GetCountSafe => safeCollection.Count;
+
+        /// <summary>
+        /// Возвращает шрифт для сейфа
+        /// </summary>
+        /// <returns>Объект шрифта</returns>
+        private Font GetFontForSafe() => new Font(pr.Families[2], 11);
+
+        /// <summary>
+        ///  Метод, который добавяет сейф на панель и добавляет его в список сейфов
+        /// </summary>
+        /// <param name="safe">Сейф</param>
+        public void CreateSafe(Safe safe)
+        {
+            // Создаем контрол на левой панели
+            Control control = new WorkingScripts.NewSafe().CreateNewSafe(safe.SafeName, GetLocationForSafe());
+            // Ставим имя и шрифт
+            control.Name = "Safe_" + GetCountSafe;
+            control.Font = GetFontForSafe();
+            // Добавляем в панель контролы
+            safeList.Controls.Add(control);
+            // Добавляем сейф в список
+            safeCollection.Add(safe);
+        }
+
+        #endregion
+
+        #region Построение интефейса
+        
+        /// <summary>
         /// Строит верхнее меню
         /// </summary>
         private void CreateTopMenu()
         {
             // Ставим плейсхолдер
             Animation.Placeholder.addPlaceholder(searchText, "Поиск", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
-
             // Событие при изменении текста в поле поиска
-            searchText.TextChanged += (f, a) => 
+            searchText.TextChanged += (f, a) =>
             {
                 // Если нет слова запроса, то скрываем кнопочку очистки текста
                 if (searchText.Text == "Поиск" || searchText.Text == string.Empty)
@@ -284,22 +217,18 @@ namespace Mercury
                 }
                 // Если нет слова запроса, то показываем кнопочку очистки текста
                 else
-                {
                     searchTextBreak.Visible = true;
-                }
             };
-
             // Событие при клике на поле поиска и передаем на него фокус
-            searchText.Click += (f, a) => 
+            searchText.Click += (f, a) =>
             {
                 // Закрываем все открытые окна
                 ClearScreenOfWindow();
 
                 searchText.Focus();
             };
-
             // Событие при клике на кнопочку очитски поля поиска
-            searchTextBreak.Click += (f, a) => 
+            searchTextBreak.Click += (f, a) =>
             {
                 // Передаем фокус на поле
                 searchText.Focus();
@@ -308,23 +237,16 @@ namespace Mercury
                 // Обнуляем поле текста
                 searchText.Text = string.Empty;
             };
-
-
             // Показываем email
             if (Properties.Settings.Default.userEmail != string.Empty && Properties.Settings.Default.userPassword != string.Empty)
-            {
                 // Записываем email
                 WriteEmail();
-            }
-         
-
-
+            
             // Событие при клике по иконке и надписи email'a
-            emailText.Click += (f, a) => 
+            emailText.Click += (f, a) =>
             {
                 // Закрываем все открытые окна
                 ClearScreenOfWindow();
-
                 // Передаем фокус
                 emailText.Focus();
 
@@ -333,34 +255,27 @@ namespace Mercury
                 {
                     // Меню активно
                     emailRightSideMenu = true;
-
                     // Меняем иконку у email'a
                     emailIcon.Image = Properties.Resources.emailIconGreenUp;
                     // Меняем цвет у email'a
                     emailText.ForeColor = Color.FromArgb(29, 185, 84);
-
                     // Хук на количество экземпляров меню
                     countOpenMenu++;
 
                     // Показываем меню
                     if (countOpenMenu == 1)
-                    {
                         // Показываем меню
                         OpenRightSideMenu();
-                    }
                 }
                 // Если меню не активно
                 else
                 {
                     // Меню не активно
                     emailRightSideMenu = false;
-
                     // Меняем иконку у email'a
                     emailIcon.Image = Properties.Resources.emailIconGrayDown;
                     // Меняем цвет у email'a
                     emailText.ForeColor = Color.FromArgb(120, 120, 120);
-
-
                     // Хук на количество экземпляров меню
                     countOpenMenu--;
                     // Скрываем меню
@@ -371,7 +286,6 @@ namespace Mercury
             {
                 // Закрываем все открытые окна
                 ClearScreenOfWindow();
-
                 // Передаем фокус
                 emailText.Focus();
 
@@ -379,42 +293,34 @@ namespace Mercury
                 {
                     // Меню активно
                     emailRightSideMenu = true;
-
                     // Меняем иконку у email'a
                     emailIcon.Image = Properties.Resources.emailIconGreenUp;
                     // Меняем цвет у email'a
                     emailText.ForeColor = Color.FromArgb(29, 185, 84);
-
                     // Хук на количество экземпляров меню
                     countOpenMenu++;
 
                     // Показываем меню
                     if (countOpenMenu < 2)
-                    {
                         // Показываем меню
                         OpenRightSideMenu();
-                    }
                 }
                 else
                 {
                     // Меню не активно
                     emailRightSideMenu = false;
-
                     // Меняем иконку у email'a
                     emailIcon.Image = Properties.Resources.emailIconGrayDown;
                     // Меняем цвет у email'a
                     emailText.ForeColor = Color.FromArgb(120, 120, 120);
-
-
                     // Хук на количество экземпляров меню
                     countOpenMenu--;
                     // Скрываем меню
                     CloseRightSideMenu();
                 }
             };
-
             // Событие при наведении на иконку и надпись email'a
-            emailText.MouseEnter += (f, a) => 
+            emailText.MouseEnter += (f, a) =>
             {
                 // Если меню не активно
                 if (!emailRightSideMenu)
@@ -436,28 +342,20 @@ namespace Mercury
                     emailIcon.Image = Properties.Resources.emailIconGrayDown;
                 }
             };
-            emailText.MouseDown += (f, a) => 
+            emailText.MouseDown += (f, a) =>
             {
                 emailText.ForeColor = Color.FromArgb(70, 70, 70);
                 if (emailRightSideMenu)
-                {
                     emailIcon.Image = Properties.Resources.emailIconDarkGrayUp;
-                }
                 else
-                {
                     emailIcon.Image = Properties.Resources.emailIconDarkGrayDown;
-                }
             };
             emailText.MouseUp += (f, a) =>
             {
                 if (emailRightSideMenu)
-                {
                     emailText.ForeColor = Color.FromArgb(29, 185, 84);
-                }
                 else
-                {
                     emailText.ForeColor = Color.FromArgb(120, 120, 120);
-                }
             };
 
             emailIcon.MouseEnter += (f, a) =>
@@ -486,24 +384,16 @@ namespace Mercury
             {
                 emailText.ForeColor = Color.FromArgb(70, 70, 70);
                 if (emailRightSideMenu)
-                {
                     emailIcon.Image = Properties.Resources.emailIconDarkGrayUp;
-                }
                 else
-                {
                     emailIcon.Image = Properties.Resources.emailIconDarkGrayDown;
-                }
             };
             emailIcon.MouseUp += (f, a) =>
             {
                 if (emailRightSideMenu)
-                {
                     emailText.ForeColor = Color.FromArgb(29, 185, 84);
-                }
                 else
-                {
                     emailText.ForeColor = Color.FromArgb(120, 120, 120);
-                }
             };
         }
 
@@ -520,54 +410,41 @@ namespace Mercury
                 // Скрываем
                 safeList.Visible = false;
             }
-
             // Делаем КАПС
             leftSideLogoLabel.Text = leftSideLogoLabel.Text.ToUpper();
 
             // Событие при наведении на лого-лейбл на левой панели
-            leftSideLogoLabel.MouseEnter += (f, a) => 
+            leftSideLogoLabel.MouseEnter += (f, a) =>
             {
                 // Меняем цвет текста
                 leftSideLogoLabel.ForeColor = Color.FromArgb(29, 185, 84);
                 // Если мы скрыли список сейфов
                 if (Properties.Settings.Default.hideSafeList)
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGreenRight;
-                }
                 else
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGreenDown;
-                }
-                
+
             };
-            leftSideLogoLabel.MouseLeave += (f, a) => 
+            leftSideLogoLabel.MouseLeave += (f, a) =>
             {
                 // Меняем цвет текста
                 leftSideLogoLabel.ForeColor = Color.FromArgb(120, 120, 120);
                 // Если мы скрыли список сейфов
                 if (Properties.Settings.Default.hideSafeList)
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGrayRight;
-                }
                 else
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGrayDown;
-                }
             };
+
             hideSafeListIcon.MouseEnter += (f, a) =>
             {
                 // Меняем цвет текста
                 leftSideLogoLabel.ForeColor = Color.FromArgb(29, 185, 84);
                 // Если мы скрыли список сейфов
                 if (Properties.Settings.Default.hideSafeList)
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGreenRight;
-                }
                 else
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGreenDown;
-                }
-
             };
             hideSafeListIcon.MouseLeave += (f, a) =>
             {
@@ -575,43 +452,32 @@ namespace Mercury
                 leftSideLogoLabel.ForeColor = Color.FromArgb(120, 120, 120);
                 // Если мы скрыли список сейфов
                 if (Properties.Settings.Default.hideSafeList)
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGrayRight;
-                }
                 else
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGrayDown;
-                }
             };
-            leftSideLogoLabel.MouseDown += (f, a) => 
+
+            leftSideLogoLabel.MouseDown += (f, a) =>
             {
                 leftSideLogoLabel.ForeColor = Color.FromArgb(70, 70, 70);
 
                 if (Properties.Settings.Default.hideSafeList)
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconDarkGrayRight;
-                }
                 else
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconDarkGrayDown;
-                }
             };
             leftSideLogoLabel.MouseUp += (f, a) =>
             {
                 leftSideLogoLabel.ForeColor = Color.FromArgb(29, 185, 84);
 
                 if (Properties.Settings.Default.hideSafeList)
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGreenRight;
-                }
                 else
-                {
                     hideSafeListIcon.Image = Properties.Resources.hideSafeListIconGreenDown;
-                }
             };
 
             // Событие при клике на лого-лейбл на левой панели
-            leftSideLogoLabel.Click += (f, a) => 
+            leftSideLogoLabel.Click += (f, a) =>
             {
                 // Закрываем все открытые окна
                 ClearScreenOfWindow();
@@ -648,14 +514,14 @@ namespace Mercury
             createSafeIcon.MouseUp += (f, a) => createSafeIcon.Image = Properties.Resources.iconPlusGreen;
 
             // Событие при клике на иконку создания сейфа
-            createSafeIcon.Click += (f, a) => 
+            createSafeIcon.Click += (f, a) =>
             {
                 createSafeIcon.Focus();
                 OpenSafePanel();
             };
 
             // Событие при наведении на кнопку создания сейфа
-            createSafeButton.MouseEnter += (f, a) => 
+            createSafeButton.MouseEnter += (f, a) =>
             {
                 createSafeButtonLabel.ForeColor = Color.FromArgb(29, 185, 84);
                 createSafeButtonIcon.Image = Properties.Resources.iconPlusGreen;
@@ -666,6 +532,7 @@ namespace Mercury
                 createSafeButtonIcon.Image = Properties.Resources.iconPlusGray;
                 leftSideSeparator2.BackColor = Color.FromArgb(40, 40, 40);
             };
+
             createSafeButtonLabel.MouseEnter += (f, a) =>
             {
                 createSafeButtonLabel.ForeColor = Color.FromArgb(29, 185, 84);
@@ -676,6 +543,7 @@ namespace Mercury
                 createSafeButtonLabel.ForeColor = Color.FromArgb(120, 120, 120);
                 createSafeButtonIcon.Image = Properties.Resources.iconPlusGray;
             };
+
             createSafeButtonIcon.MouseEnter += (f, a) =>
             {
                 createSafeButtonLabel.ForeColor = Color.FromArgb(29, 185, 84);
@@ -688,7 +556,7 @@ namespace Mercury
             };
 
             // Событие при нажатии на кнопку создания сейфа
-            createSafeButton.MouseDown += (f, a) => 
+            createSafeButton.MouseDown += (f, a) =>
             {
                 createSafeButtonLabel.ForeColor = Color.FromArgb(70, 70, 70);
                 createSafeButtonIcon.Image = Properties.Resources.iconPlusDarkGray;
@@ -706,7 +574,7 @@ namespace Mercury
                 createSafeButtonIcon.Image = Properties.Resources.iconPlusDarkGray;
                 leftSideSeparator2.BackColor = Color.FromArgb(30, 30, 30);
             };
-            createSafeButton.MouseUp += (f, a) => 
+            createSafeButton.MouseUp += (f, a) =>
             {
                 createSafeButtonLabel.ForeColor = Color.FromArgb(29, 185, 84);
                 createSafeButtonIcon.Image = Properties.Resources.iconPlusGreen;
@@ -726,7 +594,7 @@ namespace Mercury
             };
 
             // Событие при клике на снопку создания сейфа
-            createSafeButton.Click += (f, a) => 
+            createSafeButton.Click += (f, a) =>
             {
                 createSafeButton.Focus();
                 OpenSafePanel();
@@ -743,38 +611,31 @@ namespace Mercury
             };
         }
 
+        #endregion
 
 
-
-
-
-
-
-
-
-
-
-
-
-        // Конструктор формы
+        /// <summary>
+        /// Конструктор формы
+        /// </summary>
         public Main()
         {
             InitializeComponent();
             
             // Используем шрифты
             UseFonts();
-            
-            // Сохраняем путь к папке со шрифтами
-            Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
-            Properties.Settings.Default.Save();
-            
-            // Строим верхнее меню
+
+            // Строим верхню панель
             CreateTopMenu();
 
-            // Строим левое меню
+            // Строим левую панель
             CreateLeftSide();
 
-        
+
+            // Сохраняем путь к папке со шрифтами
+            Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
+                .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
+            Properties.Settings.Default.Save();
+
 
             #region Минимальные действия при нажатии на кнопки и т.д
 
@@ -901,10 +762,8 @@ namespace Mercury
 
                     // Если размер формы максимальный
                     if (WindowState == FormWindowState.Maximized)
-                    {
                         // Меняем размер списка с сейфами
                         safeList.Height = 825;
-                    }
                 }
                 else
                 {
@@ -921,7 +780,7 @@ namespace Mercury
                 // Меняем позицию правого меню
                 rightSideMenu.Location = new Point(this.Location.X + (emailIcon.Location.X + emailIcon.Width - rightSideMenu.Width),
                     this.Location.Y + (emailIcon.Location.Y + emailIcon.Height + 10));
-
+                // Меняем позицию меню создания сейфа
                 createSafe.Location = new Point(this.Location.X + (this.Width / 2 - createSafe.Width / 2),
                     this.Location.Y + (this.Height / 2 - createSafe.Height / 2));
             };
@@ -986,22 +845,13 @@ namespace Mercury
         }
 
 
-
-
-
-
-
-
-
-
-
-
+        #region Методы
 
         // Событе при загрузке приложения
         private void Main_Load(object sender, EventArgs e)
         {
             // Если данные пользователя не сохранены, то
-            if (Properties.Settings.Default.userEmail == string.Empty || 
+            if (Properties.Settings.Default.userEmail == string.Empty ||
                 Properties.Settings.Default.userPassword == string.Empty)
             {
                 // Показываем панель входа / регистрации
@@ -1039,8 +889,11 @@ namespace Mercury
                 createSafe.Location = new Point(this.Location.X + (this.Width / 2 - createSafe.Width / 2),
                     this.Location.Y + (this.Height / 2 - createSafe.Height / 2));
             }
-            // Инкерементируем счетчик открытых панелей
+            // Инкрементируем счетчик открытых панелей
             countOpenMenuCreateSafe++;
         }
+
+        #endregion
+        
     }
 }

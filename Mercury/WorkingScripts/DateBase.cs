@@ -11,7 +11,7 @@ namespace Mercury.WorkingScripts
     {
 
         /// <summary>
-        ///Внесение данных в таблицу БД.
+        /// Внесение данных в таблицу БД.
         /// </summary>
         /// <param name="Table">Таблица для внесения.</param>
         /// <param name="Field">Массив полей.</param>
@@ -57,8 +57,8 @@ namespace Mercury.WorkingScripts
 
 
         /// <summary>
-        ///Проверка на наличие данных в БД.
-        ///КОЛИЧЕСТВО ЭЛЕМЕНТОВ В МАССИВАХ Field и Value ДОЛЖНО СТРОГО СОВПАДАТЬ!
+        /// Проверка на наличие данных в БД.
+        /// КОЛИЧЕСТВО ЭЛЕМЕНТОВ В МАССИВАХ Field и Value ДОЛЖНО СТРОГО СОВПАДАТЬ!
         /// </summary>
         /// <param name="Table">Таблица для проверки.</param>
         /// <param name="Field">Массив полей.</param>

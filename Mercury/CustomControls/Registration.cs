@@ -9,23 +9,22 @@ namespace Mercury
 {
     public partial class Registration : UserControl
     {
+
+        #region Хуки и глобальные переменные
+
         // Создаем коллекцию шрифтов
         PrivateFontCollection pr = new PrivateFontCollection();
-
-
         // Переменная, которая говорит о том, нажата ли иконка
         // показа пароля (глаз) (eyeIcon)
         bool showPassword = false;
         bool showMasterPassword = false;
         bool showReMasterPassword = false;
-
         // Количество правильныйх условий
         int allFactorsIsTrue = 0;
 
+        #endregion
 
-
-
-
+        #region Вспомогательные методы
 
         /// <summary>
         /// Использует шрифт из файла
@@ -71,10 +70,10 @@ namespace Mercury
         {
             // Показываем форму ошибку
             ErrorForm error = new ErrorForm(message);
-
+            // Меняем позицию формы ошибки
             error.Location = new Point(this.Parent.Parent.Location.X + (this.Parent.Parent.Width / 2 - error.Width / 2) + 2,
                     this.Parent.Parent.Location.Y + (this.Parent.Parent.Height / 2 - error.Height / 2) - 30);
-
+            // Показываем форму ошибки
             error.ShowDialog();
         }
 
@@ -109,8 +108,12 @@ namespace Mercury
             registrationCheck.Image = null;
         }
 
+        #endregion
+        
 
-
+        /// <summary>
+        /// Конструктор
+        /// </summary>
         public Registration()
         {
             InitializeComponent();
@@ -120,29 +123,22 @@ namespace Mercury
 
 
             // Добавляем плейсхолдеры
-            Animation.Placeholder.addPlaceholder(emailData, "Email", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
-            Animation.Placeholder.addPlaceholder(passwordData, "Пароль", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
-            Animation.Placeholder.addPlaceholder(masterpasswordData, "Мастер-пароль", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
-            Animation.Placeholder.addPlaceholder(remasterpasswordData, "Подтвердите мастер-пароль", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
+            Placeholder.addPlaceholder(emailData, "Email", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
+            Placeholder.addPlaceholder(passwordData, "Пароль", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
+            Placeholder.addPlaceholder(masterpasswordData, "Мастер-пароль", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
+            Placeholder.addPlaceholder(remasterpasswordData, "Подтвердите мастер-пароль", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
 
             // Клик по панели авторизации
-            registrationPanel.Click += (f, a) =>
-            {
-                registrationPanel.Focus();
-            };
+            registrationPanel.Click += (f, a) => registrationPanel.Focus();
 
             // Событие при изменении видимости контрола
             this.VisibleChanged += (f, a) =>
             {
                 if (Visible == true)
-                {
                     registrationPanel.Focus();
-                }
                 else
-                {
                     // Очищаем поля
                     ClearControl();
-                }
             };
 
             this.Click += (f, a) => registrationPanel.Focus();
@@ -158,10 +154,8 @@ namespace Mercury
 
                 // Если нажата иконка глаза (eye)
                 if (showPassword != true)
-                {
                     // Ставим символ сокрытия пароля
                     passwordData.PasswordChar = '•';
-                }
 
             };
             passwordData.Leave += (f, a) =>
@@ -188,10 +182,8 @@ namespace Mercury
 
                 // Если нажата иконка глаза (eye)
                 if (showMasterPassword != true)
-                {
                     // Ставим символ сокрытия пароля
                     masterpasswordData.PasswordChar = '•';
-                }
 
             };
             masterpasswordData.Leave += (f, a) =>
@@ -218,10 +210,8 @@ namespace Mercury
 
                 // Если нажата иконка глаза (eye)
                 if (showReMasterPassword != true)
-                {
                     // Ставим символ сокрытия пароля
                     remasterpasswordData.PasswordChar = '•';
-                }
 
             };
             remasterpasswordData.Leave += (f, a) =>
@@ -248,10 +238,9 @@ namespace Mercury
 
                 // Проверка на то, стоит галка, или нет
                 if (registrationCheck.Image == null)
-                {
                     registrationCheck.Image = Properties.Resources.galkaGreen;
-                }
-                else { registrationCheck.Image = null; }
+                else
+                    registrationCheck.Image = null;
             };
             registrationCheckText.Click += (f, a) =>
             {
@@ -259,24 +248,15 @@ namespace Mercury
 
                 // Проверка на то, стоит галка, или нет
                 if (registrationCheck.Image == null)
-                {
                     registrationCheck.Image = Properties.Resources.galkaGreen;
-                }
-                else { registrationCheck.Image = null; }
+                else
+                    registrationCheck.Image = null;
             };
 
             // Наведение на кнопку "Регистрация" (signupButton)
-            signupButton.MouseEnter += (f, a) =>
-            {
-                signupButton.Back = Color.FromArgb(30, 215, 96);
-            };
-            signupButton.MouseLeave += (f, a) =>
-            {
-                signupButton.Back = Color.FromArgb(29, 185, 84);
-            };
-
-
-
+            signupButton.MouseEnter += (f, a) => signupButton.Back = Color.FromArgb(30, 215, 96);
+            signupButton.MouseLeave += (f, a) => signupButton.Back = Color.FromArgb(29, 185, 84);
+            
             // Клик по кнопке глаза у пароля(eye)
             eyePasswordIcon.Click += (f, a) =>
             {
@@ -285,10 +265,8 @@ namespace Mercury
                 {
                     // Обновляем флаг нажатия на иконку (eye)
                     showPassword = true;
-
                     // Меняем иконку
                     eyePasswordIcon.Image = Properties.Resources.eyeHide;
-
                     // Показываем текст в поле пароля
                     passwordData.PasswordChar = char.Parse("\0");
                 }
@@ -296,16 +274,12 @@ namespace Mercury
                 {
                     // Обнуляем флаг нажатия на иконку (eye)
                     showPassword = false;
-
                     // Меняем иконку
                     eyePasswordIcon.Image = Properties.Resources.eyeView;
-
                     // Если текст пароля не равен тексту плейсхолдера
                     if (passwordData.Text != "Пароль")
-                    {
                         // Защищаем текст в поле пароля
                         passwordData.PasswordChar = '•';
-                    }
                 }
             };
 
@@ -334,10 +308,8 @@ namespace Mercury
 
                     // Если текст пароля не равен тексту плейсхолдера
                     if (masterpasswordData.Text != "Мастер-пароль")
-                    {
                         // Защищаем текст в поле пароля
                         masterpasswordData.PasswordChar = '•';
-                    }
                 }
             };
 
@@ -366,17 +338,21 @@ namespace Mercury
 
                     // Если текст пароля не равен тексту плейсхолдера
                     if (remasterpasswordData.Text != "Подтвердите мастер-пароль")
-                    {
                         // Защищаем текст в поле пароля
                         remasterpasswordData.PasswordChar = '•';
-                    }
                 }
             };
         }
 
 
-        // Клик по кнопке "Рагистрация"
-        private async void signupButton_Click(object sender, System.EventArgs e)
+        #region Методы
+
+        /// <summary>
+        /// Клик по кнопке "Рагистрация"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void signupButton_Click(object sender, System.EventArgs e)
         {
             // Собираем данные для проверки
             string[] data =
@@ -386,51 +362,41 @@ namespace Mercury
             };
 
             // Если поня не заполнены
-            if (emailData.Text == "Email" || passwordData.Text == "Пароль" || masterpasswordData.Text == "Мастер-пароль" 
+            if (emailData.Text == "Email" || passwordData.Text == "Пароль" || masterpasswordData.Text == "Мастер-пароль"
                 || remasterpasswordData.Text == "Подтвердите мастер-пароль")
-            {
                 ShowError("Вы заполнили не все поля");
-            }
             else
             {
                 // Мастер-пароль и поле подтверждения не совпадают 
                 if (masterpasswordData.Text != remasterpasswordData.Text)
-                {
+                    // Показываем форму с ошибкой
                     ShowError("Проверьте правильность мастер-пароля");
-                }
                 else
                 {
                     // Проверяем валидность пароля
                     if (WorkingScripts.ValidateEmail.IsValidEmail(emailData.Text))
-                    {
                         // Инкрементируем количество верных условий
                         allFactorsIsTrue++;
-                    }
                     else
-                    {
+                        // Показываем форму с ошибкой
                         ShowError("Неправильный email");
-                    }
+
                     // Если пароль не совпадает с допустимой длиной
                     if (passwordData.Text.Length < 6 || passwordData.Text.Length > 32)
-                    {
+                        // Показываем форму с ошибкой
                         ShowError("Пароль должен быть длиной от 6 до 32 символов");
-                    }
                     else
-                    {
                         // Инкрементируем количество верных условий
                         allFactorsIsTrue++;
-                    }
 
                     // Если мастер-пароль и подтвердение мастер-пароля не совпадают с допустимой длиной
-                    if (masterpasswordData.Text.Length < 6 || masterpasswordData.Text.Length > 32 && remasterpasswordData.Text.Length < 6 || remasterpasswordData.Text.Length > 32)
-                    {
+                    if (masterpasswordData.Text.Length < 6 || masterpasswordData.Text.Length > 32 && 
+                        remasterpasswordData.Text.Length < 6 || remasterpasswordData.Text.Length > 32)
+                        // Показываем форму с ошибкой
                         ShowError("Мастер-пароль должен быть длиной \nот 6 до 32 символов");
-                    }
                     else
-                    {
                         // Инкрементируем количество верных условий
                         allFactorsIsTrue++;
-                    }
 
                     // Если все условия соблюдены
                     if (allFactorsIsTrue == 3)
@@ -439,9 +405,8 @@ namespace Mercury
 
                         // Регистрируем пользователя
                         if (WorkingScripts.DateBase.ExistenceCheck("UserH", "Email", data[0]))
-                        {
+                            // Показываем форму с ошибкой
                             ShowError("Такой аккаунт уже существует");
-                        }
                         else
                         {
                             // Сохраняем сессию
@@ -460,15 +425,10 @@ namespace Mercury
                             // тем самым предоставляя пользователю доступ к приложению
                             this.Parent.Visible = false;
                             this.Parent.Location = new Point(1124, 28);
-
-
+                            
                             // Регистрируем пользователя в новом потоке
-                            await Task.Factory.StartNew(() =>
-                            {
-                                WorkingScripts.DateBase.InsertData("UserH", new string[] { "Email", "Password" }, data);
-                            });
-
-
+                            WorkingScripts.DateBase.InsertData("UserH", new string[] { "Email", "Password" }, data);
+                            
                             // Очищаем поля
                             ClearControl();
                         }
@@ -479,5 +439,8 @@ namespace Mercury
                 }
             }
         }
+
+        #endregion
+        
     }
 }
