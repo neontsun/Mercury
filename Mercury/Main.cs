@@ -18,7 +18,7 @@ namespace Mercury
     public partial class Main : FormTwo
     {
 
-        #region Хуки
+        #region Хуки и глобальные переменные
 
         // Создаем коллекцию
         PrivateFontCollection pr = new PrivateFontCollection();
@@ -32,6 +32,11 @@ namespace Mercury
         int countOpenMenu = 0;
         // Количество панелей создания сейфа
         public int countOpenMenuCreateSafe = 0;
+
+        #endregion
+
+        #region Списки
+
         // Список созданных сейфов
         List<Safe> safeCollection = new List<Safe>();
 
@@ -40,10 +45,30 @@ namespace Mercury
         #region Вспомагательные методы
 
         /// <summary>
+        /// Метод подключения к бд
+        /// </summary>
+        private void ConnectWithDB()
+        {
+            // Получаем путь до базы
+            string path = Directory.GetCurrentDirectory()
+                .Remove(Directory.GetCurrentDirectory().Length - 18) + @"\db\cedoci.mdf";
+            // Записываем путь в строку подключения
+            Properties.Settings.Default.stringConnection = Properties.Settings.Default.stringConnection.Replace("@", path);
+            Properties.Settings.Default.Save();
+        }
+
+
+
+        /// <summary>
         /// Использует шрифт из файла.
         /// </summary>
         private void UseFonts()
         {
+            // Сохраняем путь к папке со шрифтами
+            Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
+                .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
+            Properties.Settings.Default.Save();
+
             // Добавляем шрифты в коллекцию
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-300.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
@@ -52,8 +77,7 @@ namespace Mercury
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
-
-
+            
             // Кнопка "Войти"
             loginButton.Font = new Font(fontFamilies[2], 12);
             // Кнопка "Регистрация"
@@ -70,6 +94,12 @@ namespace Mercury
             leftSideLogoLabel.Font = new Font(fontFamilies[2], 10);
             // Надписть "Новый сейф"
             createSafeButtonLabel.Font = new Font(fontFamilies[3], 10);
+            // Наименование сейфа на панеле отображения элементов сейфа
+            safeItemView_SafeName.Font = new Font(fontFamilies[4], 16);
+            // Кнопка "Добавить" элемент на панели элементов сейфа
+            safeItemView_AddItem.Font = new Font(fontFamilies[2], 10);
+            // Поле создателя сейфа
+            safeItemView_SafeCreator.Font = new Font(fontFamilies[2], 10);
         }
 
         /// <summary>
@@ -185,14 +215,35 @@ namespace Mercury
         public void CreateSafe(Safe safe)
         {
             // Создаем контрол на левой панели
-            Control control = new WorkingScripts.NewSafe().CreateNewSafe(safe.SafeName, GetLocationForSafe());
+            // Передаем наименование сейфа и позицию исходя из последнего элемента
+            Control control = new NewSafe(safe.SafeName, GetLocationForSafe()).CreateNewSafe();
             // Ставим имя и шрифт
             control.Name = "Safe_" + GetCountSafe;
             control.Font = GetFontForSafe();
             // Добавляем в панель контролы
             safeList.Controls.Add(control);
+            // REF: Добавление сейфа в список на главной форме
             // Добавляем сейф в список
             safeCollection.Add(safe);
+        }
+
+        /// <summary>
+        /// Метод, который проверяет сейфы на повторные названия
+        /// </summary>
+        /// <param name="name">Наименование сейфа</param>
+        /// <returns></returns>
+        public bool ValidateSafeName(string name)
+        {
+            bool result = true;
+            
+            foreach (var item in safeList.Controls)
+            {
+                // Если сейф с таким названием уже существует
+                if ((item as Label).Text == name)
+                    result = false;
+            }
+
+            return result;
         }
 
         #endregion
@@ -620,21 +671,16 @@ namespace Mercury
         public Main()
         {
             InitializeComponent();
-            
+
+            // Получаем строку подключения
+            ConnectWithDB();
             // Используем шрифты
             UseFonts();
-
             // Строим верхню панель
             CreateTopMenu();
-
             // Строим левую панель
             CreateLeftSide();
-
-
-            // Сохраняем путь к папке со шрифтами
-            Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
-                .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
-            Properties.Settings.Default.Save();
+            
 
 
             #region Минимальные действия при нажатии на кнопки и т.д
@@ -710,6 +756,14 @@ namespace Mercury
                     rightSideMenu.Location = new Point(this.Location.X + (emailIcon.Location.X + emailIcon.Width - rightSideMenu.Width),
                         this.Location.Y + (emailIcon.Location.Y + emailIcon.Height + 10));
                 }
+
+                // Меняем размер и позицию панели отображения элементов сейфа
+                safeItemView.Location = new Point(safeItemView.Location.X, safeItemView.Location.Y);
+                safeItemView.Size = new Size(this.Width - logoSeparatorVertical.Location.X - 40,
+                    this.Height - logoSeparatorHorizontal.Location.Y - 40);
+
+                // Меняем размер сепаратора у меня на панели отображения элементов сейфа
+                safeItemView_MenuSeparator.Width = safeItemView_AddItem.Location.X + 95;
 
 
                 // Если панель видна
@@ -838,6 +892,24 @@ namespace Mercury
             textLogoMain.MouseLeave += (f, a) =>
             {
                 textLogoMain.ForeColor = Color.FromArgb(255, 255, 255);
+            };
+
+            // Наведение и нажатие на кнопку "Добавить" на панели элементов сейфа
+            safeItemView_AddItem.MouseEnter += (f, a) =>
+            {
+                safeItemView_AddItem.Back = Color.FromArgb(30, 215, 96);
+            };
+            safeItemView_AddItem.MouseLeave += (f, a) =>
+            {
+                safeItemView_AddItem.Back = Color.FromArgb(29, 185, 84);
+            };
+            safeItemView_AddItem.MouseDown += (f, a) =>
+            {
+                safeItemView_AddItem.Back = Color.FromArgb(20, 131, 59);
+            };
+            safeItemView_AddItem.MouseUp += (f, a) =>
+            {
+                safeItemView_AddItem.Back = Color.FromArgb(29, 185, 84);
             };
 
             #endregion

@@ -23,14 +23,16 @@ namespace Mercury.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Program Files\\Microsoft S" +
-            "QL Server\\MSSQL13.SQLEXPRESS\\MSSQL\\DATA\\cedoci.mdf\";Integrated Security=True;Con" +
-            "nect Timeout=30")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"@\";Integrated Security=True;" +
+            "Connect Timeout=30")]
         public string stringConnection {
             get {
                 return ((string)(this["stringConnection"]));
+            }
+            set {
+                this["stringConnection"] = value;
             }
         }
         

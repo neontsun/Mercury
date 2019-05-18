@@ -440,8 +440,12 @@ namespace Mercury.CustomControls
         /// <param name="fields">Массив полей</param>
         private void addSafe(string safeName, string[] fields)
         {
-            (this.Owner as Main).CreateSafe(new Safe(safeName, fields));
+            // REF: Добавление сейфа в список на форме создания сейфа
+            // Вызываем метод на Main форме и передаем объект сейфа
+            (this.Owner as Main).CreateSafe(new Safe(safeName, fields, Properties.Settings.Default.userEmail));
         }
+
+
 
         #endregion
 
@@ -708,46 +712,50 @@ namespace Mercury.CustomControls
         {
             // Если название сейфа не введено
             if (safeName.Text == "Название")
-            {
                 // Показываем ошибку
                 ShowError("Введите название сейфа");
-            }
             else
             {
-                // Если не заполнено первое поле.
-                // Так как все остальные поля можно заполнить только
-                // после заполненения первого, то можно выполнить проверку
-                // таким образом
-                if (fieldText1.Text == "Поле" || fieldText1.Text == string.Empty)
-                {
+                if (!(this.Owner as Main).ValidateSafeName(safeName.Text))
                     // Показываем ошибку
-                    ShowError("Заполните хотя бы одно поле");
-                }
+                    ShowError("Сейф с таким названием уже существует");
                 else
                 {
-                    // Если последнее поле не заполнено
-                    if (Controls["fieldText" + countAddsField].Text == "Поле")
+                    // Если не заполнено первое поле.
+                    // Так как все остальные поля можно заполнить только
+                    // после заполненения первого, то можно выполнить проверку
+                    // таким образом
+                    if (fieldText1.Text == "Поле" || fieldText1.Text == string.Empty)
                     {
-                        ShowError("Заполните или удалите пустое поле");
+                        // Показываем ошибку
+                        ShowError("Заполните хотя бы одно поле");
                     }
                     else
                     {
-                        // Заполняем данные
-                        // Передаем заполняем название сейфа и массив полей
-                        NameSafe = safeName.Text;
-
-                        int i = 0;
-                        while (i < countAddsField)
+                        // Если последнее поле не заполнено
+                        if (Controls["fieldText" + countAddsField].Text == "Поле")
                         {
-                            FieldsSafe[i] = Controls["fieldText" + (i + 1)].Text;
-                            i++;
+                            ShowError("Заполните или удалите пустое поле");
                         }
+                        else
+                        {
+                            // Заполняем данные
+                            // Передаем заполняем название сейфа и массив полей
+                            NameSafe = safeName.Text;
 
-                        // Создаем сейф
-                        addSafe(NameSafe, FieldsSafe);
+                            int i = 0;
+                            while (i < countAddsField)
+                            {
+                                FieldsSafe[i] = Controls["fieldText" + (i + 1)].Text;
+                                i++;
+                            }
 
-                        // Закрываем
-                        cancel_Click(sender, e);
+                            // Создаем сейф
+                            addSafe(NameSafe, FieldsSafe);
+
+                            // Закрываем
+                            cancel_Click(sender, e);
+                        }
                     }
                 }
             }

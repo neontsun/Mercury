@@ -52,6 +52,11 @@
             this.createSafeButton = new System.Windows.Forms.Panel();
             this.createSafeButtonLabel = new System.Windows.Forms.Label();
             this.createSafeButtonIcon = new System.Windows.Forms.PictureBox();
+            this.safeItemView = new System.Windows.Forms.Panel();
+            this.safeItemView_SafeName = new System.Windows.Forms.Label();
+            this.safeItemView_AddItem = new pivyLab.Control.FlatEllButton();
+            this.safeItemView_SafeCreator = new System.Windows.Forms.Label();
+            this.safeItemView_MenuSeparator = new pivyLab.Control.Separator();
             this.startPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchTextBreak)).BeginInit();
@@ -60,6 +65,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.hideSafeListIcon)).BeginInit();
             this.createSafeButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.createSafeButtonIcon)).BeginInit();
+            this.safeItemView.SuspendLayout();
             this.SuspendLayout();
             // 
             // startPanel
@@ -325,6 +331,62 @@
             this.createSafeButtonIcon.TabIndex = 18;
             this.createSafeButtonIcon.TabStop = false;
             // 
+            // safeItemView
+            // 
+            this.safeItemView.Controls.Add(this.safeItemView_MenuSeparator);
+            this.safeItemView.Controls.Add(this.safeItemView_SafeCreator);
+            this.safeItemView.Controls.Add(this.safeItemView_AddItem);
+            this.safeItemView.Controls.Add(this.safeItemView_SafeName);
+            this.safeItemView.Location = new System.Drawing.Point(255, 107);
+            this.safeItemView.Name = "safeItemView";
+            this.safeItemView.Size = new System.Drawing.Size(930, 616);
+            this.safeItemView.TabIndex = 23;
+            // 
+            // safeItemView_SafeName
+            // 
+            this.safeItemView_SafeName.AutoSize = true;
+            this.safeItemView_SafeName.BackColor = System.Drawing.Color.Transparent;
+            this.safeItemView_SafeName.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_SafeName.ForeColor = System.Drawing.Color.White;
+            this.safeItemView_SafeName.Location = new System.Drawing.Point(46, 25);
+            this.safeItemView_SafeName.Name = "safeItemView_SafeName";
+            this.safeItemView_SafeName.Size = new System.Drawing.Size(231, 25);
+            this.safeItemView_SafeName.TabIndex = 0;
+            this.safeItemView_SafeName.Text = "Наименование сейфа";
+            // 
+            // safeItemView_AddItem
+            // 
+            this.safeItemView_AddItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.safeItemView_AddItem.Back = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(185)))), ((int)(((byte)(84)))));
+            this.safeItemView_AddItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.safeItemView_AddItem.ForeColor = System.Drawing.Color.White;
+            this.safeItemView_AddItem.Location = new System.Drawing.Point(721, 25);
+            this.safeItemView_AddItem.Name = "safeItemView_AddItem";
+            this.safeItemView_AddItem.RoundRadius = 2;
+            this.safeItemView_AddItem.Size = new System.Drawing.Size(147, 34);
+            this.safeItemView_AddItem.TabIndex = 1;
+            this.safeItemView_AddItem.Text = "Добавить";
+            this.safeItemView_AddItem.UseVisualStyleBackColor = true;
+            // 
+            // safeItemView_SafeCreator
+            // 
+            this.safeItemView_SafeCreator.AutoSize = true;
+            this.safeItemView_SafeCreator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_SafeCreator.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
+            this.safeItemView_SafeCreator.Location = new System.Drawing.Point(48, 50);
+            this.safeItemView_SafeCreator.Name = "safeItemView_SafeCreator";
+            this.safeItemView_SafeCreator.Size = new System.Drawing.Size(85, 16);
+            this.safeItemView_SafeCreator.TabIndex = 2;
+            this.safeItemView_SafeCreator.Text = "Создатель: ";
+            // 
+            // safeItemView_MenuSeparator
+            // 
+            this.safeItemView_MenuSeparator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.safeItemView_MenuSeparator.Location = new System.Drawing.Point(51, 131);
+            this.safeItemView_MenuSeparator.Name = "safeItemView_MenuSeparator";
+            this.safeItemView_MenuSeparator.Size = new System.Drawing.Size(817, 1);
+            this.safeItemView_MenuSeparator.TabIndex = 3;
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -345,10 +407,12 @@
             this.Controls.Add(this.hideSafeListIcon);
             this.Controls.Add(this.safeList);
             this.Controls.Add(this.createSafeButton);
+            this.Controls.Add(this.safeItemView);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.Controls.SetChildIndex(this.safeItemView, 0);
             this.Controls.SetChildIndex(this.createSafeButton, 0);
             this.Controls.SetChildIndex(this.safeList, 0);
             this.Controls.SetChildIndex(this.hideSafeListIcon, 0);
@@ -375,6 +439,8 @@
             this.createSafeButton.ResumeLayout(false);
             this.createSafeButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.createSafeButtonIcon)).EndInit();
+            this.safeItemView.ResumeLayout(false);
+            this.safeItemView.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -406,6 +472,11 @@
         private System.Windows.Forms.Label createSafeButtonLabel;
         private System.Windows.Forms.PictureBox createSafeButtonIcon;
         public System.Windows.Forms.Panel safeList;
+        private System.Windows.Forms.Panel safeItemView;
+        private System.Windows.Forms.Label safeItemView_SafeName;
+        private pivyLab.Control.FlatEllButton safeItemView_AddItem;
+        private System.Windows.Forms.Label safeItemView_SafeCreator;
+        private pivyLab.Control.Separator safeItemView_MenuSeparator;
     }
 }
 
