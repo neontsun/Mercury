@@ -29,11 +29,11 @@ namespace Mercury.WorkingScripts
 
 
                     // Сборка данных в запрос
-                    cmd.CommandText = "INSERT INTO " + Table + "(";
+                    cmd.CommandText = "INSERT INTO [" + Table + "] (";
 
                     foreach (var ArrEllField in Field)
                     {
-                        cmd.CommandText += ArrEllField + ", ";
+                        cmd.CommandText += "[" + ArrEllField + "], ";
                     }
                     cmd.CommandText = cmd.CommandText.Remove(cmd.CommandText.Length - 2);
                     cmd.CommandText += ")";
@@ -84,11 +84,11 @@ namespace Mercury.WorkingScripts
 
                     foreach (var field in Field)
                     {
-                        cmd.CommandText += field + ", ";
+                        cmd.CommandText += "[" + field + "], ";
                     }
                     cmd.CommandText = cmd.CommandText.Remove(cmd.CommandText.Length - 2);
 
-                    cmd.CommandText += " FROM " + Table + " WHERE ";
+                    cmd.CommandText += " FROM [" + Table + "] WHERE ";
 
                     for (int i = 0; i < Field.Length; i++)
                     {
@@ -137,7 +137,7 @@ namespace Mercury.WorkingScripts
                     connect.Open();
 
                     // Формируем запрос
-                    cmd.CommandText = "SELECT " + Field + " FROM " + Table + " WHERE " + Field + " = '" + Value + "'";
+                    cmd.CommandText = "SELECT " + Field + " FROM [" + Table + "] WHERE " + Field + " = '" + Value + "'";
 
                     // Значение, которое венрулось запросом
                     var request = cmd.ExecuteScalar();

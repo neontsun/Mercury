@@ -404,7 +404,7 @@ namespace Mercury
                         allFactorsIsTrue = 0;
 
                         // Регистрируем пользователя
-                        if (WorkingScripts.DateBase.ExistenceCheck("UserH", "Email", data[0]))
+                        if (WorkingScripts.DateBase.ExistenceCheck("User", "Email", data[0]))
                             // Показываем форму с ошибкой
                             ShowError("Такой аккаунт уже существует");
                         else
@@ -414,7 +414,7 @@ namespace Mercury
                             Properties.Settings.Default.userPassword = data[1];
                             Properties.Settings.Default.Save();
 
-                            // Если стои галка
+                            // Если стоит галка сессии
                             if (registrationCheck.Image != null)
                             {
                                 Properties.Settings.Default.saveSession = true;
@@ -427,7 +427,7 @@ namespace Mercury
                             this.Parent.Location = new Point(1124, 28);
                             
                             // Регистрируем пользователя в новом потоке
-                            WorkingScripts.DateBase.InsertData("UserH", new string[] { "Email", "Password" }, data);
+                            WorkingScripts.DateBase.InsertData("User", new string[] { "Email", "Password" }, data);
                             
                             // Очищаем поля
                             ClearControl();

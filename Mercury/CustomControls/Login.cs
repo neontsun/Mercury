@@ -276,14 +276,11 @@ namespace Mercury.CustomControls
                     // Обнуляем количество верных условий
                     allFactorsIsTrue = 0;
 
-                    // Создаем контрол родителя
-                    // для использования его в другом потоке
-                    var parent = this.Parent;
-
-                    if (WorkingScripts.DateBase.ExistenceCheck("UserH", "Email", data[0]))
+                    // Проверяем аккаунт на существование
+                    if (WorkingScripts.DateBase.ExistenceCheck("User", "Email", data[0]))
                     {
                         // Проверяем данные
-                        if (WorkingScripts.DateBase.CheckData("UserH", new string[] { "Email", "Password" }, data))
+                        if (WorkingScripts.DateBase.CheckData("User", new string[] { "Email", "Password" }, data))
                         {
                             // Сохраняем сессию
                             Properties.Settings.Default.userEmail = data[0];

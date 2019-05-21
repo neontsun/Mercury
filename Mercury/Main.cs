@@ -49,11 +49,14 @@ namespace Mercury
         /// </summary>
         private void ConnectWithDB()
         {
+            // TODO: Сменить базу данных
             // Получаем путь до базы
             string path = Directory.GetCurrentDirectory()
-                .Remove(Directory.GetCurrentDirectory().Length - 18) + @"\db\cedoci.mdf";
+                .Remove(Directory.GetCurrentDirectory().Length - 18) + @"\db\MercuryDB.mdf";
+            string conn = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"@\";Integrated Security=True;Connect Timeout=30";
+            conn = conn.Replace("@", path);
             // Записываем путь в строку подключения
-            Properties.Settings.Default.stringConnection = Properties.Settings.Default.stringConnection.Replace("@", path);
+            Properties.Settings.Default.stringConnection = conn;
             Properties.Settings.Default.Save();
         }
 
@@ -674,6 +677,7 @@ namespace Mercury
 
             // Получаем строку подключения
             ConnectWithDB();
+            
             // Используем шрифты
             UseFonts();
             // Строим верхню панель

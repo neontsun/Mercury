@@ -111,6 +111,7 @@ namespace Mercury.CustomControls
 
             // Поле email'a
             exit.Font = new Font(fontFamilies[3], 11);
+            settings.Font = new Font(fontFamilies[3], 11);
         }
 
 
@@ -144,7 +145,26 @@ namespace Mercury.CustomControls
             {
                 exit.ForeColor = Color.FromArgb(29, 185, 84);
             };
+
+            // Событие при наведении на кнопку настройки
+            settings.MouseEnter += (f, a) =>
+            {
+                settings.ForeColor = Color.FromArgb(29, 185, 84);
+            };
+            settings.MouseLeave += (f, a) =>
+            {
+                settings.ForeColor = Color.FromArgb(120, 120, 120);
+            };
+            settings.MouseDown += (f, a) =>
+            {
+                settings.ForeColor = Color.FromArgb(70, 70, 70);
+            };
+            settings.MouseUp += (f, a) =>
+            {
+                settings.ForeColor = Color.FromArgb(29, 185, 84);
+            };
         }
+
 
         // Клик по кнопке выйти
         private void exit_Click(object sender, EventArgs e)
@@ -153,6 +173,12 @@ namespace Mercury.CustomControls
             (this.Owner as Main).Logout();
             // Скрываем меню
             this.Hide();
+        }
+
+        // Клик по кнопке "настройки"
+        private void settings_Click(object sender, EventArgs e)
+        {
+            new Settings().ShowDialog();
         }
     }
 }

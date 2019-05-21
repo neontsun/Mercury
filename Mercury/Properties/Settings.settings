@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="stringConnection" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="@";Integrated Security=True;Connect Timeout=30</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PathForFonts" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\\Программирование\\С#\\C# Project\\Mercury\\Mercury\\Fonts\\</Value>

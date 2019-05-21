@@ -16,3 +16,4 @@ D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mer
 D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.ErrorForm.resources
 D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.RightSideMenu.resources
 D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.CreateSafeForm.resources
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.Settings.resources
