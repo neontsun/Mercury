@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Mercury.Animation;
@@ -31,6 +32,11 @@ namespace Mercury
         /// </summary>
         public void UseFonts()
         {
+            // Сохраняем путь к папке со шрифтами
+            Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
+                .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
+            Properties.Settings.Default.Save();
+
             // Добавляем шрифты в коллекцию
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-300.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
