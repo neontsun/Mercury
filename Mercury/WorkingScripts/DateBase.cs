@@ -121,7 +121,6 @@ namespace Mercury.WorkingScripts
         /// <param name="Table">Таблица.</param>
         /// <param name="Field">Поле проверки. Предположительно Email.</param>
         /// <param name="Value">Проверяемое значение.</param>
-        /// <returns></returns>
         public static bool ExistenceCheck(string Table, string Field, string Value)
         {
             // Переменная результата
@@ -152,6 +151,92 @@ namespace Mercury.WorkingScripts
 
             // Возвращаем результат
             return result;
+        }
+
+        /// <summary>
+        /// Возвращает ID последней записи
+        /// </summary>
+        /// <param name="Table">Таблица</param>
+        public static int GetLastIDFromCategory()
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT TOP 1 * FROM [Category] ORDER BY Category_ID DESC";
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает ID из таблицы User
+        /// </summary>
+        /// <param name="Table"></param>
+        /// <param name="Where"></param>
+        public static int GetUserID(string Where)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT [User_ID] FROM [User] WHERE [Email] = @Email";
+                    cmd.Parameters.AddWithValue("@Email", Where);
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает список сефсов пользователя
+        /// </summary>
+        public static List<Safe> GetSafeList()
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT [SafeName], [Email], [FieldOne], [FieldTwo], " +
+                                             "[FieldThree], [FieldFour], [FieldFive], [FieldSix] " +
+                                      "FROM [Safe] s " +
+                                      "INNER JOIN [User] u ON u.[User_ID] = s.[User_ID] " + 
+                                      "INNER JOIN [Category] c ON s.[Category_ID] = c.[Category_ID] " +
+                                      "WHERE [Email] = @Email";
+                    cmd.Parameters.AddWithValue("@Email", Properties.Settings.Default.userEmail);
+
+                    List<Safe> safeCollection = new List<Safe>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var fields = new List<string>(); 
+                        while (reader.Read())
+                        {
+                            if (reader[2].ToString() != string.Empty)
+                                fields.Add(reader[2].ToString());
+                            if (reader[3].ToString() != string.Empty)
+                                fields.Add(reader[3].ToString());
+                            if (reader[4].ToString() != string.Empty)
+                                fields.Add(reader[4].ToString());
+                            if (reader[5].ToString() != string.Empty)
+                                fields.Add(reader[5].ToString());
+                            if (reader[6].ToString() != string.Empty)
+                                fields.Add(reader[6].ToString());
+                            if (reader[7].ToString() != string.Empty)
+                                fields.Add(reader[7].ToString());
+
+                            var safe = new Safe(reader[0].ToString(), fields, reader[1].ToString());
+                            safeCollection.Add(safe);
+                        }
+                    }
+                    return safeCollection;
+                }
+            }
         }
     }
 }

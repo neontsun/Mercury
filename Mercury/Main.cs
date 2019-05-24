@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mercury.WorkingScripts;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Mercury
 {
@@ -33,6 +34,9 @@ namespace Mercury
         // Количество панелей создания сейфа
         public int countOpenMenuCreateSafe = 0;
 
+        // Активный сейф
+        Safe activeSafe;
+
         #endregion
 
         #region Списки
@@ -43,6 +47,8 @@ namespace Mercury
         #endregion
 
         #region Вспомагательные методы
+
+        #region Подключение к базе
 
         /// <summary>
         /// Метод подключения к бд
@@ -60,7 +66,9 @@ namespace Mercury
             Properties.Settings.Default.Save();
         }
 
+        #endregion
 
+        #region Использование шрифтов
 
         /// <summary>
         /// Использует шрифт из файла.
@@ -80,7 +88,7 @@ namespace Mercury
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
-            
+
             // Кнопка "Войти"
             loginButton.Font = new Font(fontFamilies[2], 12);
             // Кнопка "Регистрация"
@@ -103,7 +111,13 @@ namespace Mercury
             safeItemView_AddItem.Font = new Font(fontFamilies[2], 10);
             // Поле создателя сейфа
             safeItemView_SafeCreator.Font = new Font(fontFamilies[2], 10);
+            // Поле создателя сейфа
+            safeItemView_SafeCreatorPerson.Font = new Font(fontFamilies[2], 10);
         }
+
+        #endregion
+
+        #region Связанные с верхней панелью
 
         /// <summary>
         /// Метод, который записывает email пользователя на верхнюю панель
@@ -117,6 +131,12 @@ namespace Mercury
             // Привязываем email к верхнему правому краю
             emailText.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
         }
+
+
+
+        #endregion
+
+        #region Связанные с меню на верхней панели методы
 
         /// <summary>
         /// Открываем правое меню из верхней панели
@@ -165,6 +185,33 @@ namespace Mercury
             login.Size = new Size(this.Width, this.Height - 80);
             registration.Size = new Size(this.Width, this.Height - 80);
             separator1.Size = new Size(this.Width, 1);
+
+            // Чистим список сейфов
+            safeList.Controls.Clear();
+
+            safeItemView.Visible = false;
+        }
+
+        #endregion
+
+        #region Связанные с созданием сейфа методы
+
+        /// <summary>
+        /// Метод, который проверяет сейфы на повторные названия
+        /// </summary>
+        /// <param name="name">Наименование сейфа</param>
+        public bool ValidateSafeName(string name)
+        {
+            bool result = true;
+
+            foreach (var item in safeList.Controls)
+            {
+                // Если сейф с таким названием уже существует
+                if ((item as Label).Text == name)
+                    result = false;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -184,10 +231,13 @@ namespace Mercury
         }
 
         /// <summary>
-        ///  Получаем числовой показателя для следующего лейбла
-        ///  Объекта сейфа
+        /// Возвращает шрифт для сейфа
         /// </summary>
-        /// <returns></returns>
+        private Font GetFontForSafe() => new Font(pr.Families[2], 11);
+
+        /// <summary>
+        ///  Получаем числовой показателя для следующего лейбла / Объекта сейфа
+        /// </summary>
         private int GetLocationForSafe()
         {
             // Если количество элементов в списке контролов
@@ -203,13 +253,8 @@ namespace Mercury
         /// <summary>
         /// Возвращает количество сейфов
         /// </summary>
-        private int GetCountSafe => safeCollection.Count;
-
-        /// <summary>
-        /// Возвращает шрифт для сейфа
-        /// </summary>
-        /// <returns>Объект шрифта</returns>
-        private Font GetFontForSafe() => new Font(pr.Families[2], 11);
+        /// TODO: Проверить, правильно ли записываются названия сейфов!!!
+        private int GetCountSafe => safeList.Controls.Count + 1;
 
         /// <summary>
         ///  Метод, который добавяет сейф на панель и добавляет его в список сейфов
@@ -217,42 +262,250 @@ namespace Mercury
         /// <param name="safe">Сейф</param>
         public void CreateSafe(Safe safe)
         {
-            // Создаем контрол на левой панели
-            // Передаем наименование сейфа и позицию исходя из последнего элемента
-            Control control = new NewSafe(safe.SafeName, GetLocationForSafe()).CreateNewSafe();
-            // Ставим имя и шрифт
-            control.Name = "Safe_" + GetCountSafe;
-            control.Font = GetFontForSafe();
-            // Добавляем в панель контролы
-            safeList.Controls.Add(control);
-            // REF: Добавление сейфа в список на главной форме
-            // Добавляем сейф в список
-            safeCollection.Add(safe);
+            // Записываем данные в базу
+            InsertSafeAndCategoryInDB(safe);
+            // Чистим список сейфов
+            safeList.Controls.Clear();
+            // Заполняем список сейфов
+            FillSafeList();
+            // Передаем фокус на сейф
+            FocusedSafe(safe);
         }
 
         /// <summary>
-        /// Метод, который проверяет сейфы на повторные названия
+        /// Добавляет данные в таблицы Category и Safe
         /// </summary>
-        /// <param name="name">Наименование сейфа</param>
-        /// <returns></returns>
-        public bool ValidateSafeName(string name)
+        /// <param name="safe"></param>
+        private void InsertSafeAndCategoryInDB(Safe safe)
         {
-            bool result = true;
-            
-            foreach (var item in safeList.Controls)
+            // Массив полей
+            string[] fieldCategory = new string[6];
+            // Массив значений
+            string[] fieldValue = new string[6];
+
+            // В зависимости от количества введенных полей - заполняем значения
+            switch (safe.Fields.Count)
             {
-                // Если сейф с таким названием уже существует
-                if ((item as Label).Text == name)
-                    result = false;
+                case 1:
+
+                    fieldCategory = new string[]
+                    {
+                        "CategoryMaker",
+                        "FieldOne"
+                    };
+                    fieldValue = new string[]
+                    {
+                        Properties.Settings.Default.userEmail,
+                        safe.Fields[0]
+                    };
+
+                    break;
+
+                case 2:
+
+                    fieldCategory = new string[]
+                    {
+                        "CategoryMaker",
+                        "FieldOne",
+                        "FieldTwo"
+                    };
+                    fieldValue = new string[]
+                    {
+                        Properties.Settings.Default.userEmail,
+                        safe.Fields[0],
+                        safe.Fields[1]
+                    };
+
+                    break;
+
+                case 3:
+
+                    fieldCategory = new string[]
+                    {
+                        "CategoryMaker",
+                        "FieldOne",
+                        "FieldTwo",
+                        "FieldThree"
+                    };
+                    fieldValue = new string[]
+                    {
+                        Properties.Settings.Default.userEmail,
+                        safe.Fields[0],
+                        safe.Fields[1],
+                        safe.Fields[2]
+                    };
+
+                    break;
+
+                case 4:
+
+                    fieldCategory = new string[]
+                    {
+                        "CategoryMaker",
+                        "FieldOne",
+                        "FieldTwo",
+                        "FieldThree",
+                        "FieldFour",
+                    };
+                    fieldValue = new string[]
+                    {
+                        Properties.Settings.Default.userEmail,
+                        safe.Fields[0],
+                        safe.Fields[1],
+                        safe.Fields[2],
+                        safe.Fields[3]
+                    };
+
+                    break;
+
+                case 5:
+
+                    fieldCategory = new string[]
+                    {
+                        "CategoryMaker",
+                        "FieldOne",
+                        "FieldTwo",
+                        "FieldThree",
+                        "FieldFour",
+                        "FieldFive"
+                    };
+                    fieldValue = new string[]
+                    {
+                        Properties.Settings.Default.userEmail,
+                        safe.Fields[0],
+                        safe.Fields[1],
+                        safe.Fields[2],
+                        safe.Fields[3],
+                        safe.Fields[4]
+                    };
+
+                    break;
+
+                case 6:
+
+                    fieldCategory = new string[]
+                    {
+                        "CategoryMaker",
+                        "FieldOne",
+                        "FieldTwo",
+                        "FieldThree",
+                        "FieldFour",
+                        "FieldFive",
+                        "FieldSix"
+                    };
+                    fieldValue = new string[]
+                    {
+                        Properties.Settings.Default.userEmail,
+                        safe.Fields[0],
+                        safe.Fields[1],
+                        safe.Fields[2],
+                        safe.Fields[3],
+                        safe.Fields[4],
+                        safe.Fields[5]
+                    };
+
+                    break;
             }
 
-            return result;
+            // Заносим в базу категорию
+            WorkingScripts.DateBase.InsertData("Category", fieldCategory, fieldValue);
+            // Собираем данные
+            int catID = WorkingScripts.DateBase.GetLastIDFromCategory();
+            int userID = WorkingScripts.DateBase.GetUserID(Properties.Settings.Default.userEmail);
+            string[] value = new string[]
+            {
+                safe.SafeName,
+                userID.ToString(),
+                catID.ToString()
+            };
+            // Заносим в базу сейф
+            WorkingScripts.DateBase.InsertData("Safe", new string[] { "SafeName", "User_ID", "Category_ID" }, value);
         }
 
         #endregion
 
+        #region Сериализация
+        // TODO: Вынести всю эту хуйню в отдельный класс
+
+        //public void SerializeActiveSafe()
+        //{
+        //    BinaryFormatter formatter = new BinaryFormatter();
+        //    string path = Directory.GetCurrentDirectory()
+        //        .Remove(Directory.GetCurrentDirectory().Length - 10) + @"\SerializeObject\activeSafe.dat";
+        //    using (var fs = new FileStream(path, FileMode.OpenOrCreate))
+        //    {
+        //        formatter.Serialize(fs, activeSafe);
+        //    }
+        //}
+
+        //public void DeserializeActiveSafe()
+        //{
+        //    BinaryFormatter formatter = new BinaryFormatter();
+        //    string path = Directory.GetCurrentDirectory()
+        //        .Remove(Directory.GetCurrentDirectory().Length - 10) + @"\SerializeObject\activeSafe.dat";
+        //    using (var fs = new FileStream(path, FileMode.OpenOrCreate))
+        //    {
+        //        activeSafe = (Safe)formatter.Deserialize(fs);
+        //    }
+        //}
+
+        //private void DeleteSerializeObject()
+        //{
+        //    string path = Directory.GetCurrentDirectory()
+        //        .Remove(Directory.GetCurrentDirectory().Length - 10) + @"\SerializeObject\activeSafe.dat";
+        //    if (File.Exists(path))
+        //        File.Delete(path);
+        //}
+
+        //private bool ExistsSerializeObject()
+        //{
+        //    string path = Directory.GetCurrentDirectory()
+        //        .Remove(Directory.GetCurrentDirectory().Length - 10) + @"\SerializeObject\activeSafe.dat";
+        //    return File.Exists(path) ? true : false;
+        //}
+
+        #endregion
+            
+        #region Связанные с центром экрана
+
+        /// <summary>
+        /// Показывавает сейф изнутри
+        /// </summary>
+        /// <param name="safe">Объект класса</param>
+        public void ShowSafeItemView(Safe safe)
+        {
+            // Ставим название сейфа
+            safeItemView_SafeName.Text = safe.SafeName;
+            // Ставим создателя сейфа
+            safeItemView_SafeCreatorPerson.Text = safe.Creator;
+            // Показываем панель
+            safeItemView.Visible = true;
+        }
+
+        /// <summary>
+        ////Передает фокус на сейф
+        /// </summary>
+        /// <param name="safe"></param>
+        public void FocusedSafe(Safe safe)
+        {
+            // Показываем сейф
+            ShowSafeItemView(safe);
+            foreach (var item in safeList.Controls)
+            {
+                if ((item as Label).Text == safe.SafeName)
+                {
+                    (item as Label).ForeColor = Color.FromArgb(20, 131, 59);
+                }
+            }
+        }
+
+
+        #endregion
+
+        #endregion
+
         #region Построение интефейса
-        
+
         /// <summary>
         /// Строит верхнее меню
         /// </summary>
@@ -665,6 +918,51 @@ namespace Mercury
             };
         }
 
+        /// <summary>
+        ////Строим центр
+        /// </summary>
+        private void CreateCenter()
+        {
+            // Событие наведения и нажатия кнопки создания папки
+            safeItemView_AddFolder.MouseEnter += (f, a) => 
+                safeItemView_AddFolder.Image = Properties.Resources.addFolderGreen;
+            safeItemView_AddFolder.MouseLeave += (f, a) =>
+                safeItemView_AddFolder.Image = Properties.Resources.addFolderGray;
+            safeItemView_AddFolder.MouseDown += (f, a) =>
+                safeItemView_AddFolder.Image = Properties.Resources.addFolderDarkGray;
+            safeItemView_AddFolder.MouseUp += (f, a) =>
+                safeItemView_AddFolder.Image = Properties.Resources.addFolderGreen;
+
+            // Событие наведения и нажатия кнопки действия (Act)
+            safeItemView_Act.MouseEnter += (f, a) =>
+                safeItemView_Act.Image = Properties.Resources.actGreen;
+            safeItemView_Act.MouseLeave += (f, a) =>
+                safeItemView_Act.Image = Properties.Resources.actGray;
+            safeItemView_Act.MouseDown += (f, a) =>
+                safeItemView_Act.Image = Properties.Resources.actDarkGreen;
+            safeItemView_Act.MouseUp += (f, a) =>
+                safeItemView_Act.Image = Properties.Resources.actGreen;
+
+            // Наведение и нажатие на кнопку "Добавить" на панели элементов сейфа
+            safeItemView_AddItem.MouseEnter += (f, a) =>
+            {
+                safeItemView_AddItem.Back = Color.FromArgb(30, 215, 96);
+            };
+            safeItemView_AddItem.MouseLeave += (f, a) =>
+            {
+                safeItemView_AddItem.Back = Color.FromArgb(29, 185, 84);
+            };
+            safeItemView_AddItem.MouseDown += (f, a) =>
+            {
+                safeItemView_AddItem.Back = Color.FromArgb(20, 131, 59);
+            };
+            safeItemView_AddItem.MouseUp += (f, a) =>
+            {
+                safeItemView_AddItem.Back = Color.FromArgb(30, 215, 96);
+            };
+            
+        }
+
         #endregion
 
 
@@ -684,9 +982,9 @@ namespace Mercury
             CreateTopMenu();
             // Строим левую панель
             CreateLeftSide();
+            // Строим центр
+            CreateCenter();
             
-
-
             #region Минимальные действия при нажатии на кнопки и т.д
 
             // Клик по кнопке открытия панели входа (loginButton)
@@ -734,7 +1032,7 @@ namespace Mercury
                 if (WindowState == FormWindowState.Maximized)
                 {
                     // Меняем размер списка сейфов
-                    safeList.Height = 825;
+                    safeList.Height = leftSideSeparator2.Location.Y - 20 - safeList.Location.Y;
 
                     // Меняем размер поля поиска (searchText)
                     searchText.Size = new Size(700, searchText.Height);
@@ -749,7 +1047,7 @@ namespace Mercury
                 else
                 {
                     // Меняем размер списка сейфов
-                    safeList.Height = 490;
+                    safeList.Height = leftSideSeparator2.Location.Y - 20 - safeList.Location.Y;
 
                     // Меняем размер поля поиска (searchText)
                     searchText.Size = new Size(270, searchText.Height);
@@ -822,6 +1120,9 @@ namespace Mercury
                     if (WindowState == FormWindowState.Maximized)
                         // Меняем размер списка с сейфами
                         safeList.Height = 825;
+
+                    // REF: Заполняем список сейфов при первом входе
+                    FillSafeList();
                 }
                 else
                 {
@@ -854,6 +1155,9 @@ namespace Mercury
                     Properties.Settings.Default.userPassword = string.Empty;
                     Properties.Settings.Default.Save();
                 }
+
+                // Скрываем окно просмотра содержимого сейфа
+                safeItemView.Visible = false;
             };
 
             #endregion
@@ -898,24 +1202,6 @@ namespace Mercury
                 textLogoMain.ForeColor = Color.FromArgb(255, 255, 255);
             };
 
-            // Наведение и нажатие на кнопку "Добавить" на панели элементов сейфа
-            safeItemView_AddItem.MouseEnter += (f, a) =>
-            {
-                safeItemView_AddItem.Back = Color.FromArgb(30, 215, 96);
-            };
-            safeItemView_AddItem.MouseLeave += (f, a) =>
-            {
-                safeItemView_AddItem.Back = Color.FromArgb(29, 185, 84);
-            };
-            safeItemView_AddItem.MouseDown += (f, a) =>
-            {
-                safeItemView_AddItem.Back = Color.FromArgb(20, 131, 59);
-            };
-            safeItemView_AddItem.MouseUp += (f, a) =>
-            {
-                safeItemView_AddItem.Back = Color.FromArgb(29, 185, 84);
-            };
-
             #endregion
 
         }
@@ -946,6 +1232,9 @@ namespace Mercury
                 // Меняем размер разделяющей полосы (logoSeparator)
                 logoSeparatorHorizontal.Size = new Size(this.Width, 1);
                 logoSeparatorVertical.Size = new Size(1, this.Height);
+
+                // REF: Заполняем список сейфов при обычном запуске
+                FillSafeList();
             }
         }
 
@@ -969,7 +1258,35 @@ namespace Mercury
             countOpenMenuCreateSafe++;
         }
 
+        /// <summary>
+        /// Получаем список сейфов пользователя
+        /// </summary>
+        private void FillSafeList()
+        {
+            // Получаем коллекцию сейфов
+            this.safeCollection = WorkingScripts.DateBase.GetSafeList();
+
+            foreach (var item in safeCollection)
+            {
+                // Создаем контрол на левой панели
+                // Передаем наименование сейфа и позицию исходя из последнего элемента
+                Control control = WorkingScripts.NewSafe.CreateNewSafe
+                    (safeList, GetCountSafe, GetFontForSafe(), item, GetLocationForSafe());
+                control.Click += (f, a) => 
+                {
+                    // Обновляем хук
+                    this.activeSafe = item;
+                    // Скрываем панель
+                    safeItemView.Visible = false;
+                    // Заполняем сейф
+                    ShowSafeItemView(item);
+                };
+                // Добавляем в панель контролы
+                safeList.Controls.Add(control);
+            }
+        }
+
         #endregion
-        
+
     }
 }

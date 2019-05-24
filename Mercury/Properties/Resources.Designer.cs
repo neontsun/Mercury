@@ -63,6 +63,36 @@ namespace Mercury.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap actDarkGreen {
+            get {
+                object obj = ResourceManager.GetObject("actDarkGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap actGray {
+            get {
+                object obj = ResourceManager.GetObject("actGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap actGreen {
+            get {
+                object obj = ResourceManager.GetObject("actGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap addFieldDarkGray {
             get {
                 object obj = ResourceManager.GetObject("addFieldDarkGray", resourceCulture);
@@ -86,6 +116,36 @@ namespace Mercury.Properties {
         internal static System.Drawing.Bitmap addFieldGreen {
             get {
                 object obj = ResourceManager.GetObject("addFieldGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap addFolderDarkGray {
+            get {
+                object obj = ResourceManager.GetObject("addFolderDarkGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap addFolderGray {
+            get {
+                object obj = ResourceManager.GetObject("addFolderGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap addFolderGreen {
+            get {
+                object obj = ResourceManager.GetObject("addFolderGreen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

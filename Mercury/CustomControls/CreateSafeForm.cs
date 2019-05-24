@@ -99,7 +99,7 @@ namespace Mercury.CustomControls
         // Наименование сейфа
         string NameSafe = string.Empty;
         // Массив полей
-        string[] FieldsSafe = new string[6];
+        List<string> FieldsSafe = new List<string>();
         // Создаем коллекцию шрифтов
         PrivateFontCollection pr = new PrivateFontCollection();
 
@@ -438,11 +438,12 @@ namespace Mercury.CustomControls
         /// </summary>
         /// <param name="safeName">Наименование сейфа</param>
         /// <param name="fields">Массив полей</param>
-        private void addSafe(string safeName, string[] fields)
+        private void addSafe(string safeName, List<string> fields)
         {
             // REF: Добавление сейфа в список на форме создания сейфа
             // Вызываем метод на Main форме и передаем объект сейфа
             (this.Owner as Main).CreateSafe(new Safe(safeName, fields, Properties.Settings.Default.userEmail));
+
         }
 
 
@@ -746,7 +747,7 @@ namespace Mercury.CustomControls
                             int i = 0;
                             while (i < countAddsField)
                             {
-                                FieldsSafe[i] = Controls["fieldText" + (i + 1)].Text;
+                                FieldsSafe.Add(Controls["fieldText" + (i + 1)].Text);
                                 i++;
                             }
 

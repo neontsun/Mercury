@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mercury.WorkingScripts
 {
+    [Serializable]
     public class Safe
     {
         /// <summary>
@@ -17,12 +18,7 @@ namespace Mercury.WorkingScripts
         /// <summary>
         /// Массив полей
         /// </summary>
-        public string[] Fields { get; set; }
-
-        /// <summary>
-        /// Идентификатор
-        /// </summary>
-        public string ID { get; set; }
+        public List<string> Fields { get; set; }
 
         /// <summary>
         /// Создатель сейфа
@@ -35,12 +31,12 @@ namespace Mercury.WorkingScripts
         /// </summary>
         /// <param name="SafeName">Наименование сейфа</param>
         /// <param name="Fields">Массив полей</param>
-        public Safe(string SafeName, string[] Fields, string Creator)
+        public Safe(string SafeName, List<string> Fields, string Creator)
         {
             this.SafeName = SafeName;
             this.Fields = Fields;
             this.Creator = Creator;
-            this.ID = Guid.NewGuid().ToString();
+            //this.ID = Guid.NewGuid().ToString();
         }
     }
 }
