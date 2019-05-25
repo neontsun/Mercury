@@ -30,9 +30,9 @@ namespace Mercury.CustomControls
         public void UseFonts()
         {
             // Сохраняем путь к папке со шрифтами
-            Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
-                .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
-            Properties.Settings.Default.Save();
+            //Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
+            //    .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
+            //Properties.Settings.Default.Save();
 
             // Добавляем шрифты в коллекцию
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-300.ttf");
@@ -104,7 +104,7 @@ namespace Mercury.CustomControls
             InitializeComponent();
 
             // Используем шрифты
-            UseFonts();
+            //UseFonts();
 
             // Добавляем плейсхолдеры
             Animation.Placeholder.addPlaceholder(emailData, "Email", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));
@@ -119,7 +119,7 @@ namespace Mercury.CustomControls
             // Событие при изменении видимости контрола
             this.VisibleChanged += (f, a) => 
             {
-                if (Visible == true)
+                if (this.Visible == true)
                 {
                     loginPanel.Focus();
                 }

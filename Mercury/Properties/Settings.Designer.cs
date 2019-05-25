@@ -37,7 +37,7 @@ namespace Mercury.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\\\Программирование\\\\С#\\\\C# Project\\\\Mercury\\\\Mercury\\\\Fonts\\\\")]
         public string PathForFonts {
             get {
                 return ((string)(this["PathForFonts"]));

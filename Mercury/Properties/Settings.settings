@@ -6,7 +6,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PathForFonts" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">D:\\Программирование\\С#\\C# Project\\Mercury\\Mercury\\Fonts\\</Value>
     </Setting>
     <Setting Name="userEmail" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

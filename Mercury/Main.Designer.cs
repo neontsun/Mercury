@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.startPanel = new System.Windows.Forms.Panel();
-            this.login = new Mercury.CustomControls.Login();
-            this.registration = new Mercury.Registration();
             this.textLogo = new System.Windows.Forms.Label();
             this.loginButton = new System.Windows.Forms.Label();
             this.registrationButton = new pivyLab.Control.FlatEllButton();
@@ -53,13 +51,16 @@
             this.createSafeButtonLabel = new System.Windows.Forms.Label();
             this.createSafeButtonIcon = new System.Windows.Forms.PictureBox();
             this.safeItemView = new System.Windows.Forms.Panel();
+            this.safeItemView_ItemPanel = new System.Windows.Forms.Panel();
             this.safeItemView_Act = new System.Windows.Forms.PictureBox();
             this.safeItemView_AddFolder = new System.Windows.Forms.PictureBox();
             this.safeItemView_MenuSeparator = new pivyLab.Control.Separator();
+            this.safeItemView_SafeCreatorPerson = new System.Windows.Forms.Label();
             this.safeItemView_SafeCreator = new System.Windows.Forms.Label();
             this.safeItemView_AddItem = new pivyLab.Control.FlatEllButton();
             this.safeItemView_SafeName = new System.Windows.Forms.Label();
-            this.safeItemView_SafeCreatorPerson = new System.Windows.Forms.Label();
+            this.registration = new Mercury.Registration();
+            this.login = new Mercury.CustomControls.Login();
             this.startPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchTextBreak)).BeginInit();
@@ -78,34 +79,17 @@
             this.startPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.startPanel.Controls.Add(this.login);
             this.startPanel.Controls.Add(this.registration);
+            this.startPanel.Controls.Add(this.login);
             this.startPanel.Controls.Add(this.textLogo);
             this.startPanel.Controls.Add(this.loginButton);
             this.startPanel.Controls.Add(this.registrationButton);
             this.startPanel.Controls.Add(this.separator1);
-            this.startPanel.Location = new System.Drawing.Point(1198, 23);
+            this.startPanel.Location = new System.Drawing.Point(1191, 25);
             this.startPanel.Name = "startPanel";
             this.startPanel.Size = new System.Drawing.Size(1192, 703);
             this.startPanel.TabIndex = 3;
             this.startPanel.Visible = false;
-            // 
-            // login
-            // 
-            this.login.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.login.Location = new System.Drawing.Point(3, 57);
-            this.login.Name = "login";
-            this.login.Size = new System.Drawing.Size(1114, 643);
-            this.login.TabIndex = 7;
-            // 
-            // registration
-            // 
-            this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.registration.Location = new System.Drawing.Point(3, 57);
-            this.registration.Name = "registration";
-            this.registration.Size = new System.Drawing.Size(1114, 643);
-            this.registration.TabIndex = 6;
-            this.registration.Visible = false;
             // 
             // textLogo
             // 
@@ -338,6 +322,7 @@
             // 
             // safeItemView
             // 
+            this.safeItemView.Controls.Add(this.safeItemView_ItemPanel);
             this.safeItemView.Controls.Add(this.safeItemView_Act);
             this.safeItemView.Controls.Add(this.safeItemView_AddFolder);
             this.safeItemView.Controls.Add(this.safeItemView_MenuSeparator);
@@ -350,6 +335,14 @@
             this.safeItemView.Size = new System.Drawing.Size(930, 616);
             this.safeItemView.TabIndex = 23;
             this.safeItemView.Visible = false;
+            // 
+            // safeItemView_ItemPanel
+            // 
+            this.safeItemView_ItemPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.safeItemView_ItemPanel.Location = new System.Drawing.Point(51, 164);
+            this.safeItemView_ItemPanel.Name = "safeItemView_ItemPanel";
+            this.safeItemView_ItemPanel.Size = new System.Drawing.Size(819, 433);
+            this.safeItemView_ItemPanel.TabIndex = 20;
             // 
             // safeItemView_Act
             // 
@@ -379,6 +372,17 @@
             this.safeItemView_MenuSeparator.Name = "safeItemView_MenuSeparator";
             this.safeItemView_MenuSeparator.Size = new System.Drawing.Size(817, 1);
             this.safeItemView_MenuSeparator.TabIndex = 3;
+            // 
+            // safeItemView_SafeCreatorPerson
+            // 
+            this.safeItemView_SafeCreatorPerson.AutoSize = true;
+            this.safeItemView_SafeCreatorPerson.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_SafeCreatorPerson.ForeColor = System.Drawing.Color.White;
+            this.safeItemView_SafeCreatorPerson.Location = new System.Drawing.Point(129, 50);
+            this.safeItemView_SafeCreatorPerson.Name = "safeItemView_SafeCreatorPerson";
+            this.safeItemView_SafeCreatorPerson.Size = new System.Drawing.Size(77, 16);
+            this.safeItemView_SafeCreatorPerson.TabIndex = 2;
+            this.safeItemView_SafeCreatorPerson.Text = "создатель";
             // 
             // safeItemView_SafeCreator
             // 
@@ -417,16 +421,22 @@
             this.safeItemView_SafeName.TabIndex = 0;
             this.safeItemView_SafeName.Text = "Наименование сейфа";
             // 
-            // safeItemView_SafeCreatorPerson
+            // registration
             // 
-            this.safeItemView_SafeCreatorPerson.AutoSize = true;
-            this.safeItemView_SafeCreatorPerson.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.safeItemView_SafeCreatorPerson.ForeColor = System.Drawing.Color.White;
-            this.safeItemView_SafeCreatorPerson.Location = new System.Drawing.Point(129, 50);
-            this.safeItemView_SafeCreatorPerson.Name = "safeItemView_SafeCreatorPerson";
-            this.safeItemView_SafeCreatorPerson.Size = new System.Drawing.Size(77, 16);
-            this.safeItemView_SafeCreatorPerson.TabIndex = 2;
-            this.safeItemView_SafeCreatorPerson.Text = "создатель";
+            this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.registration.Location = new System.Drawing.Point(34, 58);
+            this.registration.Name = "registration";
+            this.registration.Size = new System.Drawing.Size(1120, 636);
+            this.registration.TabIndex = 7;
+            this.registration.Visible = false;
+            // 
+            // login
+            // 
+            this.login.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.login.Location = new System.Drawing.Point(34, 58);
+            this.login.Name = "login";
+            this.login.Size = new System.Drawing.Size(1120, 636);
+            this.login.TabIndex = 6;
             // 
             // Main
             // 
@@ -496,8 +506,6 @@
         private pivyLab.Control.FlatEllButton registrationButton;
         private System.Windows.Forms.Label loginButton;
         private System.Windows.Forms.Label textLogo;
-        private Registration registration;
-        private CustomControls.Login login;
         private System.Windows.Forms.Label textLogoMain;
         private pivyLab.Control.Separator logoSeparatorHorizontal;
         private System.Windows.Forms.PictureBox searchIcon;
@@ -523,6 +531,9 @@
         private System.Windows.Forms.PictureBox safeItemView_Act;
         private System.Windows.Forms.PictureBox safeItemView_AddFolder;
         private System.Windows.Forms.Label safeItemView_SafeCreatorPerson;
+        private System.Windows.Forms.Panel safeItemView_ItemPanel;
+        private CustomControls.Login login;
+        private Registration registration;
     }
 }
 

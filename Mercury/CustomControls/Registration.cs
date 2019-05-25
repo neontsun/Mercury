@@ -13,8 +13,8 @@ namespace Mercury
 
         #region Хуки и глобальные переменные
 
-        // Создаем коллекцию шрифтов
-        PrivateFontCollection pr = new PrivateFontCollection();
+        //// Создаем коллекцию шрифтов
+        //PrivateFontCollection pr = new PrivateFontCollection();
         // Переменная, которая говорит о том, нажата ли иконка
         // показа пароля (глаз) (eyeIcon)
         bool showPassword = false;
@@ -32,10 +32,13 @@ namespace Mercury
         /// </summary>
         public void UseFonts()
         {
-            // Сохраняем путь к папке со шрифтами
-            Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
-                .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
-            Properties.Settings.Default.Save();
+            //// Сохраняем путь к папке со шрифтами
+            //Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
+            //    .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
+            //Properties.Settings.Default.Save();
+
+            // Создаем коллекцию шрифтов
+            PrivateFontCollection pr = new PrivateFontCollection();
 
             // Добавляем шрифты в коллекцию
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-300.ttf");
@@ -125,7 +128,7 @@ namespace Mercury
             InitializeComponent();
 
             // Используем шрифты
-            UseFonts();
+            //UseFonts();
 
 
             // Добавляем плейсхолдеры
@@ -140,7 +143,7 @@ namespace Mercury
             // Событие при изменении видимости контрола
             this.VisibleChanged += (f, a) =>
             {
-                if (Visible == true)
+                if (this.Visible == true)
                     registrationPanel.Focus();
                 else
                     // Очищаем поля

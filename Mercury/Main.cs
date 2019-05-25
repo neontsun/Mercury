@@ -117,7 +117,7 @@ namespace Mercury
 
         #endregion
 
-        #region Связанные с верхней панелью
+        #region Верхняя панель
 
         /// <summary>
         /// Метод, который записывает email пользователя на верхнюю панель
@@ -136,7 +136,7 @@ namespace Mercury
 
         #endregion
 
-        #region Связанные с меню на верхней панели методы
+        #region Меню на верхней панели
 
         /// <summary>
         /// Открываем правое меню из верхней панели
@@ -194,7 +194,7 @@ namespace Mercury
 
         #endregion
 
-        #region Связанные с созданием сейфа методы
+        #region Создание сейфа
 
         /// <summary>
         /// Метод, который проверяет сейфы на повторные названия
@@ -466,7 +466,7 @@ namespace Mercury
 
         #endregion
             
-        #region Связанные с центром экрана
+        #region Панель сейфа
 
         /// <summary>
         /// Показывавает сейф изнутри
@@ -1029,7 +1029,7 @@ namespace Mercury
             // Событие при изменении размера формы
             this.Resize += (f, a) =>
             {
-                if (WindowState == FormWindowState.Maximized)
+                if (this.WindowState == FormWindowState.Maximized)
                 {
                     // Меняем размер списка сейфов
                     safeList.Height = leftSideSeparator2.Location.Y - 20 - safeList.Location.Y;
@@ -1066,7 +1066,9 @@ namespace Mercury
 
                 // Меняем размер сепаратора у меня на панели отображения элементов сейфа
                 safeItemView_MenuSeparator.Width = safeItemView_AddItem.Location.X + 95;
-
+                // Меняем ширину и высоту панели элементов в сейфе
+                safeItemView_ItemPanel.Width = safeItemView_MenuSeparator.Width;
+                safeItemView_ItemPanel.Height = safeItemView.Height - safeItemView_ItemPanel.Location.Y - 20;
 
                 // Если панель видна
                 if (startPanel.Visible == true)
@@ -1117,7 +1119,7 @@ namespace Mercury
                     WriteEmail();
 
                     // Если размер формы максимальный
-                    if (WindowState == FormWindowState.Maximized)
+                    if (this.WindowState == FormWindowState.Maximized)
                         // Меняем размер списка с сейфами
                         safeList.Height = 825;
 
@@ -1271,7 +1273,7 @@ namespace Mercury
                 // Создаем контрол на левой панели
                 // Передаем наименование сейфа и позицию исходя из последнего элемента
                 Control control = WorkingScripts.NewSafe.CreateNewSafe
-                    (safeList, GetCountSafe, GetFontForSafe(), item, GetLocationForSafe());
+                    (safeList, this.GetCountSafe, GetFontForSafe(), item, GetLocationForSafe());
                 control.Click += (f, a) => 
                 {
                     // Обновляем хук
