@@ -93,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\Placeholder.cs" />
+    <Compile Include="CustomControls\AddFolder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\AddFolder.Designer.cs">
+      <DependentUpon>AddFolder.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="WorkingScripts\Folder.cs" />
+    <Compile Include="WorkingScripts\NewFolder.cs" />
     <Compile Include="WorkingScripts\Safe.cs" />
     <Compile Include="CustomControls\CreateSafeForm.cs">
       <SubType>Form</SubType>
@@ -149,6 +157,9 @@
     <Compile Include="WorkingScripts\NewSafe.cs" />
     <Compile Include="WorkingScripts\DateBase.cs" />
     <Compile Include="WorkingScripts\ValidateEmail.cs" />
+    <EmbeddedResource Include="CustomControls\AddFolder.resx">
+      <DependentUpon>AddFolder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\CreateSafeForm.resx">
       <DependentUpon>CreateSafeForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -279,6 +290,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\actGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folderGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folderWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\closePanelViewGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\closePanelViewDarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\closePanelViewGray.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

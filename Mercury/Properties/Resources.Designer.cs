@@ -153,6 +153,36 @@ namespace Mercury.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap closePanelViewDarkGray {
+            get {
+                object obj = ResourceManager.GetObject("closePanelViewDarkGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap closePanelViewGray {
+            get {
+                object obj = ResourceManager.GetObject("closePanelViewGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap closePanelViewGreen {
+            get {
+                object obj = ResourceManager.GetObject("closePanelViewGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap emailIconDarkGrayDown {
             get {
                 object obj = ResourceManager.GetObject("emailIconDarkGrayDown", resourceCulture);
@@ -226,6 +256,26 @@ namespace Mercury.Properties {
         internal static System.Drawing.Bitmap eyeView {
             get {
                 object obj = ResourceManager.GetObject("eyeView", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderGreen {
+            get {
+                object obj = ResourceManager.GetObject("folderGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderWhite {
+            get {
+                object obj = ResourceManager.GetObject("folderWhite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

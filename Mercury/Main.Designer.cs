@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.startPanel = new System.Windows.Forms.Panel();
+            this.registration = new Mercury.Registration();
+            this.login = new Mercury.CustomControls.Login();
             this.textLogo = new System.Windows.Forms.Label();
             this.loginButton = new System.Windows.Forms.Label();
             this.registrationButton = new pivyLab.Control.FlatEllButton();
@@ -51,7 +53,14 @@
             this.createSafeButtonLabel = new System.Windows.Forms.Label();
             this.createSafeButtonIcon = new System.Windows.Forms.PictureBox();
             this.safeItemView = new System.Windows.Forms.Panel();
+            this.safeItemView_Field6 = new System.Windows.Forms.Label();
+            this.safeItemView_Field5 = new System.Windows.Forms.Label();
+            this.safeItemView_Field4 = new System.Windows.Forms.Label();
+            this.safeItemView_Field3 = new System.Windows.Forms.Label();
+            this.safeItemView_Field2 = new System.Windows.Forms.Label();
+            this.safeItemView_Field1 = new System.Windows.Forms.Label();
             this.safeItemView_ItemPanel = new System.Windows.Forms.Panel();
+            this.safeItemView_Hide = new System.Windows.Forms.PictureBox();
             this.safeItemView_Act = new System.Windows.Forms.PictureBox();
             this.safeItemView_AddFolder = new System.Windows.Forms.PictureBox();
             this.safeItemView_MenuSeparator = new pivyLab.Control.Separator();
@@ -59,8 +68,6 @@
             this.safeItemView_SafeCreator = new System.Windows.Forms.Label();
             this.safeItemView_AddItem = new pivyLab.Control.FlatEllButton();
             this.safeItemView_SafeName = new System.Windows.Forms.Label();
-            this.registration = new Mercury.Registration();
-            this.login = new Mercury.CustomControls.Login();
             this.startPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchTextBreak)).BeginInit();
@@ -70,6 +77,7 @@
             this.createSafeButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.createSafeButtonIcon)).BeginInit();
             this.safeItemView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Hide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).BeginInit();
             this.SuspendLayout();
@@ -90,6 +98,23 @@
             this.startPanel.Size = new System.Drawing.Size(1192, 703);
             this.startPanel.TabIndex = 3;
             this.startPanel.Visible = false;
+            // 
+            // registration
+            // 
+            this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.registration.Location = new System.Drawing.Point(34, 58);
+            this.registration.Name = "registration";
+            this.registration.Size = new System.Drawing.Size(1120, 636);
+            this.registration.TabIndex = 7;
+            this.registration.Visible = false;
+            // 
+            // login
+            // 
+            this.login.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.login.Location = new System.Drawing.Point(34, 58);
+            this.login.Name = "login";
+            this.login.Size = new System.Drawing.Size(1120, 636);
+            this.login.TabIndex = 6;
             // 
             // textLogo
             // 
@@ -322,7 +347,14 @@
             // 
             // safeItemView
             // 
+            this.safeItemView.Controls.Add(this.safeItemView_Field6);
+            this.safeItemView.Controls.Add(this.safeItemView_Field5);
+            this.safeItemView.Controls.Add(this.safeItemView_Field4);
+            this.safeItemView.Controls.Add(this.safeItemView_Field3);
+            this.safeItemView.Controls.Add(this.safeItemView_Field2);
+            this.safeItemView.Controls.Add(this.safeItemView_Field1);
             this.safeItemView.Controls.Add(this.safeItemView_ItemPanel);
+            this.safeItemView.Controls.Add(this.safeItemView_Hide);
             this.safeItemView.Controls.Add(this.safeItemView_Act);
             this.safeItemView.Controls.Add(this.safeItemView_AddFolder);
             this.safeItemView.Controls.Add(this.safeItemView_MenuSeparator);
@@ -336,13 +368,96 @@
             this.safeItemView.TabIndex = 23;
             this.safeItemView.Visible = false;
             // 
+            // safeItemView_Field6
+            // 
+            this.safeItemView_Field6.AutoSize = true;
+            this.safeItemView_Field6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_Field6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.safeItemView_Field6.Location = new System.Drawing.Point(724, 150);
+            this.safeItemView_Field6.Name = "safeItemView_Field6";
+            this.safeItemView_Field6.Size = new System.Drawing.Size(40, 16);
+            this.safeItemView_Field6.TabIndex = 21;
+            this.safeItemView_Field6.Text = "поле";
+            this.safeItemView_Field6.Visible = false;
+            // 
+            // safeItemView_Field5
+            // 
+            this.safeItemView_Field5.AutoSize = true;
+            this.safeItemView_Field5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_Field5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.safeItemView_Field5.Location = new System.Drawing.Point(584, 150);
+            this.safeItemView_Field5.Name = "safeItemView_Field5";
+            this.safeItemView_Field5.Size = new System.Drawing.Size(40, 16);
+            this.safeItemView_Field5.TabIndex = 21;
+            this.safeItemView_Field5.Text = "поле";
+            this.safeItemView_Field5.Visible = false;
+            // 
+            // safeItemView_Field4
+            // 
+            this.safeItemView_Field4.AutoSize = true;
+            this.safeItemView_Field4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_Field4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.safeItemView_Field4.Location = new System.Drawing.Point(454, 150);
+            this.safeItemView_Field4.Name = "safeItemView_Field4";
+            this.safeItemView_Field4.Size = new System.Drawing.Size(40, 16);
+            this.safeItemView_Field4.TabIndex = 21;
+            this.safeItemView_Field4.Text = "поле";
+            this.safeItemView_Field4.Visible = false;
+            // 
+            // safeItemView_Field3
+            // 
+            this.safeItemView_Field3.AutoSize = true;
+            this.safeItemView_Field3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_Field3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.safeItemView_Field3.Location = new System.Drawing.Point(325, 150);
+            this.safeItemView_Field3.Name = "safeItemView_Field3";
+            this.safeItemView_Field3.Size = new System.Drawing.Size(40, 16);
+            this.safeItemView_Field3.TabIndex = 21;
+            this.safeItemView_Field3.Text = "поле";
+            this.safeItemView_Field3.Visible = false;
+            // 
+            // safeItemView_Field2
+            // 
+            this.safeItemView_Field2.AutoSize = true;
+            this.safeItemView_Field2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_Field2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.safeItemView_Field2.Location = new System.Drawing.Point(211, 150);
+            this.safeItemView_Field2.Name = "safeItemView_Field2";
+            this.safeItemView_Field2.Size = new System.Drawing.Size(40, 16);
+            this.safeItemView_Field2.TabIndex = 21;
+            this.safeItemView_Field2.Text = "поле";
+            this.safeItemView_Field2.Visible = false;
+            // 
+            // safeItemView_Field1
+            // 
+            this.safeItemView_Field1.AutoSize = true;
+            this.safeItemView_Field1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_Field1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.safeItemView_Field1.Location = new System.Drawing.Point(93, 150);
+            this.safeItemView_Field1.Name = "safeItemView_Field1";
+            this.safeItemView_Field1.Size = new System.Drawing.Size(40, 16);
+            this.safeItemView_Field1.TabIndex = 21;
+            this.safeItemView_Field1.Text = "поле";
+            this.safeItemView_Field1.Visible = false;
+            // 
             // safeItemView_ItemPanel
             // 
-            this.safeItemView_ItemPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.safeItemView_ItemPanel.Location = new System.Drawing.Point(51, 164);
+            this.safeItemView_ItemPanel.AutoScroll = true;
+            this.safeItemView_ItemPanel.Location = new System.Drawing.Point(51, 178);
             this.safeItemView_ItemPanel.Name = "safeItemView_ItemPanel";
-            this.safeItemView_ItemPanel.Size = new System.Drawing.Size(819, 433);
+            this.safeItemView_ItemPanel.Size = new System.Drawing.Size(819, 418);
             this.safeItemView_ItemPanel.TabIndex = 20;
+            // 
+            // safeItemView_Hide
+            // 
+            this.safeItemView_Hide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.safeItemView_Hide.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.safeItemView_Hide.Image = global::Mercury.Properties.Resources.closePanelViewGray;
+            this.safeItemView_Hide.Location = new System.Drawing.Point(903, 3);
+            this.safeItemView_Hide.Name = "safeItemView_Hide";
+            this.safeItemView_Hide.Size = new System.Drawing.Size(24, 24);
+            this.safeItemView_Hide.TabIndex = 19;
+            this.safeItemView_Hide.TabStop = false;
             // 
             // safeItemView_Act
             // 
@@ -421,23 +536,6 @@
             this.safeItemView_SafeName.TabIndex = 0;
             this.safeItemView_SafeName.Text = "Наименование сейфа";
             // 
-            // registration
-            // 
-            this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.registration.Location = new System.Drawing.Point(34, 58);
-            this.registration.Name = "registration";
-            this.registration.Size = new System.Drawing.Size(1120, 636);
-            this.registration.TabIndex = 7;
-            this.registration.Visible = false;
-            // 
-            // login
-            // 
-            this.login.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.login.Location = new System.Drawing.Point(34, 58);
-            this.login.Name = "login";
-            this.login.Size = new System.Drawing.Size(1120, 636);
-            this.login.TabIndex = 6;
-            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -492,6 +590,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.createSafeButtonIcon)).EndInit();
             this.safeItemView.ResumeLayout(false);
             this.safeItemView.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Hide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).EndInit();
             this.ResumeLayout(false);
@@ -534,6 +633,13 @@
         private System.Windows.Forms.Panel safeItemView_ItemPanel;
         private CustomControls.Login login;
         private Registration registration;
+        private System.Windows.Forms.Label safeItemView_Field6;
+        private System.Windows.Forms.Label safeItemView_Field5;
+        private System.Windows.Forms.Label safeItemView_Field4;
+        private System.Windows.Forms.Label safeItemView_Field3;
+        private System.Windows.Forms.Label safeItemView_Field2;
+        private System.Windows.Forms.Label safeItemView_Field1;
+        private System.Windows.Forms.PictureBox safeItemView_Hide;
     }
 }
 

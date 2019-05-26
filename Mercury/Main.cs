@@ -43,6 +43,7 @@ namespace Mercury
 
         // Список созданных сейфов
         List<Safe> safeCollection = new List<Safe>();
+        public List<Folder> folderCollectionInActiveSafe = new List<Folder>();
 
         #endregion
 
@@ -113,6 +114,13 @@ namespace Mercury
             safeItemView_SafeCreator.Font = new Font(fontFamilies[2], 10);
             // Поле создателя сейфа
             safeItemView_SafeCreatorPerson.Font = new Font(fontFamilies[2], 10);
+            // Поля отображения на панели сейфа
+            safeItemView_Field1.Font = new Font(fontFamilies[3], 10);
+            safeItemView_Field2.Font = new Font(fontFamilies[3], 10);
+            safeItemView_Field3.Font = new Font(fontFamilies[3], 10);
+            safeItemView_Field4.Font = new Font(fontFamilies[3], 10);
+            safeItemView_Field5.Font = new Font(fontFamilies[3], 10);
+            safeItemView_Field6.Font = new Font(fontFamilies[3], 10);
         }
 
         #endregion
@@ -465,7 +473,7 @@ namespace Mercury
         //}
 
         #endregion
-            
+
         #region Панель сейфа
 
         /// <summary>
@@ -478,8 +486,34 @@ namespace Mercury
             safeItemView_SafeName.Text = safe.SafeName;
             // Ставим создателя сейфа
             safeItemView_SafeCreatorPerson.Text = safe.Creator;
+            // Заполняем поля
+            FillFieldInSafeView(safe.Fields);
             // Показываем панель
             safeItemView.Visible = true;
+        }
+
+        /// <summary>
+        /// Заполняет поля панели
+        /// </summary>
+        /// <param name="list">список полей</param>
+        public void FillFieldInSafeView(List<string> list)
+        {
+            for (int i = 1; i <= list.Count; i++)
+            {
+                safeItemView.Controls["safeItemView_Field" + i].Text = list[i - 1];
+                safeItemView.Controls["safeItemView_Field" + i].Visible = true;
+            }
+        }
+
+        /// <summary>
+        /// Скрывает поля в сейфе
+        /// </summary>
+        public void HideFieldInSafeView()
+        {
+            for (int i = 1; i < 7; i++)
+            {
+                safeItemView.Controls["safeItemView_Field" + i].Visible = false;
+            }
         }
 
         /// <summary>
@@ -499,6 +533,98 @@ namespace Mercury
             }
         }
 
+        /// <summary>
+        /// Возвращает шрифт для сейфа
+        /// </summary>
+        private Font GetFontForFolder() => new Font(pr.Families[3], 11);
+
+        /// <summary>
+        ///  Получаем числовой показателя для следующего лейбла / Объекта сейфа
+        /// </summary>
+        private int GetLocationForFolder()
+        {
+            // Если количество элементов в списке контролов
+            // равно нулю, то возвращаем позицию первого контрола
+            if (safeItemView_ItemPanel.Controls.Count == 0)
+                return 5;
+            // Иначе возвращаем позицию в результате расчета
+            // позиции последнего контрола в списке
+            else
+                return safeItemView_ItemPanel.Controls[safeItemView_ItemPanel.Controls.Count - 1].Location.Y + 50;
+        }
+
+        /// <summary>
+        /// Получает количество папок
+        /// </summary>
+        private int GetFolderCount()
+        {
+            int i = 0;
+            foreach (var item in safeItemView_ItemPanel.Controls)
+            {
+                if ((item as Panel).Controls["Mark"].Text == "folder")
+                    i++;
+            }
+            return i;
+        }
+
+        /// <summary>
+        /// Показывает панель создания папки
+        /// </summary>
+        public void ShowAddFolderForm()
+        {
+            var newFolder = new CustomControls.AddFolder()
+            {
+                Owner = this
+            }.ShowDialog();
+        }
+
+        /// <summary>
+        /// Заполняет список папок в активном сейфе
+        /// </summary>
+        public void FillFolderList()
+        {
+            // Заполняем список папок
+            // Передаем в параметры запроса объект активного сейфа
+            this.folderCollectionInActiveSafe = WorkingScripts.DateBase.GetFolderList(activeSafe);
+
+            // REF: Очищаем список папок
+            // TODO: Переделать, тк будут очищаться и итемы
+            safeItemView_ItemPanel.Controls.Clear();
+
+            // Создаем контролы на панели
+            foreach (var item in folderCollectionInActiveSafe)
+            {
+                safeItemView_ItemPanel.Controls.Add(
+                    NewFolder.CreateNewFolder(safeItemView_ItemPanel,
+                    GetFolderCount(), GetFontForFolder(), item, GetLocationForFolder())
+                );
+            }
+        }
+
+        /// <summary>
+        /// Создает папку
+        /// </summary>
+        /// <param name="folder"></param>
+        public void CreateFolder(Folder folder)
+        {
+            //CreateFolder(new Folder("Соска", Properties.Settings.Default.userEmail));
+
+            safeItemView_ItemPanel.Controls.Add(
+                NewFolder.CreateNewFolder(safeItemView_ItemPanel,
+                GetFolderCount(), GetFontForFolder(), folder, GetLocationForFolder())
+            );
+
+            // Записываем данные в базу
+            var values = new string[]
+            {
+                folder.FolderName,
+                activeSafe.getSafeID().ToString()
+            };
+            DateBase.InsertData("Folder", new string[] { "FolderName", "Safe_ID"}, values);
+
+            // Добавляем папку в список
+            folderCollectionInActiveSafe.Add(folder);
+        }
 
         #endregion
 
@@ -960,7 +1086,33 @@ namespace Mercury
             {
                 safeItemView_AddItem.Back = Color.FromArgb(30, 215, 96);
             };
-            
+
+            safeItemView_Hide.MouseEnter += (f, a) => 
+            {
+                safeItemView_Hide.Image = Properties.Resources.closePanelViewGreen;
+            };
+            safeItemView_Hide.MouseLeave += (f, a) =>
+            {
+                safeItemView_Hide.Image = Properties.Resources.closePanelViewGray;
+            };
+            safeItemView_Hide.MouseDown += (f, a) =>
+            {
+                safeItemView_Hide.Image = Properties.Resources.closePanelViewDarkGray;
+            };
+            safeItemView_Hide.MouseUp += (f, a) =>
+            {
+                safeItemView_Hide.Image = Properties.Resources.closePanelViewGreen;
+            };
+
+            safeItemView_AddFolder.Click += (f, a) => ShowAddFolderForm();
+            safeItemView_Hide.Click += (f, a) => 
+            {
+                foreach (var item in safeList.Controls)
+                {
+                    (item as Label).ForeColor = Color.White;
+                }
+                safeItemView.Visible = false;
+            };
         }
 
         #endregion
@@ -984,7 +1136,7 @@ namespace Mercury
             CreateLeftSide();
             // Строим центр
             CreateCenter();
-            
+
             #region Минимальные действия при нажатии на кнопки и т.д
 
             // Клик по кнопке открытия панели входа (loginButton)
@@ -1068,7 +1220,16 @@ namespace Mercury
                 safeItemView_MenuSeparator.Width = safeItemView_AddItem.Location.X + 95;
                 // Меняем ширину и высоту панели элементов в сейфе
                 safeItemView_ItemPanel.Width = safeItemView_MenuSeparator.Width;
-                safeItemView_ItemPanel.Height = safeItemView.Height - safeItemView_ItemPanel.Location.Y - 20;
+                safeItemView_ItemPanel.Height = safeItemView.Height - safeItemView_ItemPanel.Location.Y - 30;
+
+                // Меняем размер элементов на панели сейфа
+                if (safeItemView_ItemPanel.Controls.Count != 0)
+                {
+                    foreach (var item in safeItemView_ItemPanel.Controls)
+                    {
+                        (item as Panel).Width = safeItemView.Width - 2;
+                    }
+                }
 
                 // Если панель видна
                 if (startPanel.Visible == true)
@@ -1274,14 +1435,20 @@ namespace Mercury
                 // Передаем наименование сейфа и позицию исходя из последнего элемента
                 Control control = WorkingScripts.NewSafe.CreateNewSafe
                     (safeList, this.GetCountSafe, GetFontForSafe(), item, GetLocationForSafe());
+
+                // REF: При клике на сейф
                 control.Click += (f, a) => 
                 {
                     // Обновляем хук
                     this.activeSafe = item;
                     // Скрываем панель
                     safeItemView.Visible = false;
+                    // Чистим поля
+                    HideFieldInSafeView();
                     // Заполняем сейф
                     ShowSafeItemView(item);
+                    // Заполняем список папок в активном сейфе
+                    FillFolderList();
                 };
                 // Добавляем в панель контролы
                 safeList.Controls.Add(control);

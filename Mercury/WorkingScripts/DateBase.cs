@@ -192,7 +192,7 @@ namespace Mercury.WorkingScripts
         }
 
         /// <summary>
-        /// Возвращает список сефсов пользователя
+        /// Возвращает список сейфов пользователя
         /// </summary>
         public static List<Safe> GetSafeList()
         {
@@ -203,7 +203,7 @@ namespace Mercury.WorkingScripts
                     conn.Open();
 
                     cmd.CommandText = "SELECT [SafeName], [Email], [FieldOne], [FieldTwo], " +
-                                             "[FieldThree], [FieldFour], [FieldFive], [FieldSix] " +
+                                             "[FieldThree], [FieldFour], [FieldFive], [FieldSix]" +
                                       "FROM [Safe] s " +
                                       "INNER JOIN [User] u ON u.[User_ID] = s.[User_ID] " + 
                                       "INNER JOIN [Category] c ON s.[Category_ID] = c.[Category_ID] " +
@@ -214,27 +214,79 @@ namespace Mercury.WorkingScripts
 
                     using (var reader = cmd.ExecuteReader())
                     {
-                        var fields = new List<string>(); 
                         while (reader.Read())
                         {
-                            if (reader[2].ToString() != string.Empty)
-                                fields.Add(reader[2].ToString());
-                            if (reader[3].ToString() != string.Empty)
-                                fields.Add(reader[3].ToString());
-                            if (reader[4].ToString() != string.Empty)
-                                fields.Add(reader[4].ToString());
-                            if (reader[5].ToString() != string.Empty)
-                                fields.Add(reader[5].ToString());
-                            if (reader[6].ToString() != string.Empty)
-                                fields.Add(reader[6].ToString());
-                            if (reader[7].ToString() != string.Empty)
-                                fields.Add(reader[7].ToString());
-
+                            var fields = new List<string>();
+                            for (int i = 2; i < 8; i++)
+                            {
+                                if (reader[i].ToString() != string.Empty)
+                                {
+                                    fields.Add(reader[i].ToString());
+                                }
+                            }
                             var safe = new Safe(reader[0].ToString(), fields, reader[1].ToString());
                             safeCollection.Add(safe);
                         }
                     }
                     return safeCollection;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает идентификатор сейфа
+        /// </summary>
+        /// <param name="safeName">Название сейфа</param>
+        /// <returns></returns>
+        public static int GetSafeID(string safeName)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT [Safe_ID] " +
+                                      "FROM [Safe] s " +
+                                      "INNER JOIN [User] u ON s.[User_ID] = u.[User_ID] AND s.[SafeName] = @Name AND u.[Email] = @Email";
+                    cmd.Parameters.AddWithValue("@Name", safeName);
+                    cmd.Parameters.AddWithValue("@Email", Properties.Settings.Default.userEmail);
+
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        /// <summary>
+        ////Возвращает список папок в активном сейфе
+        /// </summary>
+        /// <param name="safe"></param>
+        public static List<Folder> GetFolderList(Safe safe)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT [FolderName], [Email] " +
+                                      "FROM [Folder] f " +
+                                      "INNER JOIN [Safe] s ON f.[Safe_ID] = s.[Safe_ID] " +
+                                      "INNER JOIN [User] u ON s.[User_ID] = u.[User_ID] " +
+                                      "WHERE f.[Safe_ID] = @SafeID";
+                    cmd.Parameters.AddWithValue("@SafeID", GetSafeID(safe.SafeName));
+
+                    List<Folder> folderCollection = new List<Folder>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var folder = new Folder(reader[0].ToString(), reader[1].ToString());
+                            folderCollection.Add(folder);
+                        }
+                    }
+                    return folderCollection;
                 }
             }
         }
