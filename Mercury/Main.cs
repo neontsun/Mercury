@@ -490,6 +490,8 @@ namespace Mercury
             FillFieldInSafeView(safe.Fields);
             // Показываем панель
             safeItemView.Visible = true;
+            // Обновляем хук активного сейфа
+            this.activeSafe = safe;
         }
 
         /// <summary>
@@ -522,6 +524,8 @@ namespace Mercury
         /// <param name="safe"></param>
         public void FocusedSafe(Safe safe)
         {
+            // Чистим список элементов на панели отображения итемов сейфа
+            safeItemView_ItemPanel.Controls.Clear();
             // Показываем сейф
             ShowSafeItemView(safe);
             foreach (var item in safeList.Controls)

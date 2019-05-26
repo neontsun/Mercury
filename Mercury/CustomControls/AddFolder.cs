@@ -231,8 +231,11 @@ namespace Mercury.CustomControls
             saveButton.Click += (f, a) => 
             {
                 if (ValidateFolder())
+                {
                     (this.Owner as Main).CreateFolder
                         (new Folder(folderName.Text, Properties.Settings.Default.userEmail));
+                    this.Close();
+                }
                 else
                     ShowError("Папка с таким название уже существует");
             };
