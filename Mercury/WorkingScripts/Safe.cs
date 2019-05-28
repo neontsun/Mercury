@@ -24,12 +24,11 @@ namespace Mercury.WorkingScripts
         /// Создатель сейфа
         /// </summary>
         public string Creator { get; set; }
-        public int SafeID { get; }
 
         /// <summary>
-        /// Идентификатор сейфа
+        /// ID сейфа
         /// </summary>
-        public int ID { get; set; }
+        public int SafeID { get; set; }
 
 
         /// <summary>
@@ -43,11 +42,5 @@ namespace Mercury.WorkingScripts
             this.Fields = Fields;
             this.Creator = Creator;
         }
-
-        /// <summary>
-        /// Возвращает идентификатор сейфа
-        /// </summary>
-        /// <returns></returns>
-        public int getSafeID() => DateBase.GetSafeID(SafeName);
     }
 }

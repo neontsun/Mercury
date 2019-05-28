@@ -201,13 +201,14 @@ namespace Mercury.WorkingScripts
                 using (var cmd = conn.CreateCommand())
                 {
                     conn.Open();
-
-                    cmd.CommandText = "SELECT [SafeName], [Email], [FieldOne], [FieldTwo], " +
-                                             "[FieldThree], [FieldFour], [FieldFive], [FieldSix]" +
-                                      "FROM [Safe] s " +
-                                      "INNER JOIN [User] u ON u.[User_ID] = s.[User_ID] " + 
-                                      "INNER JOIN [Category] c ON s.[Category_ID] = c.[Category_ID] " +
-                                      "WHERE [Email] = @Email";
+                    
+                    cmd.CommandText = "SELECT [SafeName], dbo.GetSafeCreator(us.[Safe_ID]) Creator, us.[Safe_ID], [FieldOne], [FieldTwo], " +
+                                             "[FieldThree], [FieldFour], [FieldFive], [FieldSix] " +
+                                      "FROM [User-Safe] us " +
+                                      "INNER JOIN [Safe] s ON us.[Safe_ID] = s.[Safe_ID] " +
+                                      "INNER JOIN [Category] ct ON ct.[Category_ID] = s.[Category_ID] " +
+                                      "INNER JOIN [User] u ON u.[User_ID] = us.[User_ID] " +
+                                      "WHERE[Email] = @Email"; //  AND [UserIsCreator] = 1
                     cmd.Parameters.AddWithValue("@Email", Properties.Settings.Default.userEmail);
 
                     List<Safe> safeCollection = new List<Safe>();
@@ -217,14 +218,16 @@ namespace Mercury.WorkingScripts
                         while (reader.Read())
                         {
                             var fields = new List<string>();
-                            for (int i = 2; i < 8; i++)
+                            for (int i = 3; i < 9; i++)
                             {
                                 if (reader[i].ToString() != string.Empty)
                                 {
                                     fields.Add(reader[i].ToString());
                                 }
                             }
+                            //var creator = 
                             var safe = new Safe(reader[0].ToString(), fields, reader[1].ToString());
+                            safe.SafeID = (int)reader[2];
                             safeCollection.Add(safe);
                         }
                     }
@@ -238,24 +241,29 @@ namespace Mercury.WorkingScripts
         /// </summary>
         /// <param name="safeName">Название сейфа</param>
         /// <returns></returns>
-        public static int GetSafeID(string safeName)
-        {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
-            {
-                using (var cmd = conn.CreateCommand())
-                {
-                    conn.Open();
+        //public static int GetSafeID(Safe safe, bool where)
+        //{
+        //    using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+        //    {
+        //        using (var cmd = conn.CreateCommand())
+        //        {
+        //            conn.Open();
+        //            // TODO: Поменять запрос
+        //            // Может быть такое, что у пользователя с указанным email'email'ом
+        //            // могут быть несколько сейфов с одинаковым названием
+        //            cmd.CommandText = "SELECT us.[Safe_ID] " +
+        //                              "FROM [User-Safe] us " +
+        //                              "INNER JOIN [Safe] s ON us.[Safe_ID] = s.[Safe_ID] " +
+        //                              "INNER JOIN [User] u ON u.[User_ID] = us.[User_ID] " +
+        //                              "WHERE s.[SafeName] = @Name AND u.[Email] = @Email AND us.[UserIsCreator] = @Where";
+        //            cmd.Parameters.AddWithValue("@Name", safe.SafeName);
+        //            cmd.Parameters.AddWithValue("@Email", safe.Creator);
+        //            cmd.Parameters.AddWithValue("@Where", where);
 
-                    cmd.CommandText = "SELECT [Safe_ID] " +
-                                      "FROM [Safe] s " +
-                                      "INNER JOIN [User] u ON s.[User_ID] = u.[User_ID] AND s.[SafeName] = @Name AND u.[Email] = @Email";
-                    cmd.Parameters.AddWithValue("@Name", safeName);
-                    cmd.Parameters.AddWithValue("@Email", Properties.Settings.Default.userEmail);
-
-                    return (int)cmd.ExecuteScalar();
-                }
-            }
-        }
+        //            return (int)cmd.ExecuteScalar();
+        //        }
+        //    }
+        //}
 
         /// <summary>
         ////Возвращает список папок в активном сейфе
@@ -268,13 +276,13 @@ namespace Mercury.WorkingScripts
                 using (var cmd = conn.CreateCommand())
                 {
                     conn.Open();
-
                     cmd.CommandText = "SELECT [FolderName], [Email] " +
                                       "FROM [Folder] f " +
                                       "INNER JOIN [Safe] s ON f.[Safe_ID] = s.[Safe_ID] " +
-                                      "INNER JOIN [User] u ON s.[User_ID] = u.[User_ID] " +
+                                      "INNER JOIN [User-Safe] us ON us.[Safe_ID] = s.[Safe_ID] " +
+                                      "INNER JOIN [User] u ON us.[User_ID] = u.[User_ID] " +
                                       "WHERE f.[Safe_ID] = @SafeID";
-                    cmd.Parameters.AddWithValue("@SafeID", GetSafeID(safe.SafeName));
+                    cmd.Parameters.AddWithValue("@SafeID", safe.SafeID);
 
                     List<Folder> folderCollection = new List<Folder>();
 

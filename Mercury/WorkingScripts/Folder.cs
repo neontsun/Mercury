@@ -19,6 +19,12 @@ namespace Mercury.WorkingScripts
         internal string FolderCreator { get; set; }
 
         /// <summary>
+        /// Идентификатор
+        /// </summary>
+        internal int FolderID { get; set; }
+
+
+        /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="FolderName">Название папки</param>

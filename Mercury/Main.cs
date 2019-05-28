@@ -622,7 +622,7 @@ namespace Mercury
             var values = new string[]
             {
                 folder.FolderName,
-                activeSafe.getSafeID().ToString()
+                activeSafe.SafeID.ToString()
             };
             DateBase.InsertData("Folder", new string[] { "FolderName", "Safe_ID"}, values);
 
