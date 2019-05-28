@@ -237,6 +237,29 @@ namespace Mercury.WorkingScripts
         }
 
         /// <summary>
+        /// Возвращает количество членов в сейфе
+        /// </summary>
+        /// <param name="safeID"></param>
+        /// <returns></returns>
+        public static int GetCountMembersInSafe(int safeID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT COUNT(us.[User-Safe_ID]) " +
+                                      "FROM [User-Safe] us " +
+                                      "WHERE us.[Safe_ID] = @SafeID";
+                    cmd.Parameters.AddWithValue("@SafeID", safeID);
+
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        /// <summary>
         /// Возвращает ID последней записи
         /// </summary>
         /// <param name="Table">Таблица</param>
@@ -273,7 +296,7 @@ namespace Mercury.WorkingScripts
         }
 
         /// <summary>
-        ////Возвращает список папок в активном сейфе
+        /// Возвращает список папок в активном сейфе
         /// </summary>
         /// <param name="safe"></param>
         public static List<Folder> GetFolderList(Safe safe)
@@ -302,6 +325,60 @@ namespace Mercury.WorkingScripts
                         }
                     }
                     return folderCollection;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Удаляет сейф
+        /// </summary>
+        /// <param name="safe"></param>
+        public static void DeleteSafe(Safe safe)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    // TODO: Поправить запрос
+                    // При удалении сейфа, если в нем несколько папок, созданных 
+                    // разными пользователями, то выскакивает исключение
+                    cmd.CommandText = "BEGIN TRANSACTION;" +
+                                      "DECLARE @CatID int;" +
+                                      "DECLARE @safe int;" +
+                                      "DECLARE @FolderID int;" +
+                                      "SET @safe = @SafeID;" +
+                                      "SET @FolderID = ( " +
+                                      "     SELECT fs.[Folder_ID] " +
+                                      "     FROM [Folder-Safe] fs " +
+                                      "     WHERE fs.[Safe_ID] = @safe " +
+                                      ") " +
+                                      "SET @CatID = ( " +
+                                      "   SELECT ct.[Category_ID] " +
+                                      "   FROM [Safe] s " +
+                                      "   INNER JOIN [Category] ct ON s.[Category_ID] = ct.[Category_ID] " +
+                                      "   WHERE s.[Safe_ID] = @safe " +
+                                      ")" +
+                                      "DELETE " +
+                                      "FROM [User-Safe] " +
+                                      "WHERE [Safe_ID] = @safe;" +
+                                      "DELETE " +
+                                      "FROM [Folder-Safe] " +
+                                      "WHERE [Folder_ID] = @FolderID;" +
+                                      "DELETE " +
+                                      "FROM [Safe] " +
+                                      "WHERE [Safe_ID] = @safe;" +
+                                      "DELETE " +
+                                      "FROM [Category] " +
+                                      "WHERE [Category_ID] = @CatID;" +
+                                      "DELETE " +
+                                      "FROM [Folder] " +
+                                      "WHERE [Folder_ID] = @FolderID;" +
+                                      "COMMIT;";
+
+                    cmd.Parameters.AddWithValue("@SafeID", safe.SafeID);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

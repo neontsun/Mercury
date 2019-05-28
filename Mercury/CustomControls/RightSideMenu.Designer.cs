@@ -30,6 +30,8 @@
         {
             this.exit = new System.Windows.Forms.Label();
             this.settings = new System.Windows.Forms.Label();
+            this.userIDLabel = new System.Windows.Forms.Label();
+            this.userID = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // exit
@@ -60,12 +62,41 @@
             this.settings.Text = "Настройки";
             this.settings.Click += new System.EventHandler(this.settings_Click);
             // 
+            // userIDLabel
+            // 
+            this.userIDLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.userIDLabel.AutoSize = true;
+            this.userIDLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.userIDLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.userIDLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
+            this.userIDLabel.Location = new System.Drawing.Point(23, 20);
+            this.userIDLabel.Name = "userIDLabel";
+            this.userIDLabel.Size = new System.Drawing.Size(24, 16);
+            this.userIDLabel.TabIndex = 8;
+            this.userIDLabel.Text = "ID:";
+            this.userIDLabel.Click += new System.EventHandler(this.settings_Click);
+            // 
+            // userID
+            // 
+            this.userID.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.userID.AutoSize = true;
+            this.userID.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.userID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.userID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
+            this.userID.Location = new System.Drawing.Point(46, 20);
+            this.userID.Name = "userID";
+            this.userID.Size = new System.Drawing.Size(19, 16);
+            this.userID.TabIndex = 8;
+            this.userID.Text = "id";
+            // 
             // RightSideMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(177, 244);
+            this.Controls.Add(this.userID);
+            this.Controls.Add(this.userIDLabel);
             this.Controls.Add(this.settings);
             this.Controls.Add(this.exit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -81,5 +112,7 @@
         #endregion
         private System.Windows.Forms.Label exit;
         private System.Windows.Forms.Label settings;
+        private System.Windows.Forms.Label userIDLabel;
+        private System.Windows.Forms.Label userID;
     }
 }

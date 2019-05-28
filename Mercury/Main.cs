@@ -56,7 +56,6 @@ namespace Mercury
         /// </summary>
         private void ConnectWithDB()
         {
-            // TODO: Сменить базу данных
             // Получаем путь до базы
             string path = Directory.GetCurrentDirectory()
                 .Remove(Directory.GetCurrentDirectory().Length - 18) + @"\db\MercuryDB.mdf";
@@ -121,6 +120,8 @@ namespace Mercury
             safeItemView_Field4.Font = new Font(fontFamilies[3], 10);
             safeItemView_Field5.Font = new Font(fontFamilies[3], 10);
             safeItemView_Field6.Font = new Font(fontFamilies[3], 10);
+            // Количество участников в сейфе
+            safeItemView_MembersCount.Font = new Font(fontFamilies[3], 11);
         }
 
         #endregion
@@ -272,6 +273,8 @@ namespace Mercury
         {
             // Записываем данные в базу
             InsertSafeAndCategoryInDB(safe);
+            // Записываем safeID
+            safe.SafeID = DateBase.GetLastIDFromSafe();
             // Чистим список сейфов
             safeList.Controls.Clear();
             // Заполняем список сейфов
@@ -501,6 +504,8 @@ namespace Mercury
             safeItemView.Visible = true;
             // Обновляем хук активного сейфа
             this.activeSafe = safe;
+            // Показываем количество участников
+            safeItemView_MembersCount.Text = DateBase.GetCountMembersInSafe(safe.SafeID).ToString();
         }
 
         /// <summary>
@@ -600,7 +605,6 @@ namespace Mercury
             // Передаем в параметры запроса объект активного сейфа
             this.folderCollectionInActiveSafe = WorkingScripts.DateBase.GetFolderList(activeSafe);
 
-            // REF: Очищаем список папок
             // TODO: Переделать, тк будут очищаться и итемы
             safeItemView_ItemPanel.Controls.Clear();
 
@@ -643,6 +647,25 @@ namespace Mercury
 
             // Добавляем папку в список
             folderCollectionInActiveSafe.Add(folder);
+        }
+
+        /// <summary>
+        /// Удаляет сейф
+        /// </summary>
+        /// <param name="safe"></param>
+        public void DeleteSafe(Safe safe)
+        {
+            // Удаляем из БД
+            DateBase.DeleteSafe(safe);
+
+            // Скрываем панель сейфа
+            foreach (var item in safeList.Controls)
+            {
+                (item as Label).ForeColor = Color.White;
+            }
+            safeItemView.Visible = false;
+            // Заполняем заново
+            FillSafeList();
         }
 
         #endregion
@@ -1123,6 +1146,47 @@ namespace Mercury
                 safeItemView_Hide.Image = Properties.Resources.closePanelViewGreen;
             };
 
+            safeItemView_Members.MouseEnter += (f, a) => 
+            {
+                safeItemView_Members.Image = Properties.Resources.membersGreen;
+                safeItemView_MembersCount.ForeColor = Color.FromArgb(30, 215, 96);
+            };
+            safeItemView_Members.MouseLeave += (f, a) =>
+            {
+                safeItemView_Members.Image = Properties.Resources.membersGray;
+                safeItemView_MembersCount.ForeColor = Color.FromArgb(120, 120, 120);
+            };
+            safeItemView_Members.MouseDown += (f, a) =>
+            {
+                safeItemView_Members.Image = Properties.Resources.membersDarkGray;
+                safeItemView_MembersCount.ForeColor = Color.FromArgb(70, 70, 70);
+            };
+            safeItemView_Members.MouseUp += (f, a) =>
+            {
+                safeItemView_Members.Image = Properties.Resources.membersGreen;
+                safeItemView_MembersCount.ForeColor = Color.FromArgb(30, 215, 96);
+            };
+            safeItemView_MembersCount.MouseEnter += (f, a) =>
+            {
+                safeItemView_Members.Image = Properties.Resources.membersGreen;
+                safeItemView_MembersCount.ForeColor = Color.FromArgb(30, 215, 96);
+            };
+            safeItemView_MembersCount.MouseLeave += (f, a) =>
+            {
+                safeItemView_Members.Image = Properties.Resources.membersGray;
+                safeItemView_MembersCount.ForeColor = Color.FromArgb(120, 120, 120);
+            };
+            safeItemView_MembersCount.MouseDown += (f, a) =>
+            {
+                safeItemView_Members.Image = Properties.Resources.membersDarkGray;
+                safeItemView_MembersCount.ForeColor = Color.FromArgb(70, 70, 70);
+            };
+            safeItemView_MembersCount.MouseUp += (f, a) =>
+            {
+                safeItemView_Members.Image = Properties.Resources.membersGreen;
+                safeItemView_MembersCount.ForeColor = Color.FromArgb(30, 215, 96);
+            };
+
             safeItemView_AddFolder.Click += (f, a) => ShowAddFolderForm();
             safeItemView_Hide.Click += (f, a) => 
             {
@@ -1132,6 +1196,7 @@ namespace Mercury
                 }
                 safeItemView.Visible = false;
             };
+            safeItemView_DeleteSafe.Click += (f, a) => this.DeleteSafe(this.activeSafe);
         }
 
         #endregion
@@ -1303,7 +1368,7 @@ namespace Mercury
                         // Меняем размер списка с сейфами
                         safeList.Height = 825;
 
-                    // REF: Заполняем список сейфов при первом входе
+                    // Заполняем список сейфов при первом входе
                     FillSafeList();
                 }
                 else
@@ -1448,6 +1513,9 @@ namespace Mercury
             // Получаем коллекцию сейфов
             this.safeCollection = WorkingScripts.DateBase.GetSafeList();
 
+            // Чистим контролы
+            safeList.Controls.Clear();
+
             foreach (var item in safeCollection)
             {
                 // Создаем контрол на левой панели
@@ -1455,7 +1523,6 @@ namespace Mercury
                 Control control = WorkingScripts.NewSafe.CreateNewSafe
                     (safeList, this.GetCountSafe, GetFontForSafe(), item, GetLocationForSafe());
 
-                // REF: При клике на сейф
                 control.Click += (f, a) => 
                 {
                     // Обновляем хук

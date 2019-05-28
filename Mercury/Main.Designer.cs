@@ -68,6 +68,9 @@
             this.safeItemView_SafeCreator = new System.Windows.Forms.Label();
             this.safeItemView_AddItem = new pivyLab.Control.FlatEllButton();
             this.safeItemView_SafeName = new System.Windows.Forms.Label();
+            this.safeItemView_Members = new System.Windows.Forms.PictureBox();
+            this.safeItemView_MembersCount = new System.Windows.Forms.Label();
+            this.safeItemView_DeleteSafe = new System.Windows.Forms.Label();
             this.startPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchTextBreak)).BeginInit();
@@ -80,6 +83,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Hide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Members)).BeginInit();
             this.SuspendLayout();
             // 
             // startPanel
@@ -347,15 +351,18 @@
             // 
             // safeItemView
             // 
+            this.safeItemView.Controls.Add(this.safeItemView_DeleteSafe);
             this.safeItemView.Controls.Add(this.safeItemView_Field6);
             this.safeItemView.Controls.Add(this.safeItemView_Field5);
             this.safeItemView.Controls.Add(this.safeItemView_Field4);
             this.safeItemView.Controls.Add(this.safeItemView_Field3);
             this.safeItemView.Controls.Add(this.safeItemView_Field2);
+            this.safeItemView.Controls.Add(this.safeItemView_MembersCount);
             this.safeItemView.Controls.Add(this.safeItemView_Field1);
             this.safeItemView.Controls.Add(this.safeItemView_ItemPanel);
             this.safeItemView.Controls.Add(this.safeItemView_Hide);
             this.safeItemView.Controls.Add(this.safeItemView_Act);
+            this.safeItemView.Controls.Add(this.safeItemView_Members);
             this.safeItemView.Controls.Add(this.safeItemView_AddFolder);
             this.safeItemView.Controls.Add(this.safeItemView_MenuSeparator);
             this.safeItemView.Controls.Add(this.safeItemView_SafeCreatorPerson);
@@ -464,7 +471,7 @@
             this.safeItemView_Act.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.safeItemView_Act.Cursor = System.Windows.Forms.Cursors.Hand;
             this.safeItemView_Act.Image = global::Mercury.Properties.Resources.actGray;
-            this.safeItemView_Act.Location = new System.Drawing.Point(846, 101);
+            this.safeItemView_Act.Location = new System.Drawing.Point(846, 97);
             this.safeItemView_Act.Name = "safeItemView_Act";
             this.safeItemView_Act.Size = new System.Drawing.Size(24, 24);
             this.safeItemView_Act.TabIndex = 19;
@@ -474,7 +481,7 @@
             // 
             this.safeItemView_AddFolder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.safeItemView_AddFolder.Image = global::Mercury.Properties.Resources.addFolderGray;
-            this.safeItemView_AddFolder.Location = new System.Drawing.Point(51, 101);
+            this.safeItemView_AddFolder.Location = new System.Drawing.Point(51, 97);
             this.safeItemView_AddFolder.Name = "safeItemView_AddFolder";
             this.safeItemView_AddFolder.Size = new System.Drawing.Size(24, 24);
             this.safeItemView_AddFolder.TabIndex = 19;
@@ -536,6 +543,38 @@
             this.safeItemView_SafeName.TabIndex = 0;
             this.safeItemView_SafeName.Text = "Наименование сейфа";
             // 
+            // safeItemView_Members
+            // 
+            this.safeItemView_Members.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.safeItemView_Members.Image = global::Mercury.Properties.Resources.membersGray;
+            this.safeItemView_Members.Location = new System.Drawing.Point(110, 99);
+            this.safeItemView_Members.Name = "safeItemView_Members";
+            this.safeItemView_Members.Size = new System.Drawing.Size(24, 24);
+            this.safeItemView_Members.TabIndex = 19;
+            this.safeItemView_Members.TabStop = false;
+            // 
+            // safeItemView_MembersCount
+            // 
+            this.safeItemView_MembersCount.AutoSize = true;
+            this.safeItemView_MembersCount.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.safeItemView_MembersCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_MembersCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.safeItemView_MembersCount.Location = new System.Drawing.Point(138, 102);
+            this.safeItemView_MembersCount.Name = "safeItemView_MembersCount";
+            this.safeItemView_MembersCount.Size = new System.Drawing.Size(90, 18);
+            this.safeItemView_MembersCount.TabIndex = 21;
+            this.safeItemView_MembersCount.Text = "количество";
+            // 
+            // safeItemView_DeleteSafe
+            // 
+            this.safeItemView_DeleteSafe.AutoSize = true;
+            this.safeItemView_DeleteSafe.ForeColor = System.Drawing.Color.White;
+            this.safeItemView_DeleteSafe.Location = new System.Drawing.Point(791, 106);
+            this.safeItemView_DeleteSafe.Name = "safeItemView_DeleteSafe";
+            this.safeItemView_DeleteSafe.Size = new System.Drawing.Size(47, 13);
+            this.safeItemView_DeleteSafe.TabIndex = 22;
+            this.safeItemView_DeleteSafe.Text = "удалить";
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -593,6 +632,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Hide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Members)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -640,6 +680,9 @@
         private System.Windows.Forms.Label safeItemView_Field2;
         private System.Windows.Forms.Label safeItemView_Field1;
         private System.Windows.Forms.PictureBox safeItemView_Hide;
+        private System.Windows.Forms.PictureBox safeItemView_Members;
+        private System.Windows.Forms.Label safeItemView_MembersCount;
+        private System.Windows.Forms.Label safeItemView_DeleteSafe;
     }
 }
 

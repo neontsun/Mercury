@@ -1,4 +1,5 @@
-﻿using pivyLab.UserForms;
+﻿using Mercury.WorkingScripts;
+using pivyLab.UserForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -92,9 +93,14 @@ namespace Mercury.CustomControls
 
         #endregion
 
+        #region Хуки
 
         // Создаем коллекцию
         PrivateFontCollection pr = new PrivateFontCollection();
+
+        #endregion
+        
+        #region Вспомогательные методы
 
         /// <summary>
         /// Использует шрифт из файла.
@@ -118,10 +124,13 @@ namespace Mercury.CustomControls
             // Поле email'a
             exit.Font = new Font(fontFamilies[3], 11);
             settings.Font = new Font(fontFamilies[3], 11);
+            userIDLabel.Font = new Font(fontFamilies[3], 10);
+            userID.Font = new Font(fontFamilies[3], 10);
         }
 
+        #endregion
 
-
+        
         public RightSideMenu()
         {
             InitializeComponent();
@@ -169,9 +178,12 @@ namespace Mercury.CustomControls
             {
                 settings.ForeColor = Color.FromArgb(29, 185, 84);
             };
+
+            this.Activated += (f, a) => userID.Text = DateBase.GetUserID(Properties.Settings.Default.userEmail).ToString();
         }
 
-
+        #region Методы
+        
         // Клик по кнопке выйти
         private void exit_Click(object sender, EventArgs e)
         {
@@ -186,5 +198,7 @@ namespace Mercury.CustomControls
         {
             new Settings().ShowDialog();
         }
+
+        #endregion
     }
 }

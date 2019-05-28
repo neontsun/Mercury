@@ -446,7 +446,6 @@ namespace Mercury.CustomControls
         /// <param name="fields">Массив полей</param>
         private void addSafe(string safeName, List<string> fields)
         {
-            // REF: Добавление сейфа в список на форме создания сейфа
             // Вызываем метод на Main форме и передаем объект сейфа
             (this.Owner as Main).CreateSafe(new Safe(safeName, fields, Properties.Settings.Default.userEmail));
 

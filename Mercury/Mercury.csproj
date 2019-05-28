@@ -306,5 +306,14 @@
   <ItemGroup>
     <None Include="Resources\closePanelViewGray.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\membersDarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\membersGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\membersGreen.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
