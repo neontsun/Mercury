@@ -23,12 +23,17 @@ namespace Mercury.WorkingScripts
         /// </summary>
         internal int FolderID { get; set; }
 
+        /// <summary>
+        /// Список элементов в папке
+        /// </summary>
+        //internal List<Folder> Items { get; set; }
+
 
         /// <summary>
-        /// Конструктор
-        /// </summary>
-        /// <param name="FolderName">Название папки</param>
-        /// <param name="FolderCreator">Создатель</param>
+    /// Конструктор
+    /// </summary>
+    /// <param name="FolderName">Название папки</param>
+    /// <param name="FolderCreator">Создатель</param>
         public Folder(string FolderName, string FolderCreator)
         {
             this.FolderName = FolderName;

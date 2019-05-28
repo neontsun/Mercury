@@ -1,4 +1,3 @@
-
 SELECT [SafeName], [UserIsCreator], [FieldOne], [FieldTwo],
 	   [FieldThree], [FieldFour], [FieldFive], [FieldSix]
 FROM [User-Safe] us 
@@ -32,11 +31,8 @@ INNER JOIN [User] u ON u.[User_ID] = us.[User_ID]
 WHERE s.[SafeName] = 'Пароли' 
 
 
-SELECT DISTINCT [FolderName], [Email]
-FROM [Folder] f
-INNER JOIN [Safe] s ON f.[Safe_ID] = s.[Safe_ID]
-INNER JOIN [User-Safe] us ON us.[Safe_ID] = s.[Safe_ID]
-INNER JOIN [User] u ON us.[User_ID] = u.[User_ID]
-WHERE f.[Safe_ID] = 20
-GROUP BY [FolderName], [Email]
-
+SELECT f.[Folder_ID], [FolderName], [Email]
+FROM [Folder-Safe] fs
+INNER JOIN [Folder] f ON fs.[Folder_ID] = f.[Folder_ID]
+INNER JOIN [User] u ON f.[User_ID] = u.[User_ID]
+WHERE fs.[Safe_ID] = 19

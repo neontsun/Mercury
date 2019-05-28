@@ -416,18 +416,27 @@ namespace Mercury
             }
 
             // Заносим в базу категорию
-            WorkingScripts.DateBase.InsertData("Category", fieldCategory, fieldValue);
+            DateBase.InsertData("Category", fieldCategory, fieldValue);
+
             // Собираем данные
             int catID = WorkingScripts.DateBase.GetLastIDFromCategory();
-            int userID = WorkingScripts.DateBase.GetUserID(Properties.Settings.Default.userEmail);
             string[] value = new string[]
             {
                 safe.SafeName,
-                userID.ToString(),
                 catID.ToString()
             };
-            // Заносим в базу сейф
-            WorkingScripts.DateBase.InsertData("Safe", new string[] { "SafeName", "User_ID", "Category_ID" }, value);
+            DateBase.InsertData("Safe", new string[] { "SafeName", "Category_ID" }, value);
+
+            // Собираем данные
+            int safeID = DateBase.GetLastIDFromSafe();
+            int userID = WorkingScripts.DateBase.GetUserID(Properties.Settings.Default.userEmail);
+            value = new string[] 
+            {
+                userID.ToString(),
+                safeID.ToString(),
+                true.ToString()
+            };
+            DateBase.InsertData("User-Safe", new string[] { "User_ID", "Safe_ID", "UserIsCreator" }, value);
         }
 
         #endregion
@@ -617,14 +626,20 @@ namespace Mercury
                 NewFolder.CreateNewFolder(safeItemView_ItemPanel,
                 GetFolderCount(), GetFontForFolder(), folder, GetLocationForFolder())
             );
-
-            // Записываем данные в базу
-            var values = new string[]
+            
+            // Собираем и добавляем данные в базу
+            var values = new string[] 
             {
                 folder.FolderName,
+                DateBase.GetUserID(Properties.Settings.Default.userEmail).ToString()
+            };
+            DateBase.InsertData("Folder", new string[] { "FolderName", "User_ID" }, values);
+            values = new string[]
+            {
+                DateBase.GetLastIDFromFolder().ToString(),
                 activeSafe.SafeID.ToString()
             };
-            DateBase.InsertData("Folder", new string[] { "FolderName", "Safe_ID"}, values);
+            DateBase.InsertData("Folder-Safe", new string[] { "Folder_ID", "Safe_ID" }, values);
 
             // Добавляем папку в список
             folderCollectionInActiveSafe.Add(folder);

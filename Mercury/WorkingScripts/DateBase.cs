@@ -237,33 +237,40 @@ namespace Mercury.WorkingScripts
         }
 
         /// <summary>
-        /// Возвращает идентификатор сейфа
+        /// Возвращает ID последней записи
         /// </summary>
-        /// <param name="safeName">Название сейфа</param>
-        /// <returns></returns>
-        //public static int GetSafeID(Safe safe, bool where)
-        //{
-        //    using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
-        //    {
-        //        using (var cmd = conn.CreateCommand())
-        //        {
-        //            conn.Open();
-        //            // TODO: Поменять запрос
-        //            // Может быть такое, что у пользователя с указанным email'email'ом
-        //            // могут быть несколько сейфов с одинаковым названием
-        //            cmd.CommandText = "SELECT us.[Safe_ID] " +
-        //                              "FROM [User-Safe] us " +
-        //                              "INNER JOIN [Safe] s ON us.[Safe_ID] = s.[Safe_ID] " +
-        //                              "INNER JOIN [User] u ON u.[User_ID] = us.[User_ID] " +
-        //                              "WHERE s.[SafeName] = @Name AND u.[Email] = @Email AND us.[UserIsCreator] = @Where";
-        //            cmd.Parameters.AddWithValue("@Name", safe.SafeName);
-        //            cmd.Parameters.AddWithValue("@Email", safe.Creator);
-        //            cmd.Parameters.AddWithValue("@Where", where);
+        /// <param name="Table">Таблица</param>
+        public static int GetLastIDFromFolder()
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
 
-        //            return (int)cmd.ExecuteScalar();
-        //        }
-        //    }
-        //}
+                    cmd.CommandText = "SELECT TOP 1 * FROM [Folder] ORDER BY Folder_ID DESC";
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает ID последней записи
+        /// </summary>
+        /// <param name="Table">Таблица</param>
+        public static int GetLastIDFromSafe()
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT TOP 1 * FROM [Safe] ORDER BY Safe_ID DESC";
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
 
         /// <summary>
         ////Возвращает список папок в активном сейфе
@@ -276,12 +283,11 @@ namespace Mercury.WorkingScripts
                 using (var cmd = conn.CreateCommand())
                 {
                     conn.Open();
-                    cmd.CommandText = "SELECT [FolderName], [Email] " +
-                                      "FROM [Folder] f " +
-                                      "INNER JOIN [Safe] s ON f.[Safe_ID] = s.[Safe_ID] " +
-                                      "INNER JOIN [User-Safe] us ON us.[Safe_ID] = s.[Safe_ID] " +
-                                      "INNER JOIN [User] u ON us.[User_ID] = u.[User_ID] " +
-                                      "WHERE f.[Safe_ID] = @SafeID";
+                    cmd.CommandText = "SELECT f.[Folder_ID], [FolderName], [Email] " +
+                                      "FROM [Folder-Safe] fs " +
+                                      "INNER JOIN [Folder] f ON fs.[Folder_ID] = f.[Folder_ID] " +
+                                      "INNER JOIN [User] u ON f.[User_ID] = u.[User_ID] " +
+                                      "WHERE fs.[Safe_ID] = @SafeID";
                     cmd.Parameters.AddWithValue("@SafeID", safe.SafeID);
 
                     List<Folder> folderCollection = new List<Folder>();
@@ -290,7 +296,8 @@ namespace Mercury.WorkingScripts
                     {
                         while (reader.Read())
                         {
-                            var folder = new Folder(reader[0].ToString(), reader[1].ToString());
+                            var folder = new Folder(reader[1].ToString(), reader[2].ToString());
+                            folder.FolderID = (int)reader[0];
                             folderCollection.Add(folder);
                         }
                     }
