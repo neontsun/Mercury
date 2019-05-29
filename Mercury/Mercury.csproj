@@ -99,6 +99,18 @@
     <Compile Include="CustomControls\AddFolder.Designer.cs">
       <DependentUpon>AddFolder.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\EditSafe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\EditSafe.Designer.cs">
+      <DependentUpon>EditSafe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\SafeMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\SafeMenu.Designer.cs">
+      <DependentUpon>SafeMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\Settings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +175,9 @@
     <EmbeddedResource Include="CustomControls\CreateSafeForm.resx">
       <DependentUpon>CreateSafeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\EditSafe.resx">
+      <DependentUpon>EditSafe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -171,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\RightSideMenu.resx">
       <DependentUpon>RightSideMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\SafeMenu.resx">
+      <DependentUpon>SafeMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\Settings.resx">
       <DependentUpon>Settings.cs</DependentUpon>

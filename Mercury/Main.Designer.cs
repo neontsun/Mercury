@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.startPanel = new System.Windows.Forms.Panel();
-            this.registration = new Mercury.Registration();
-            this.login = new Mercury.CustomControls.Login();
             this.textLogo = new System.Windows.Forms.Label();
             this.loginButton = new System.Windows.Forms.Label();
             this.registrationButton = new pivyLab.Control.FlatEllButton();
@@ -58,19 +56,20 @@
             this.safeItemView_Field4 = new System.Windows.Forms.Label();
             this.safeItemView_Field3 = new System.Windows.Forms.Label();
             this.safeItemView_Field2 = new System.Windows.Forms.Label();
+            this.safeItemView_MembersCount = new System.Windows.Forms.Label();
             this.safeItemView_Field1 = new System.Windows.Forms.Label();
             this.safeItemView_ItemPanel = new System.Windows.Forms.Panel();
             this.safeItemView_Hide = new System.Windows.Forms.PictureBox();
             this.safeItemView_Act = new System.Windows.Forms.PictureBox();
+            this.safeItemView_Members = new System.Windows.Forms.PictureBox();
             this.safeItemView_AddFolder = new System.Windows.Forms.PictureBox();
             this.safeItemView_MenuSeparator = new pivyLab.Control.Separator();
             this.safeItemView_SafeCreatorPerson = new System.Windows.Forms.Label();
             this.safeItemView_SafeCreator = new System.Windows.Forms.Label();
             this.safeItemView_AddItem = new pivyLab.Control.FlatEllButton();
             this.safeItemView_SafeName = new System.Windows.Forms.Label();
-            this.safeItemView_Members = new System.Windows.Forms.PictureBox();
-            this.safeItemView_MembersCount = new System.Windows.Forms.Label();
-            this.safeItemView_DeleteSafe = new System.Windows.Forms.Label();
+            this.registration = new Mercury.Registration();
+            this.login = new Mercury.CustomControls.Login();
             this.startPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchTextBreak)).BeginInit();
@@ -82,8 +81,8 @@
             this.safeItemView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Hide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Members)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).BeginInit();
             this.SuspendLayout();
             // 
             // startPanel
@@ -102,23 +101,6 @@
             this.startPanel.Size = new System.Drawing.Size(1192, 703);
             this.startPanel.TabIndex = 3;
             this.startPanel.Visible = false;
-            // 
-            // registration
-            // 
-            this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.registration.Location = new System.Drawing.Point(34, 58);
-            this.registration.Name = "registration";
-            this.registration.Size = new System.Drawing.Size(1120, 636);
-            this.registration.TabIndex = 7;
-            this.registration.Visible = false;
-            // 
-            // login
-            // 
-            this.login.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.login.Location = new System.Drawing.Point(34, 58);
-            this.login.Name = "login";
-            this.login.Size = new System.Drawing.Size(1120, 636);
-            this.login.TabIndex = 6;
             // 
             // textLogo
             // 
@@ -351,7 +333,6 @@
             // 
             // safeItemView
             // 
-            this.safeItemView.Controls.Add(this.safeItemView_DeleteSafe);
             this.safeItemView.Controls.Add(this.safeItemView_Field6);
             this.safeItemView.Controls.Add(this.safeItemView_Field5);
             this.safeItemView.Controls.Add(this.safeItemView_Field4);
@@ -435,6 +416,18 @@
             this.safeItemView_Field2.Text = "поле";
             this.safeItemView_Field2.Visible = false;
             // 
+            // safeItemView_MembersCount
+            // 
+            this.safeItemView_MembersCount.AutoSize = true;
+            this.safeItemView_MembersCount.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.safeItemView_MembersCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.safeItemView_MembersCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
+            this.safeItemView_MembersCount.Location = new System.Drawing.Point(136, 102);
+            this.safeItemView_MembersCount.Name = "safeItemView_MembersCount";
+            this.safeItemView_MembersCount.Size = new System.Drawing.Size(90, 18);
+            this.safeItemView_MembersCount.TabIndex = 21;
+            this.safeItemView_MembersCount.Text = "количество";
+            // 
             // safeItemView_Field1
             // 
             this.safeItemView_Field1.AutoSize = true;
@@ -476,6 +469,16 @@
             this.safeItemView_Act.Size = new System.Drawing.Size(24, 24);
             this.safeItemView_Act.TabIndex = 19;
             this.safeItemView_Act.TabStop = false;
+            // 
+            // safeItemView_Members
+            // 
+            this.safeItemView_Members.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.safeItemView_Members.Image = global::Mercury.Properties.Resources.membersGray;
+            this.safeItemView_Members.Location = new System.Drawing.Point(110, 99);
+            this.safeItemView_Members.Name = "safeItemView_Members";
+            this.safeItemView_Members.Size = new System.Drawing.Size(24, 24);
+            this.safeItemView_Members.TabIndex = 19;
+            this.safeItemView_Members.TabStop = false;
             // 
             // safeItemView_AddFolder
             // 
@@ -543,37 +546,22 @@
             this.safeItemView_SafeName.TabIndex = 0;
             this.safeItemView_SafeName.Text = "Наименование сейфа";
             // 
-            // safeItemView_Members
+            // registration
             // 
-            this.safeItemView_Members.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.safeItemView_Members.Image = global::Mercury.Properties.Resources.membersGray;
-            this.safeItemView_Members.Location = new System.Drawing.Point(110, 99);
-            this.safeItemView_Members.Name = "safeItemView_Members";
-            this.safeItemView_Members.Size = new System.Drawing.Size(24, 24);
-            this.safeItemView_Members.TabIndex = 19;
-            this.safeItemView_Members.TabStop = false;
+            this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.registration.Location = new System.Drawing.Point(34, 58);
+            this.registration.Name = "registration";
+            this.registration.Size = new System.Drawing.Size(1120, 636);
+            this.registration.TabIndex = 7;
+            this.registration.Visible = false;
             // 
-            // safeItemView_MembersCount
+            // login
             // 
-            this.safeItemView_MembersCount.AutoSize = true;
-            this.safeItemView_MembersCount.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.safeItemView_MembersCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.safeItemView_MembersCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(97)))), ((int)(((byte)(97)))), ((int)(((byte)(97)))));
-            this.safeItemView_MembersCount.Location = new System.Drawing.Point(138, 102);
-            this.safeItemView_MembersCount.Name = "safeItemView_MembersCount";
-            this.safeItemView_MembersCount.Size = new System.Drawing.Size(90, 18);
-            this.safeItemView_MembersCount.TabIndex = 21;
-            this.safeItemView_MembersCount.Text = "количество";
-            // 
-            // safeItemView_DeleteSafe
-            // 
-            this.safeItemView_DeleteSafe.AutoSize = true;
-            this.safeItemView_DeleteSafe.ForeColor = System.Drawing.Color.White;
-            this.safeItemView_DeleteSafe.Location = new System.Drawing.Point(791, 106);
-            this.safeItemView_DeleteSafe.Name = "safeItemView_DeleteSafe";
-            this.safeItemView_DeleteSafe.Size = new System.Drawing.Size(47, 13);
-            this.safeItemView_DeleteSafe.TabIndex = 22;
-            this.safeItemView_DeleteSafe.Text = "удалить";
+            this.login.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.login.Location = new System.Drawing.Point(34, 58);
+            this.login.Name = "login";
+            this.login.Size = new System.Drawing.Size(1120, 636);
+            this.login.TabIndex = 6;
             // 
             // Main
             // 
@@ -631,8 +619,8 @@
             this.safeItemView.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Hide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Members)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -682,7 +670,6 @@
         private System.Windows.Forms.PictureBox safeItemView_Hide;
         private System.Windows.Forms.PictureBox safeItemView_Members;
         private System.Windows.Forms.Label safeItemView_MembersCount;
-        private System.Windows.Forms.Label safeItemView_DeleteSafe;
     }
 }
 

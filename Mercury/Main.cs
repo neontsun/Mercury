@@ -8,12 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Mercury.WorkingScripts;
 using System.Runtime.Serialization.Formatters.Binary;
+using Mercury.CustomControls;
 
 namespace Mercury
 {
-
-    // Всегда передаем фокус на елемент при клике на него
-
 
 
     public partial class Main : FormTwo
@@ -29,20 +27,28 @@ namespace Mercury
         CustomControls.RightSideMenu rightSideMenu = new CustomControls.RightSideMenu();
         // Панель создания сейфа
         CustomControls.CreateSafeForm createSafe = new CustomControls.CreateSafeForm();
+        // Панель меню сейфа
+        public SafeMenu safeMenu = new SafeMenu();
+        // Панель редактирования сейфа
+        public EditSafe editSafe;
         // Количество открытых меню
-        int countOpenMenu = 0;
+        public int countOpenMenu = 0;
+        // Хук количества открытых меню сейфа
+        public int countOpenSafeMenu = 0;
         // Количество панелей создания сейфа
         public int countOpenMenuCreateSafe = 0;
+        // Хук открытого меню сейфа
+        public bool safeMenuIsOpen = false;
 
         // Активный сейф
-        Safe activeSafe;
+        public Safe activeSafe;
 
         #endregion
 
         #region Списки
 
         // Список созданных сейфов
-        List<Safe> safeCollection = new List<Safe>();
+        public List<Safe> safeCollection = new List<Safe>();
         public List<Folder> folderCollectionInActiveSafe = new List<Folder>();
 
         #endregion
@@ -182,6 +188,10 @@ namespace Mercury
             emailRightSideMenu = false;
             // Обнуляем хук количества элементов меню
             countOpenMenu = 0;
+
+            countOpenSafeMenu = 0;
+            safeMenuIsOpen = false;
+            CloseSafeMenu();
 
             // Обнуляем данные пользователя
             Properties.Settings.Default.userEmail = string.Empty;
@@ -433,7 +443,7 @@ namespace Mercury
             // Собираем данные
             int safeID = DateBase.GetLastIDFromSafe();
             int userID = WorkingScripts.DateBase.GetUserID(Properties.Settings.Default.userEmail);
-            value = new string[] 
+            value = new string[]
             {
                 userID.ToString(),
                 safeID.ToString(),
@@ -498,6 +508,8 @@ namespace Mercury
             safeItemView_SafeName.Text = safe.SafeName;
             // Ставим создателя сейфа
             safeItemView_SafeCreatorPerson.Text = safe.Creator;
+            // Чистим поля
+            HideFieldInSafeView();
             // Заполняем поля
             FillFieldInSafeView(safe.Fields);
             // Показываем панель
@@ -630,9 +642,9 @@ namespace Mercury
                 NewFolder.CreateNewFolder(safeItemView_ItemPanel,
                 GetFolderCount(), GetFontForFolder(), folder, GetLocationForFolder())
             );
-            
+
             // Собираем и добавляем данные в базу
-            var values = new string[] 
+            var values = new string[]
             {
                 folder.FolderName,
                 DateBase.GetUserID(Properties.Settings.Default.userEmail).ToString()
@@ -648,6 +660,37 @@ namespace Mercury
             // Добавляем папку в список
             folderCollectionInActiveSafe.Add(folder);
         }
+
+        /// <summary>
+        /// Показывает меню сейфа
+        /// </summary>
+        public void OpenSafeMenu()
+        {
+            // Выдаем права на форму
+            safeMenu.Owner = this;
+            safeMenu.BringToFront();
+            // Показываем меню
+            safeMenu.Show();
+            // Меняем позицию меню
+            safeMenu.Location = new Point(this.Location.X +
+                (safeItemView.Location.X + safeItemView_Act.Location.X + safeItemView_Act.Width - safeMenu.Width),
+                this.Location.Y + (safeItemView.Location.Y + safeItemView_Act.Location.Y + 30));
+        }
+
+        /// <summary>
+        /// Скрывает меню сейфа
+        /// </summary>
+        public void CloseSafeMenu()
+        {
+            safeMenu.Hide();
+            safeMenuIsOpen = false;
+            countOpenSafeMenu = 0;
+        }
+
+        /// <summary>
+        /// Возвращает идентификатор сейфа
+        /// </summary>
+        public int GetSafeID() => this.activeSafe.SafeID;
 
         /// <summary>
         /// Удаляет сейф
@@ -666,6 +709,21 @@ namespace Mercury
             safeItemView.Visible = false;
             // Заполняем заново
             FillSafeList();
+        }
+
+        /// <summary>
+        /// Открывает панель редактирования сейфа
+        /// </summary>
+        /// <param name="safe"></param>
+        public void OpenEditSafeMenu(Safe safe)
+        {
+            // Скрываем меню сейфа
+            CloseSafeMenu();
+
+            // Показываем панель редактирования сейфа
+            editSafe = new EditSafe(safe);
+            editSafe.Owner = this;
+            editSafe.ShowDialog();
         }
 
         #endregion
@@ -1194,9 +1252,40 @@ namespace Mercury
                 {
                     (item as Label).ForeColor = Color.White;
                 }
+
+                countOpenSafeMenu = 0;
+                safeMenuIsOpen = false;
+                CloseSafeMenu();
+
                 safeItemView.Visible = false;
             };
-            safeItemView_DeleteSafe.Click += (f, a) => this.DeleteSafe(this.activeSafe);
+            safeItemView_Act.Click += (f, a) => 
+            {
+                // Если меню активно
+                if (!safeMenuIsOpen)
+                {
+                    // Меню активно
+                    safeMenuIsOpen = true;
+                    // Хук на количество экземпляров меню
+                    countOpenSafeMenu++;
+
+                    // Показываем меню
+                    if (countOpenSafeMenu == 1)
+                        // Показываем меню
+                        OpenSafeMenu();
+                }
+                // Если меню не активно
+                else
+                {
+                    // Меню не активно
+                    safeMenuIsOpen = false;
+                    // Хук на количество экземпляров меню
+                    countOpenSafeMenu--;
+                    // Скрываем меню
+                    CloseSafeMenu();
+                }
+            };
+
         }
 
         #endregion
@@ -1306,6 +1395,11 @@ namespace Mercury
                 safeItemView_ItemPanel.Width = safeItemView_MenuSeparator.Width;
                 safeItemView_ItemPanel.Height = safeItemView.Height - safeItemView_ItemPanel.Location.Y - 30;
 
+                // Меняем позицию меню сейфа
+                safeMenu.Location = new Point(this.Location.X +
+                    (safeItemView.Location.X + safeItemView_Act.Location.X + safeItemView_Act.Width - safeMenu.Width),
+                    this.Location.Y + (safeItemView.Location.Y + safeItemView_Act.Location.Y + 30));
+
                 // Меняем размер элементов на панели сейфа
                 if (safeItemView_ItemPanel.Controls.Count != 0)
                 {
@@ -1389,6 +1483,10 @@ namespace Mercury
                 // Меняем позицию меню создания сейфа
                 createSafe.Location = new Point(this.Location.X + (this.Width / 2 - createSafe.Width / 2),
                     this.Location.Y + (this.Height / 2 - createSafe.Height / 2));
+                // Меняем позицию меню сейфа
+                safeMenu.Location = new Point(this.Location.X +
+                    (safeItemView.Location.X + safeItemView_Act.Location.X + safeItemView_Act.Width - safeMenu.Width),
+                    this.Location.Y + (safeItemView.Location.Y + safeItemView_Act.Location.Y + 30));
             };
 
             // Событие при закрытие формы
@@ -1508,7 +1606,7 @@ namespace Mercury
         /// <summary>
         /// Получаем список сейфов пользователя
         /// </summary>
-        private void FillSafeList()
+        public void FillSafeList()
         {
             // Получаем коллекцию сейфов
             this.safeCollection = WorkingScripts.DateBase.GetSafeList();

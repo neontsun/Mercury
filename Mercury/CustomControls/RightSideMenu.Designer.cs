@@ -32,6 +32,8 @@
             this.settings = new System.Windows.Forms.Label();
             this.userIDLabel = new System.Windows.Forms.Label();
             this.userID = new System.Windows.Forms.Label();
+            this.separator2 = new pivyLab.Control.Separator();
+            this.separator1 = new pivyLab.Control.Separator();
             this.SuspendLayout();
             // 
             // exit
@@ -55,7 +57,7 @@
             this.settings.Cursor = System.Windows.Forms.Cursors.Hand;
             this.settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.settings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
-            this.settings.Location = new System.Drawing.Point(23, 155);
+            this.settings.Location = new System.Drawing.Point(23, 74);
             this.settings.Name = "settings";
             this.settings.Size = new System.Drawing.Size(83, 18);
             this.settings.TabIndex = 8;
@@ -66,7 +68,7 @@
             // 
             this.userIDLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.userIDLabel.AutoSize = true;
-            this.userIDLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.userIDLabel.Cursor = System.Windows.Forms.Cursors.Default;
             this.userIDLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.userIDLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.userIDLabel.Location = new System.Drawing.Point(23, 20);
@@ -80,7 +82,7 @@
             // 
             this.userID.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.userID.AutoSize = true;
-            this.userID.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.userID.Cursor = System.Windows.Forms.Cursors.Default;
             this.userID.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.userID.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
             this.userID.Location = new System.Drawing.Point(46, 20);
@@ -89,12 +91,30 @@
             this.userID.TabIndex = 8;
             this.userID.Text = "id";
             // 
+            // separator2
+            // 
+            this.separator2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.separator2.Location = new System.Drawing.Point(0, 55);
+            this.separator2.Name = "separator2";
+            this.separator2.Size = new System.Drawing.Size(177, 1);
+            this.separator2.TabIndex = 12;
+            // 
+            // separator1
+            // 
+            this.separator1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.separator1.Location = new System.Drawing.Point(0, 189);
+            this.separator1.Name = "separator1";
+            this.separator1.Size = new System.Drawing.Size(177, 1);
+            this.separator1.TabIndex = 13;
+            // 
             // RightSideMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
             this.ClientSize = new System.Drawing.Size(177, 244);
+            this.Controls.Add(this.separator2);
+            this.Controls.Add(this.separator1);
             this.Controls.Add(this.userID);
             this.Controls.Add(this.userIDLabel);
             this.Controls.Add(this.settings);
@@ -114,5 +134,7 @@
         private System.Windows.Forms.Label settings;
         private System.Windows.Forms.Label userIDLabel;
         private System.Windows.Forms.Label userID;
+        private pivyLab.Control.Separator separator2;
+        private pivyLab.Control.Separator separator1;
     }
 }

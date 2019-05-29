@@ -382,5 +382,66 @@ namespace Mercury.WorkingScripts
                 }
             }
         }
+
+        /// <summary>
+        /// Внесение данных в таблицу БД.
+        /// </summary>
+        /// <param name="Table">Таблица для внесения.</param>
+        /// <param name="Field">Массив полей.</param>
+        /// <param name="Value">Массив значений.</param>
+        public static void UpdateSafe(Safe safe, List<string> Values, string safeName)
+        {
+            // Создаем подключение
+            using (var connect = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                // Формируем запрос
+                using (var cmd = connect.CreateCommand())
+                {
+                    // Открываем соединение
+                    connect.Open();
+
+
+                    cmd.CommandText = "DECLARE @CatID int;" +
+                                      "SET @CatID = ( " +
+                                      "     SELECT s.[Category_ID]" +
+                                      "     FROM [Safe] s " +
+                                      "     WHERE s.[Safe_ID] = @SafeID " +
+                                      ") " +
+                                      "UPDATE [Category] " +
+                                      "SET [FieldOne] = @ParametersOne, " +
+                                      "    [FieldTwo] = @ParametersTwo, " +
+                                      "    [FieldThree] = @ParametersThree, " +
+                                      "    [FieldFour] = @ParametersFour, " +
+                                      "    [FieldFive] = @ParametersFive, " +
+                                      "    [FieldSix] = @ParametersSix " +
+                                      "WHERE [Category_ID] = @CatID; " +
+                                      "UPDATE [Safe] " +
+                                      "SET [SafeName] = @SafeName " +
+                                      "WHERE [Safe_ID] = @SafeID;";
+                    cmd.Parameters.AddWithValue("@SafeID", safe.SafeID);
+                    cmd.Parameters.AddWithValue("@SafeName", safeName);
+                    cmd.Parameters.AddWithValue("@ParametersOne", Values[0]);
+                    cmd.Parameters.AddWithValue("@ParametersTwo", Values[1] != null ? Values[1] : string.Empty);
+                    cmd.Parameters.AddWithValue("@ParametersThree", Values[2] != null ? Values[2] : string.Empty);
+                    cmd.Parameters.AddWithValue("@ParametersFour", Values[3] != null ? Values[3] : string.Empty);
+                    cmd.Parameters.AddWithValue("@ParametersFive", Values[4] != null ? Values[4] : string.Empty);
+                    cmd.Parameters.AddWithValue("@ParametersSix", Values[5] != null ? Values[5] : string.Empty);
+
+                    // Отправляем запрос на выполнение
+                    cmd.ExecuteNonQuery();
+
+                    //// Сборка данных в запрос
+                    //cmd.CommandText = "UPDATE [" + Table + "] SET ";
+
+                    //for (int i = 0; i < Field.Length; i++)
+                    //{
+                    //    cmd.CommandText += "[" + Field[i] + "] = ";
+                    //}
+                    //cmd.CommandText = cmd.CommandText.Remove(cmd.CommandText.Length - 2);
+                    
+                }
+            }
+        }
+
     }
 }

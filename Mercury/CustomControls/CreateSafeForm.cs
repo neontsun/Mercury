@@ -464,6 +464,9 @@ namespace Mercury.CustomControls
             // Подключаем шрифты
             UseFonts();
 
+            // Риссуем форму
+            FormStyleTwo.PaintForm(this);
+
             // Событие при клике на данную форму
             this.Click += (f, a) => logoLabel.Focus();
 
