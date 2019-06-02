@@ -260,6 +260,40 @@ namespace Mercury.WorkingScripts
         }
 
         /// <summary>
+        /// Возвращает список участников сейфа
+        /// </summary>
+        /// <param name="safeID"></param>
+        /// <returns></returns>
+        public static List<Member> GetListMembersInSafe(int safeID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT u.[User_ID], u.[Email] " +
+                                      "FROM [User-Safe] us " +
+                                      "INNER JOIN [User] u ON us.[User_ID] = u.[User_ID] " +
+                                      "WHERE us.[Safe_ID] = @SafeID";
+                    cmd.Parameters.AddWithValue("@SafeID", safeID);
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var list = new List<Member>();
+
+                        while (reader.Read())
+                        {
+                            list.Add(new Member(reader[1].ToString(), (int)reader[0]));
+                        }
+
+                        return list;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Возвращает ID последней записи
         /// </summary>
         /// <param name="Table">Таблица</param>
@@ -367,6 +401,9 @@ namespace Mercury.WorkingScripts
                                       "FROM [Folder-Safe] " +
                                       "WHERE [Folder_ID] = @FolderID;" +
                                       "DELETE " +
+                                      "FROM [Notification] " +
+                                      "WHERE [Safe_ID] = @safe;" +
+                                      "DELETE " +
                                       "FROM [Safe] " +
                                       "WHERE [Safe_ID] = @safe;" +
                                       "DELETE " +
@@ -443,5 +480,25 @@ namespace Mercury.WorkingScripts
             }
         }
 
+
+        /// <summary>
+        /// Приглашает пользователя в сейф
+        /// </summary>
+        public static void InviteInSafe(int UserID, int SafeID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "INSERT INTO [Notification] (User_ID, Safe_ID) VALUES(@UserID, @SafeID)";
+                    cmd.Parameters.AddWithValue("UserID", UserID);
+                    cmd.Parameters.AddWithValue("SafeID", SafeID);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

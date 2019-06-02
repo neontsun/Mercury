@@ -209,6 +209,10 @@ namespace Mercury.CustomControls
             {
                 (this.Owner as Main).OpenEditSafeMenu((this.Owner as Main).activeSafe);
             };
+            inviteToSafe.Click += (f, a) => 
+            {
+                (this.Owner as Main).OpenInviteForm();
+            };
         }
     }
 }

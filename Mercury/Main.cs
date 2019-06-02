@@ -27,6 +27,8 @@ namespace Mercury
         CustomControls.RightSideMenu rightSideMenu = new CustomControls.RightSideMenu();
         // Панель создания сейфа
         CustomControls.CreateSafeForm createSafe = new CustomControls.CreateSafeForm();
+        // Панель участников сейфа
+        MembersInSafe members = new MembersInSafe();
         // Панель меню сейфа
         public SafeMenu safeMenu = new SafeMenu();
         // Панель редактирования сейфа
@@ -39,6 +41,10 @@ namespace Mercury
         public int countOpenMenuCreateSafe = 0;
         // Хук открытого меню сейфа
         public bool safeMenuIsOpen = false;
+        // Хук открытого меню участников сейфа
+        public bool membersMenuIsOpen = false;
+        // Хук количества открытых меню сейфа
+        public int countOpenSafeMembers = 0;
 
         // Активный сейф
         public Safe activeSafe;
@@ -212,7 +218,7 @@ namespace Mercury
         }
 
         #endregion
-
+         
         #region Создание сейфа
 
         /// <summary>
@@ -517,6 +523,7 @@ namespace Mercury
             // Обновляем хук активного сейфа
             this.activeSafe = safe;
             // Показываем количество участников
+            // REF: Заполнение количества участников в сейфе
             safeItemView_MembersCount.Text = DateBase.GetCountMembersInSafe(safe.SafeID).ToString();
         }
 
@@ -724,6 +731,41 @@ namespace Mercury
             editSafe = new EditSafe(safe);
             editSafe.Owner = this;
             editSafe.ShowDialog();
+        }
+
+        /// <summary>
+        /// Показывает меню участников сейфа
+        /// </summary>
+        public void OpenMembersMenu()
+        {
+            members.Owner = this;
+            members.BringToFront();
+            // Показываем меню
+            members.Show();
+            //// Меняем позицию меню
+            members.Location = new Point(this.Location.X +
+                (safeItemView.Location.X + safeItemView_Members.Location.X),
+                this.Location.Y + (safeItemView.Location.Y + safeItemView_Members.Location.Y + 30));
+        }
+
+        /// <summary>
+        /// Скрывает меню участников сейфа
+        /// </summary>
+        public void CloseMembersMenu()
+        {
+            members.Hide();
+            membersMenuIsOpen = false;
+            countOpenSafeMembers = 0;
+        }
+
+        /// <summary>
+        /// Открывает форму приглашения
+        /// </summary>
+        public void OpenInviteForm()
+        {
+            var invite = new InviteForm();
+            invite.Owner = this;
+            invite.ShowDialog();
         }
 
         #endregion
@@ -1156,8 +1198,8 @@ namespace Mercury
                 safeItemView_AddFolder.Image = Properties.Resources.addFolderGray;
             safeItemView_AddFolder.MouseDown += (f, a) =>
                 safeItemView_AddFolder.Image = Properties.Resources.addFolderDarkGray;
-            safeItemView_AddFolder.MouseUp += (f, a) =>
-                safeItemView_AddFolder.Image = Properties.Resources.addFolderGreen;
+            //safeItemView_AddFolder.MouseUp += (f, a) =>
+            //    safeItemView_AddFolder.Image = Properties.Resources.addFolderGreen;
 
             // Событие наведения и нажатия кнопки действия (Act)
             safeItemView_Act.MouseEnter += (f, a) =>
@@ -1283,6 +1325,60 @@ namespace Mercury
                     countOpenSafeMenu--;
                     // Скрываем меню
                     CloseSafeMenu();
+                }
+            };
+            safeItemView_MembersCount.Click += (f, a) => 
+            {
+
+                // Если меню активно
+                if (!membersMenuIsOpen)
+                {
+                    // Меню активно
+                    membersMenuIsOpen = true;
+                    // Хук на количество экземпляров меню
+                    countOpenSafeMembers++;
+
+                    // Показываем меню
+                    if (countOpenSafeMembers == 1)
+                        // Показываем меню
+                        OpenMembersMenu();
+                }
+                // Если меню не активно
+                else
+                {
+                    // Меню не активно
+                    membersMenuIsOpen = false;
+                    // Хук на количество экземпляров меню
+                    countOpenSafeMembers--;
+                    // Скрываем меню
+                    CloseMembersMenu();
+                }
+            };
+            safeItemView_Members.Click += (f, a) =>
+            {
+
+                // Если меню активно
+                if (!membersMenuIsOpen)
+                {
+                    // Меню активно
+                    membersMenuIsOpen = true;
+                    // Хук на количество экземпляров меню
+                    countOpenSafeMembers++;
+
+                    // Показываем меню
+                    if (countOpenSafeMembers == 1)
+                        // Показываем меню
+                        OpenMembersMenu();
+                }
+                // Если меню не активно
+                else
+                {
+                    // Меню не активно
+                    membersMenuIsOpen = false;
+                    // Хук на количество экземпляров меню
+                    countOpenSafeMembers--;
+                    // Скрываем меню
+                    CloseMembersMenu();
                 }
             };
 

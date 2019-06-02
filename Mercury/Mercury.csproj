@@ -105,6 +105,18 @@
     <Compile Include="CustomControls\EditSafe.Designer.cs">
       <DependentUpon>EditSafe.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\InviteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\InviteForm.Designer.cs">
+      <DependentUpon>InviteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\MembersInSafe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\MembersInSafe.Designer.cs">
+      <DependentUpon>MembersInSafe.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\SafeMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +135,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="WorkingScripts\Folder.cs" />
+    <Compile Include="WorkingScripts\Member.cs" />
     <Compile Include="WorkingScripts\NewFolder.cs" />
     <Compile Include="WorkingScripts\Safe.cs" />
     <Compile Include="CustomControls\CreateSafeForm.cs">
@@ -181,8 +194,14 @@
     <EmbeddedResource Include="CustomControls\ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\InviteForm.resx">
+      <DependentUpon>InviteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\MembersInSafe.resx">
+      <DependentUpon>MembersInSafe.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\RightSideMenu.resx">
       <DependentUpon>RightSideMenu.cs</DependentUpon>

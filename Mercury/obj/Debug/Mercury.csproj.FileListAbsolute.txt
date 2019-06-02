@@ -20,3 +20,5 @@ D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mer
 D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.AddFolder.resources
 D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.SafeMenu.resources
 D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.EditSafe.resources
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.MembersInSafe.resources
+D:\Программирование\С#\C# Project\Mercury\Mercury\obj\Debug\Mercury.CustomControls.InviteForm.resources
