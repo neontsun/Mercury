@@ -176,7 +176,8 @@ namespace Mercury.CustomControls
             this.Activated += (f, a) => LoadNotification();
         }
 
-
+        
+        #region Методы
 
         /// <summary>
         /// Строит уведомления
@@ -202,9 +203,7 @@ namespace Mercury.CustomControls
         public void UpdateNotificationCount()
         {
             if (DateBase.GetNotificationCount(DateBase.GetUserID(Properties.Settings.Default.userEmail)) != 0)
-            {
                 (this.Owner as Main).WriteNotification();
-            }
             else
                 (this.Owner as Main).HideNotificationCount();
         }
@@ -213,5 +212,7 @@ namespace Mercury.CustomControls
         /// Заполняет список сейфов
         /// </summary>
         public void ReloadSafeList() => (this.Owner as Main).FillSafeList();
+
+        #endregion
     }
 }

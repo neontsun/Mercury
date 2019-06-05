@@ -154,6 +154,12 @@
   <data name="closePanelViewGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\closePanelViewGreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="deleteFolderGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\deleteFolderGreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="deleteFolderWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\deleteFolderWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="emailIconDarkGrayDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\emailIconDarkGrayDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -178,8 +184,20 @@
   <data name="eyeView" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\eyeView.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="folderEditGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folderEditGreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folderEditWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folderEditWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="folderGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folderGreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folderMenuGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folderMenuGreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="folderMenuWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\folderMenuWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="folderWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folderWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

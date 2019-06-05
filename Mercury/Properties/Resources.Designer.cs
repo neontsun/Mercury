@@ -183,6 +183,26 @@ namespace Mercury.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap deleteFolderGreen {
+            get {
+                object obj = ResourceManager.GetObject("deleteFolderGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap deleteFolderWhite {
+            get {
+                object obj = ResourceManager.GetObject("deleteFolderWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap emailIconDarkGrayDown {
             get {
                 object obj = ResourceManager.GetObject("emailIconDarkGrayDown", resourceCulture);
@@ -263,9 +283,49 @@ namespace Mercury.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap folderEditGreen {
+            get {
+                object obj = ResourceManager.GetObject("folderEditGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderEditWhite {
+            get {
+                object obj = ResourceManager.GetObject("folderEditWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap folderGreen {
             get {
                 object obj = ResourceManager.GetObject("folderGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderMenuGreen {
+            get {
+                object obj = ResourceManager.GetObject("folderMenuGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderMenuWhite {
+            get {
+                object obj = ResourceManager.GetObject("folderMenuWhite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -372,5 +372,23 @@
   <ItemGroup>
     <None Include="Resources\notificationGreen.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folderMenuGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folderMenuWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folderEditGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folderEditWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deleteFolderGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deleteFolderWhite.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mercury.CustomControls;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Mercury.WorkingScripts
             {
                 Text = folder.FolderCreator,
                 AutoSize = true,
-                Location = new Point(control.Width - 190, 17),
+                Location = new Point(control.Width - 250, 17),
                 ForeColor = Color.White,
                 Font = new Font(font.FontFamily, 9, FontStyle.Regular)
             };
@@ -64,79 +65,96 @@ namespace Mercury.WorkingScripts
                 Visible = false,
                 Name = "Mark"
             };
+            var edit = new PictureBox
+            {
+                Location = new Point(creator.Location.X + creator.Width + 75, 15),
+                Size = new Size(16, 16),
+                AutoSize = false,
+                Cursor = Cursors.Hand,
+                Image = Properties.Resources.folderEditWhite,
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
+            var delete = new PictureBox
+            {
+                Location = new Point(edit.Location.X + edit.Width + 30, 15),
+                Size = new Size(16, 16),
+                AutoSize = false,
+                Cursor = Cursors.Hand,
+                Image = Properties.Resources.deleteFolderWhite,
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
 
             control.Controls.Add(icon);
             control.Controls.Add(folderName);
             control.Controls.Add(creator);
             control.Controls.Add(label);
             control.Controls.Add(mark);
+            control.Controls.Add(edit);
+            control.Controls.Add(delete);
 
             control.MouseEnter += (f, a) => 
             {
                 icon.Image = Properties.Resources.folderGreen;
                 folderName.ForeColor = Color.FromArgb(29, 185, 84);
-                creator.ForeColor = Color.FromArgb(29, 185, 84);
             };
             control.MouseLeave += (f, a) =>
             {
                 icon.Image = Properties.Resources.folderWhite;
                 folderName.ForeColor = Color.White;
-                creator.ForeColor = Color.White;
             };
             icon.MouseEnter += (f, a) =>
             {
                 icon.Image = Properties.Resources.folderGreen;
                 folderName.ForeColor = Color.FromArgb(29, 185, 84);
-                creator.ForeColor = Color.FromArgb(29, 185, 84);
             };
             icon.MouseLeave += (f, a) =>
             {
                 icon.Image = Properties.Resources.folderWhite;
                 folderName.ForeColor = Color.White;
-                creator.ForeColor = Color.White;
             };
             folderName.MouseEnter += (f, a) =>
             {
                 icon.Image = Properties.Resources.folderGreen;
                 folderName.ForeColor = Color.FromArgb(29, 185, 84);
-                creator.ForeColor = Color.FromArgb(29, 185, 84);
             };
             folderName.MouseLeave += (f, a) =>
             {
                 icon.Image = Properties.Resources.folderWhite;
                 folderName.ForeColor = Color.White;
-                creator.ForeColor = Color.White;
             };
-            label.MouseEnter += (f, a) =>
+            edit.MouseEnter += (f, a) =>
             {
-                icon.Image = Properties.Resources.folderGreen;
-                folderName.ForeColor = Color.FromArgb(29, 185, 84);
-                creator.ForeColor = Color.FromArgb(29, 185, 84);
+                edit.Image = Properties.Resources.folderEditGreen;
             };
-            label.MouseLeave += (f, a) =>
+            edit.MouseLeave += (f, a) =>
             {
-                icon.Image = Properties.Resources.folderWhite;
-                folderName.ForeColor = Color.White;
-                creator.ForeColor = Color.White;
+                edit.Image = Properties.Resources.folderEditWhite;
             };
-            creator.MouseEnter += (f, a) =>
+            delete.MouseEnter += (f, a) =>
             {
-                icon.Image = Properties.Resources.folderGreen;
-                folderName.ForeColor = Color.FromArgb(29, 185, 84);
-                creator.ForeColor = Color.FromArgb(29, 185, 84);
+                delete.Image = Properties.Resources.deleteFolderGreen;
             };
-            creator.MouseLeave += (f, a) =>
+            delete.MouseLeave += (f, a) =>
             {
-                icon.Image = Properties.Resources.folderWhite;
-                folderName.ForeColor = Color.White;
-                creator.ForeColor = Color.White;
+                delete.Image = Properties.Resources.deleteFolderWhite;
+            };
+
+            // REF: Удаление папки
+            delete.Click += (f, a) => 
+            {
+                var par = parent.Parent.Parent;
+                (par as Main).folderCollectionInActiveSafe.Remove(folder);
+                (par as Main).DeleteFolder((par as Main).activeSafe.SafeID, folder.FolderID);
+                (par as Main).ShowSafeItemView((par as Main).activeSafe);
             };
 
             control.Resize += (f, a) => 
             {
                 control.Width = parent.Width - 2;
-                creator.Location = new Point(control.Width - 190, 17);
+                creator.Location = new Point(control.Width - 250, 17);
                 label.Location = new Point(creator.Location.X - 10 - 60, 17);
+                edit.Location = new Point(creator.Location.X + creator.Width + 75, 15);
+                delete.Location = new Point(edit.Location.X + edit.Width + 30, 15);
             };
 
             return control;

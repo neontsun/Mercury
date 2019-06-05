@@ -403,6 +403,30 @@ namespace Mercury.WorkingScripts
         }
 
         /// <summary>
+        /// Удаляет папку
+        /// </summary>
+        public static void DeleteFolder(int safeID, int folderID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "DELETE " +
+                                      "FROM [Folder-Safe] " +
+                                      "WHERE [Safe_ID] = @SafeID AND [Folder_ID] = @FolderID;" +
+                                      "DELETE " +
+                                      "FROM [Folder] " +
+                                      "WHERE [Folder_ID] = @FolderID;";
+                    cmd.Parameters.AddWithValue("@SafeID", safeID);
+                    cmd.Parameters.AddWithValue("@FolderID", folderID);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
         /// Удаляет сейф
         /// </summary>
         /// <param name="safe"></param>

@@ -550,6 +550,8 @@ namespace Mercury
             safeItemView.Visible = true;
             // Обновляем хук активного сейфа
             this.activeSafe = safe;
+            // Заполянем список папок в активном сейфе
+            FillFolderList();
             // Показываем количество участников
             // REF: Заполнение количества участников в сейфе
             safeItemView_MembersCount.Text = DateBase.GetCountMembersInSafe(safe.SafeID).ToString();
@@ -673,13 +675,19 @@ namespace Mercury
         }
 
         /// <summary>
+        /// Удаляет папку
+        /// </summary>
+        public void DeleteFolder(int safeID, int folderID)
+        {
+            DateBase.DeleteFolder(safeID, folderID);
+        }
+
+        /// <summary>
         /// Создает папку
         /// </summary>
         /// <param name="folder"></param>
         public void CreateFolder(Folder folder)
         {
-            //CreateFolder(new Folder("Соска", Properties.Settings.Default.userEmail));
-
             safeItemView_ItemPanel.Controls.Add(
                 NewFolder.CreateNewFolder(safeItemView_ItemPanel,
                 GetFolderCount(), GetFontForFolder(), folder, GetLocationForFolder())
@@ -1881,7 +1889,7 @@ namespace Mercury
                     // Заполняем сейф
                     ShowSafeItemView(item);
                     // Заполняем список папок в активном сейфе
-                    FillFolderList();
+                    //FillFolderList();
                 };
                 // Добавляем в панель контролы
                 safeList.Controls.Add(control);
