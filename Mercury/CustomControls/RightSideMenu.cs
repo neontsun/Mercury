@@ -124,8 +124,6 @@ namespace Mercury.CustomControls
             // Поле email'a
             exit.Font = new Font(fontFamilies[3], 11);
             settings.Font = new Font(fontFamilies[3], 11);
-            userIDLabel.Font = new Font(fontFamilies[3], 10);
-            userID.Font = new Font(fontFamilies[3], 10);
         }
 
         #endregion
@@ -178,8 +176,6 @@ namespace Mercury.CustomControls
             {
                 settings.ForeColor = Color.FromArgb(29, 185, 84);
             };
-
-            this.Activated += (f, a) => userID.Text = DateBase.GetUserID(Properties.Settings.Default.userEmail).ToString();
         }
 
         #region Методы

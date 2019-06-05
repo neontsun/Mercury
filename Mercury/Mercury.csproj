@@ -117,6 +117,12 @@
     <Compile Include="CustomControls\MembersInSafe.Designer.cs">
       <DependentUpon>MembersInSafe.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\NotificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\NotificationForm.Designer.cs">
+      <DependentUpon>NotificationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\SafeMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,8 @@
     <Compile Include="WorkingScripts\Folder.cs" />
     <Compile Include="WorkingScripts\Member.cs" />
     <Compile Include="WorkingScripts\NewFolder.cs" />
+    <Compile Include="WorkingScripts\NewNotification.cs" />
+    <Compile Include="WorkingScripts\Notification.cs" />
     <Compile Include="WorkingScripts\Safe.cs" />
     <Compile Include="CustomControls\CreateSafeForm.cs">
       <SubType>Form</SubType>
@@ -202,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\MembersInSafe.resx">
       <DependentUpon>MembersInSafe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\NotificationForm.resx">
+      <DependentUpon>NotificationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\RightSideMenu.resx">
       <DependentUpon>RightSideMenu.cs</DependentUpon>
@@ -351,6 +362,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\membersGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notificationDarkGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notificationGray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notificationGreen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -207,6 +207,7 @@ namespace Mercury.CustomControls
             invite.Click += (f, a) => this.InviteInSafe((this.Owner as Main).activeSafe);
         }
 
+
         /// <summary>
         /// Приглашает в сейф
         /// </summary>
@@ -227,12 +228,17 @@ namespace Mercury.CustomControls
                     }
                     else
                     {
-                        DateBase.InviteInSafe(DateBase.GetUserID(Email.Text), safe.SafeID);
-                        ShowError("Приглашение отправлено");
-                        (this.Owner as Main).safeMenuIsOpen = false;
-                        (this.Owner as Main).countOpenSafeMenu = 0;
-                        (this.Owner as Main).CloseSafeMenu();
-                        this.Close();
+                        if (DateBase.CheckUserSafeValid(DateBase.GetUserID(Email.Text), safe.SafeID))
+                            ShowError("Пользователь уже находится в сейфе");
+                        else
+                        {
+                            DateBase.InviteInSafe(DateBase.GetUserID(Email.Text), safe.SafeID);
+                            ShowError("Приглашение отправлено");
+                            (this.Owner as Main).safeMenuIsOpen = false;
+                            (this.Owner as Main).countOpenSafeMenu = 0;
+                            (this.Owner as Main).CloseSafeMenu();
+                            this.Close();
+                        }
                     }
                 }
             }

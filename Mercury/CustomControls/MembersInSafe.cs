@@ -160,10 +160,18 @@ namespace Mercury.CustomControls
             // Риссуем форму
             FormStyleTwo.PaintForm(this);
 
-            this.Load += (f, a) => 
+            this.Activated += (f, a) => 
             {
                 // Заполняем список участников
+                membersList.Clear();
+                listView1.Items.Clear();
                 membersList = DateBase.GetListMembersInSafe((this.Owner as Main).activeSafe.SafeID);
+
+                // Если пользователь не создатель сейфа
+                if ((this.Owner as Main).activeSafe.Creator != Properties.Settings.Default.userEmail)
+                {
+                    leave.Visible = false;
+                }
 
                 foreach (var item in membersList)
                 {

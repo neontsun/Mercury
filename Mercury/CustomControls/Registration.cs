@@ -430,13 +430,13 @@ namespace Mercury
                                 Properties.Settings.Default.Save();
                             }
 
+                            // Регистрируем пользователя
+                            WorkingScripts.DateBase.InsertData("User", new string[] { "Email", "Password" }, data);
+
                             // Скрываем панель входа и регистрации,
                             // тем самым предоставляя пользователю доступ к приложению
                             this.Parent.Visible = false;
                             this.Parent.Location = new Point(1124, 28);
-                            
-                            // Регистрируем пользователя в новом потоке
-                            WorkingScripts.DateBase.InsertData("User", new string[] { "Email", "Password" }, data);
                             
                             // Очищаем поля
                             ClearControl();

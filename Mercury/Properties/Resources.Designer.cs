@@ -413,6 +413,36 @@ namespace Mercury.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap notificationDarkGray {
+            get {
+                object obj = ResourceManager.GetObject("notificationDarkGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap notificationGray {
+            get {
+                object obj = ResourceManager.GetObject("notificationGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap notificationGreen {
+            get {
+                object obj = ResourceManager.GetObject("notificationGreen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap removeFieldDarkGray {
             get {
                 object obj = ResourceManager.GetObject("removeFieldDarkGray", resourceCulture);

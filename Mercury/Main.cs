@@ -29,6 +29,8 @@ namespace Mercury
         CustomControls.CreateSafeForm createSafe = new CustomControls.CreateSafeForm();
         // Панель участников сейфа
         MembersInSafe members = new MembersInSafe();
+        // Панель уведомлений
+        public NotificationForm notification = new NotificationForm();
         // Панель меню сейфа
         public SafeMenu safeMenu = new SafeMenu();
         // Панель редактирования сейфа
@@ -45,6 +47,10 @@ namespace Mercury
         public bool membersMenuIsOpen = false;
         // Хук количества открытых меню сейфа
         public int countOpenSafeMembers = 0;
+        // Хук открытого меню уведомлений
+        public bool notificationMenuIsOpen = false;
+        // Хук количества открытых меню уведомлений
+        public int countOpenNotificationMenu = 0;
 
         // Активный сейф
         public Safe activeSafe;
@@ -56,6 +62,7 @@ namespace Mercury
         // Список созданных сейфов
         public List<Safe> safeCollection = new List<Safe>();
         public List<Folder> folderCollectionInActiveSafe = new List<Folder>();
+        public List<Notification> notificationCollection = new List<Notification>();
 
         #endregion
 
@@ -134,6 +141,8 @@ namespace Mercury
             safeItemView_Field6.Font = new Font(fontFamilies[3], 10);
             // Количество участников в сейфе
             safeItemView_MembersCount.Font = new Font(fontFamilies[3], 11);
+            // Количество уведомлений
+            notificationCount.Font = new Font(fontFamilies[2], 10);
         }
 
         #endregion
@@ -153,7 +162,68 @@ namespace Mercury
             emailText.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
         }
 
+        /// <summary>
+        /// Метод, который записывает количество уведомлений и подстраивает отображение
+        /// </summary>
+        public void WriteNotification()
+        {
+            notificationPanel.Location = new Point(emailText.Location.X - notificationPanel.Width - 20, notificationPanel.Location.Y);
+            notificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
 
+            var count = DateBase.GetNotificationCount(DateBase.GetUserID(Properties.Settings.Default.userEmail));
+
+            if (count == 0)
+                notificationCount.Visible = false;
+            else
+            {
+                notificationCount.Visible = true;
+                notificationCount.Text = DateBase.GetNotificationCount
+                    (DateBase.GetUserID(Properties.Settings.Default.userEmail)).ToString();
+            }
+
+            LoadNotification();
+        }
+
+        /// <summary>
+        /// Показывает меню участников сейфа
+        /// </summary>
+        public void OpenNotificationForm()
+        {
+            notification.Owner = this;
+            notification.BringToFront();
+            // Показываем меню
+            notification.Show();
+            // Меняем позицию меню уведомлений
+            notification.Location = new Point(this.Location.X + notificationPanel.Location.X,
+                this.Location.Y + notificationPanel.Location.Y + notificationPanel.Height + 10);
+        }
+
+        /// <summary>
+        /// Скрывает меню участников сейфа
+        /// </summary>
+        public void CloseNotificationForm()
+        {
+            notification.Hide();
+            notificationMenuIsOpen = false;
+            countOpenNotificationMenu = 0;
+        }
+
+        /// <summary>
+        /// Подгружает список уведомлений
+        /// </summary>
+        public void LoadNotification()
+        {
+            this.notificationCollection = DateBase.GetNotificationList(DateBase.GetUserID(Properties.Settings.Default.userEmail));
+        }
+
+        /// <summary>
+        /// Скрывает количество уведомлений
+        /// </summary>
+        public void HideNotificationCount()
+        {
+            notificationCount.Visible = false;
+            CloseNotificationForm();
+        }
 
         #endregion
 
@@ -460,48 +530,6 @@ namespace Mercury
 
         #endregion
 
-        #region Сериализация
-        // TODO: Вынести всю эту хуйню в отдельный класс
-
-        //public void SerializeActiveSafe()
-        //{
-        //    BinaryFormatter formatter = new BinaryFormatter();
-        //    string path = Directory.GetCurrentDirectory()
-        //        .Remove(Directory.GetCurrentDirectory().Length - 10) + @"\SerializeObject\activeSafe.dat";
-        //    using (var fs = new FileStream(path, FileMode.OpenOrCreate))
-        //    {
-        //        formatter.Serialize(fs, activeSafe);
-        //    }
-        //}
-
-        //public void DeserializeActiveSafe()
-        //{
-        //    BinaryFormatter formatter = new BinaryFormatter();
-        //    string path = Directory.GetCurrentDirectory()
-        //        .Remove(Directory.GetCurrentDirectory().Length - 10) + @"\SerializeObject\activeSafe.dat";
-        //    using (var fs = new FileStream(path, FileMode.OpenOrCreate))
-        //    {
-        //        activeSafe = (Safe)formatter.Deserialize(fs);
-        //    }
-        //}
-
-        //private void DeleteSerializeObject()
-        //{
-        //    string path = Directory.GetCurrentDirectory()
-        //        .Remove(Directory.GetCurrentDirectory().Length - 10) + @"\SerializeObject\activeSafe.dat";
-        //    if (File.Exists(path))
-        //        File.Delete(path);
-        //}
-
-        //private bool ExistsSerializeObject()
-        //{
-        //    string path = Directory.GetCurrentDirectory()
-        //        .Remove(Directory.GetCurrentDirectory().Length - 10) + @"\SerializeObject\activeSafe.dat";
-        //    return File.Exists(path) ? true : false;
-        //}
-
-        #endregion
-
         #region Панель сейфа
 
         /// <summary>
@@ -525,6 +553,12 @@ namespace Mercury
             // Показываем количество участников
             // REF: Заполнение количества участников в сейфе
             safeItemView_MembersCount.Text = DateBase.GetCountMembersInSafe(safe.SafeID).ToString();
+
+            // Если пользователь не создатель сейфа
+            if (safe.Creator != Properties.Settings.Default.userEmail)
+                safeItemView_Act.Visible = false;
+            else
+                safeItemView_Act.Visible = true;
         }
 
         /// <summary>
@@ -595,6 +629,7 @@ namespace Mercury
         /// </summary>
         private int GetFolderCount()
         {
+            // REF: Аналогия для элементов
             int i = 0;
             foreach (var item in safeItemView_ItemPanel.Controls)
             {
@@ -816,7 +851,9 @@ namespace Mercury
             if (Properties.Settings.Default.userEmail != string.Empty && Properties.Settings.Default.userPassword != string.Empty)
                 // Записываем email
                 WriteEmail();
-            
+            // Заполняем строку уведомлений
+            //WriteNotification();
+
             // Событие при клике по иконке и надписи email'a
             emailText.Click += (f, a) =>
             {
@@ -969,6 +1006,108 @@ namespace Mercury
                     emailText.ForeColor = Color.FromArgb(29, 185, 84);
                 else
                     emailText.ForeColor = Color.FromArgb(120, 120, 120);
+            };
+
+            notificationImage.MouseEnter += (f, a) => 
+            {
+                notificationImage.Image = Properties.Resources.notificationGreen;
+                notificationCount.Back = Color.FromArgb(29, 185, 84);
+                notificationCount.Invalidate();
+            };
+            notificationImage.MouseLeave += (f, a) =>
+            {
+                notificationImage.Image = Properties.Resources.notificationGray;
+                notificationCount.Back = Color.FromArgb(120, 120, 120);
+                notificationCount.Invalidate();
+            };
+            notificationImage.MouseDown += (f, a) =>
+            {
+                notificationImage.Image = Properties.Resources.notificationDarkGray;
+                notificationCount.Back = Color.FromArgb(70, 70, 70);
+                notificationCount.Invalidate();
+            };
+            notificationImage.MouseUp += (f, a) =>
+            {
+                notificationImage.Image = Properties.Resources.notificationGreen;
+                notificationCount.Back = Color.FromArgb(29, 185, 84);
+                notificationCount.Invalidate();
+            };
+            notificationCount.MouseEnter += (f, a) =>
+            {
+                notificationImage.Image = Properties.Resources.notificationGreen;
+                notificationCount.Back = Color.FromArgb(29, 185, 84);
+                notificationCount.Invalidate();
+            };
+            notificationCount.MouseLeave += (f, a) =>
+            {
+                notificationImage.Image = Properties.Resources.notificationGray;
+                notificationCount.Back = Color.FromArgb(120, 120, 120);
+                notificationCount.Invalidate();
+            };
+            notificationCount.MouseDown += (f, a) =>
+            {
+                notificationImage.Image = Properties.Resources.notificationDarkGray;
+                notificationCount.Back = Color.FromArgb(70, 70, 70);
+                notificationCount.Invalidate();
+            };
+            notificationCount.MouseUp += (f, a) =>
+            {
+                notificationImage.Image = Properties.Resources.notificationGreen;
+                notificationCount.Back = Color.FromArgb(29, 185, 84);
+                notificationCount.Invalidate();
+            };
+
+            notificationCount.Click += (f, a) => 
+            {
+                // Если меню активно
+                if (!notificationMenuIsOpen)
+                {
+                    // Меню активно
+                    notificationMenuIsOpen = true;
+                    // Хук на количество экземпляров меню
+                    countOpenNotificationMenu++;
+
+                    // Показываем меню
+                    if (countOpenNotificationMenu == 1)
+                        // Показываем меню
+                        OpenNotificationForm();
+                }
+                // Если меню не активно
+                else
+                {
+                    // Меню не активно
+                    notificationMenuIsOpen = false;
+                    // Хук на количество экземпляров меню
+                    countOpenNotificationMenu--;
+                    // Скрываем меню
+                    CloseNotificationForm();
+                }
+            };
+            notificationImage.Click += (f, a) =>
+            {
+                // Если меню активно
+                if (!notificationMenuIsOpen)
+                {
+                    // Меню активно
+                    notificationMenuIsOpen = true;
+                    // Хук на количество экземпляров меню
+                    countOpenNotificationMenu++;
+
+                    // Показываем меню
+                    if (countOpenNotificationMenu == 1)
+                        // Показываем меню
+                        OpenNotificationForm();
+                }
+                // Если меню не активно
+                else
+                {
+                    // Меню не активно
+                    notificationMenuIsOpen = false;
+                    // Хук на количество экземпляров меню
+                    countOpenNotificationMenu--;
+                    // Скрываем меню
+                    CloseNotificationForm();
+                }
             };
         }
 
@@ -1406,6 +1545,8 @@ namespace Mercury
             // Строим центр
             CreateCenter();
 
+            //MessageBox.Show(Properties.Settings.Default.userEmail);
+
             #region Минимальные действия при нажатии на кнопки и т.д
 
             // Клик по кнопке открытия панели входа (loginButton)
@@ -1496,6 +1637,10 @@ namespace Mercury
                     (safeItemView.Location.X + safeItemView_Act.Location.X + safeItemView_Act.Width - safeMenu.Width),
                     this.Location.Y + (safeItemView.Location.Y + safeItemView_Act.Location.Y + 30));
 
+                // Меняем позицию меню уведомлений
+                notification.Location = new Point(this.Location.X + notificationPanel.Location.X,
+                    this.Location.Y + notificationPanel.Location.Y + notificationPanel.Height + 10);
+
                 // Меняем размер элементов на панели сейфа
                 if (safeItemView_ItemPanel.Controls.Count != 0)
                 {
@@ -1553,6 +1698,9 @@ namespace Mercury
                     // Заполняем поле с email'ом
                     WriteEmail();
 
+                    // Заполняем поле уведомлений
+                    WriteNotification();
+
                     // Если размер формы максимальный
                     if (this.WindowState == FormWindowState.Maximized)
                         // Меняем размер списка с сейфами
@@ -1583,6 +1731,10 @@ namespace Mercury
                 safeMenu.Location = new Point(this.Location.X +
                     (safeItemView.Location.X + safeItemView_Act.Location.X + safeItemView_Act.Width - safeMenu.Width),
                     this.Location.Y + (safeItemView.Location.Y + safeItemView_Act.Location.Y + 30));
+
+                // Меняем позицию меню уведомлений
+                notification.Location = new Point(this.Location.X + notificationPanel.Location.X,
+                    this.Location.Y + notificationPanel.Location.Y + notificationPanel.Height + 10);
             };
 
             // Событие при закрытие формы
@@ -1664,7 +1816,6 @@ namespace Mercury
             // Если показываем элементы
             else
             {
-                //MessageBox.Show(Properties.Settings.Default.userEmail + "\n" + Properties.Settings.Default.userPassword);
                 // Показываем лого
                 textLogoMain.Visible = true;
                 logoSeparatorHorizontal.Visible = true;
@@ -1676,6 +1827,8 @@ namespace Mercury
 
                 // REF: Заполняем список сейфов при обычном запуске
                 FillSafeList();
+                // Заполняем уведомления
+                WriteNotification();
             }
         }
 

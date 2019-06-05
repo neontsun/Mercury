@@ -23,6 +23,7 @@ namespace Mercury.WorkingScripts
                 Parent = parent,
                 Name = "Folder_" + folderCount
             };
+
             var creator = new Label
             {
                 Text = folder.FolderCreator,

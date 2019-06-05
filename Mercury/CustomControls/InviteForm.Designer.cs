@@ -92,9 +92,9 @@
             this.logoLabel.ForeColor = System.Drawing.Color.White;
             this.logoLabel.Location = new System.Drawing.Point(33, 33);
             this.logoLabel.Name = "logoLabel";
-            this.logoLabel.Size = new System.Drawing.Size(207, 33);
+            this.logoLabel.Size = new System.Drawing.Size(171, 33);
             this.logoLabel.TabIndex = 5;
-            this.logoLabel.Text = "Создать сейф";
+            this.logoLabel.Text = "Пригласить";
             // 
             // InviteForm
             // 

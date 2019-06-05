@@ -68,8 +68,11 @@
             this.safeItemView_SafeCreator = new System.Windows.Forms.Label();
             this.safeItemView_AddItem = new pivyLab.Control.FlatEllButton();
             this.safeItemView_SafeName = new System.Windows.Forms.Label();
+            this.notificationImage = new System.Windows.Forms.PictureBox();
             this.registration = new Mercury.Registration();
             this.login = new Mercury.CustomControls.Login();
+            this.notificationPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.notificationCount = new pivyLab.Control.FlatEllButton();
             this.startPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchTextBreak)).BeginInit();
@@ -83,6 +86,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Members)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.notificationImage)).BeginInit();
+            this.notificationPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // startPanel
@@ -546,6 +551,16 @@
             this.safeItemView_SafeName.TabIndex = 0;
             this.safeItemView_SafeName.Text = "Наименование сейфа";
             // 
+            // notificationImage
+            // 
+            this.notificationImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.notificationImage.Image = global::Mercury.Properties.Resources.notificationGray;
+            this.notificationImage.Location = new System.Drawing.Point(3, 4);
+            this.notificationImage.Name = "notificationImage";
+            this.notificationImage.Size = new System.Drawing.Size(24, 24);
+            this.notificationImage.TabIndex = 24;
+            this.notificationImage.TabStop = false;
+            // 
             // registration
             // 
             this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
@@ -562,6 +577,30 @@
             this.login.Name = "login";
             this.login.Size = new System.Drawing.Size(1120, 636);
             this.login.TabIndex = 6;
+            // 
+            // notificationPanel
+            // 
+            this.notificationPanel.Controls.Add(this.notificationImage);
+            this.notificationPanel.Controls.Add(this.notificationCount);
+            this.notificationPanel.FlowDirection = System.Windows.Forms.FlowDirection.BottomUp;
+            this.notificationPanel.Location = new System.Drawing.Point(894, 42);
+            this.notificationPanel.Name = "notificationPanel";
+            this.notificationPanel.Size = new System.Drawing.Size(82, 31);
+            this.notificationPanel.TabIndex = 25;
+            // 
+            // notificationCount
+            // 
+            this.notificationCount.Back = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(120)))), ((int)(((byte)(120)))));
+            this.notificationCount.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.notificationCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.notificationCount.ForeColor = System.Drawing.Color.White;
+            this.notificationCount.Location = new System.Drawing.Point(33, 5);
+            this.notificationCount.Name = "notificationCount";
+            this.notificationCount.RoundRadius = 4;
+            this.notificationCount.Size = new System.Drawing.Size(33, 23);
+            this.notificationCount.TabIndex = 26;
+            this.notificationCount.Text = "1";
+            this.notificationCount.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -584,10 +623,12 @@
             this.Controls.Add(this.safeList);
             this.Controls.Add(this.createSafeButton);
             this.Controls.Add(this.safeItemView);
+            this.Controls.Add(this.notificationPanel);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "";
             this.Load += new System.EventHandler(this.Main_Load);
+            this.Controls.SetChildIndex(this.notificationPanel, 0);
             this.Controls.SetChildIndex(this.safeItemView, 0);
             this.Controls.SetChildIndex(this.createSafeButton, 0);
             this.Controls.SetChildIndex(this.safeList, 0);
@@ -621,6 +662,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Members)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_AddFolder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.notificationImage)).EndInit();
+            this.notificationPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -670,6 +713,9 @@
         private System.Windows.Forms.PictureBox safeItemView_Hide;
         private System.Windows.Forms.PictureBox safeItemView_Members;
         private System.Windows.Forms.Label safeItemView_MembersCount;
+        private System.Windows.Forms.PictureBox notificationImage;
+        private System.Windows.Forms.FlowLayoutPanel notificationPanel;
+        private pivyLab.Control.FlatEllButton notificationCount;
     }
 }
 

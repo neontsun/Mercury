@@ -154,6 +154,45 @@ namespace Mercury.WorkingScripts
         }
 
         /// <summary>
+        /// Проверяет существование записи в таблице User-Safe
+        /// </summary>
+        public static bool CheckUserSafeValid(int userID, int safeID)
+        {
+            // Переменная результата
+            var result = false;
+
+            // Создаем подключение к базе
+            using (var connect = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                // Создаем запрос
+                using (var cmd = connect.CreateCommand())
+                {
+                    // Открываем соединение
+                    connect.Open();
+
+                    // Формируем запрос
+                    cmd.CommandText = "SELECT us.[User_ID], us.[Safe_ID] " +
+                                      "FROM [User-Safe] us " +
+                                      "WHERE us.[UserIsCreator] = 'False' AND us.[User_ID] = @UserID AND us.[Safe_ID] = @SafeID";
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+                    cmd.Parameters.AddWithValue("@SafeID", safeID);
+
+                    // Значение, которое венрулось запросом
+                    var request = cmd.ExecuteScalar();
+
+                    // Проверка на существование
+                    if (request != null)
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            // Возвращаем результат
+            return result;
+        }
+
+        /// <summary>
         /// Возвращает ID последней записи
         /// </summary>
         /// <param name="Table">Таблица</param>
@@ -176,7 +215,7 @@ namespace Mercury.WorkingScripts
         /// </summary>
         /// <param name="Table"></param>
         /// <param name="Where"></param>
-        public static int GetUserID(string Where)
+        public static int GetUserID(string Email)
         {
             using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
             {
@@ -185,7 +224,7 @@ namespace Mercury.WorkingScripts
                     conn.Open();
 
                     cmd.CommandText = "SELECT [User_ID] FROM [User] WHERE [Email] = @Email";
-                    cmd.Parameters.AddWithValue("@Email", Where);
+                    cmd.Parameters.AddWithValue("@Email", Email);
                     return (int)cmd.ExecuteScalar();
                 }
             }
@@ -201,7 +240,7 @@ namespace Mercury.WorkingScripts
                 using (var cmd = conn.CreateCommand())
                 {
                     conn.Open();
-                    
+
                     cmd.CommandText = "SELECT [SafeName], dbo.GetSafeCreator(us.[Safe_ID]) Creator, us.[Safe_ID], [FieldOne], [FieldTwo], " +
                                              "[FieldThree], [FieldFour], [FieldFive], [FieldSix] " +
                                       "FROM [User-Safe] us " +
@@ -475,7 +514,7 @@ namespace Mercury.WorkingScripts
                     //    cmd.CommandText += "[" + Field[i] + "] = ";
                     //}
                     //cmd.CommandText = cmd.CommandText.Remove(cmd.CommandText.Length - 2);
-                    
+
                 }
             }
         }
@@ -496,6 +535,103 @@ namespace Mercury.WorkingScripts
                     cmd.Parameters.AddWithValue("UserID", UserID);
                     cmd.Parameters.AddWithValue("SafeID", SafeID);
 
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Приглашает пользователя в сейф
+        /// </summary>
+        public static List<Notification> GetNotificationList(int UserID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT n.[Notification_ID], n.[Safe_ID], s.[SafeName], u.[Email] " +
+                                      "FROM [Notification] n " +
+                                      "INNER JOIN [Safe] s ON n.[Safe_ID] = s.[Safe_ID] " +
+                                      "INNER JOIN [User-Safe] us ON s.[Safe_ID] = us.[Safe_ID] " +
+                                      "INNER JOIN [User] u ON us.[User_ID] = u.[User_ID] " +
+                                      "WHERE n.[User_ID] = @UserID AND us.[UserIsCreator] = 1;";
+                    cmd.Parameters.AddWithValue("UserID", UserID);
+
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var list = new List<Notification>();
+                        while (reader.Read())
+                        {
+                            list.Add(new Notification((int)reader[0], (int)reader[1], reader[2].ToString(), reader[3].ToString()));
+                        }
+                        return list;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Приглашает пользователя в сейф
+        /// </summary>
+        public static int GetNotificationCount(int UserID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT COUNT(n.[Notification_ID]) " +
+                                      "FROM [Notification] n " +
+                                      "WHERE n.[User_ID] = @UserID";
+                    cmd.Parameters.AddWithValue("UserID", UserID);
+
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Удаляет строку записи из таблицы Notification
+        /// </summary>
+        /// <param name="notificationID"></param>
+        public static void DeleteNotification(int notificationID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "DELETE " +
+                                      "FROM [Notification] " +
+                                      "WHERE [Notification_ID] = @ID";
+                    cmd.Parameters.AddWithValue("ID", notificationID);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Добавляет пользователя в сейф
+        /// </summary>
+        /// <param name="safeID"></param>
+        /// <param name="userID"></param>
+        public static void AddUserInSafe(int safeID, int userID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "INSERT INTO [User-Safe] ([User_ID], [Safe_ID], [UserIsCreator]) " +
+                                      "VALUES (@userID, @safeID, 'False')";
+                    cmd.Parameters.AddWithValue("@userID", userID);
+                    cmd.Parameters.AddWithValue("@safeID", safeID);
                     cmd.ExecuteNonQuery();
                 }
             }
