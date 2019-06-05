@@ -33,9 +33,9 @@ namespace Mercury
         public void UseFonts()
         {
             //// Сохраняем путь к папке со шрифтами
-            //Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
-            //    .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
-            //Properties.Settings.Default.Save();
+            Properties.Settings.Default.PathForFonts = Directory.GetCurrentDirectory()
+                .Remove(Directory.GetCurrentDirectory().Length - 10) + "\\Fonts\\";
+            Properties.Settings.Default.Save();
 
             // Создаем коллекцию шрифтов
             PrivateFontCollection pr = new PrivateFontCollection();
@@ -128,7 +128,7 @@ namespace Mercury
             InitializeComponent();
 
             // Используем шрифты
-            //UseFonts();
+            UseFonts();
 
 
             // Добавляем плейсхолдеры

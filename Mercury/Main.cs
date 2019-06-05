@@ -66,7 +66,7 @@ namespace Mercury
 
         #endregion
 
-        #region Вспомагательные методы
+        #region Вспомогательные методы
 
         #region Подключение к базе
 
