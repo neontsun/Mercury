@@ -95,5 +95,18 @@ namespace Mercury.Properties {
                 this["hideSafeList"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=cedoci.xyz;Initial Catalog=u0588153_Mercury;Persist Security Info=Tru" +
+            "e;User ID=u0588153_adminMerc;Password=4Tuo1?r1")]
+        public string connectWithServer {
+            get {
+                return ((string)(this["connectWithServer"]));
+            }
+            set {
+                this["connectWithServer"] = value;
+            }
+        }
     }
 }

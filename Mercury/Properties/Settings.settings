@@ -20,5 +20,8 @@
     <Setting Name="hideSafeList" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="connectWithServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=cedoci.xyz;Initial Catalog=u0588153_Mercury;Persist Security Info=True;User ID=u0588153_adminMerc;Password=4Tuo1?r1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

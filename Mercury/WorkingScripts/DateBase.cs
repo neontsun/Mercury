@@ -19,7 +19,7 @@ namespace Mercury.WorkingScripts
         public static void InsertData(string Table, string[] Field, string[] Value)
         {
             // Создаем подключение
-            using (var connect = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var connect = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 // Формируем запрос
                 using (var cmd = connect.CreateCommand())
@@ -70,7 +70,7 @@ namespace Mercury.WorkingScripts
             bool result = false;
 
             // Создаем подключение
-            using (var connect = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var connect = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 // Формируем запрос
                 using (var cmd = connect.CreateCommand())
@@ -127,7 +127,7 @@ namespace Mercury.WorkingScripts
             var result = false;
 
             // Создаем подключение к базе
-            using (var connect = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var connect = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 // Создаем запрос
                 using (var cmd = connect.CreateCommand())
@@ -162,7 +162,7 @@ namespace Mercury.WorkingScripts
             var result = false;
 
             // Создаем подключение к базе
-            using (var connect = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var connect = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 // Создаем запрос
                 using (var cmd = connect.CreateCommand())
@@ -198,7 +198,7 @@ namespace Mercury.WorkingScripts
         /// <param name="Table">Таблица</param>
         public static int GetLastIDFromCategory()
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -217,7 +217,7 @@ namespace Mercury.WorkingScripts
         /// <param name="Where"></param>
         public static int GetUserID(string Email)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -235,7 +235,7 @@ namespace Mercury.WorkingScripts
         /// </summary>
         public static List<Safe> GetSafeList()
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -282,7 +282,7 @@ namespace Mercury.WorkingScripts
         /// <returns></returns>
         public static int GetCountMembersInSafe(int safeID)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -305,7 +305,7 @@ namespace Mercury.WorkingScripts
         /// <returns></returns>
         public static List<Member> GetListMembersInSafe(int safeID)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -338,7 +338,7 @@ namespace Mercury.WorkingScripts
         /// <param name="Table">Таблица</param>
         public static int GetLastIDFromFolder()
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -356,7 +356,7 @@ namespace Mercury.WorkingScripts
         /// <param name="Table">Таблица</param>
         public static int GetLastIDFromSafe()
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -374,7 +374,7 @@ namespace Mercury.WorkingScripts
         /// <param name="safe"></param>
         public static List<Folder> GetFolderList(Safe safe)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -407,7 +407,7 @@ namespace Mercury.WorkingScripts
         /// </summary>
         public static void DeleteFolder(int safeID, int folderID)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -432,7 +432,7 @@ namespace Mercury.WorkingScripts
         /// <param name="safe"></param>
         public static void DeleteSafe(Safe safe)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -492,7 +492,7 @@ namespace Mercury.WorkingScripts
         public static void UpdateSafe(Safe safe, List<string> Values, string safeName)
         {
             // Создаем подключение
-            using (var connect = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var connect = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 // Формируем запрос
                 using (var cmd = connect.CreateCommand())
@@ -549,7 +549,7 @@ namespace Mercury.WorkingScripts
         /// </summary>
         public static void InviteInSafe(int UserID, int SafeID)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -569,7 +569,7 @@ namespace Mercury.WorkingScripts
         /// </summary>
         public static List<Notification> GetNotificationList(int UserID)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -602,7 +602,7 @@ namespace Mercury.WorkingScripts
         /// </summary>
         public static int GetNotificationCount(int UserID)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -624,7 +624,7 @@ namespace Mercury.WorkingScripts
         /// <param name="notificationID"></param>
         public static void DeleteNotification(int notificationID)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
@@ -646,7 +646,7 @@ namespace Mercury.WorkingScripts
         /// <param name="userID"></param>
         public static void AddUserInSafe(int safeID, int userID)
         {
-            using (var conn = new SqlConnection(Properties.Settings.Default.stringConnection))
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
             {
                 using (var cmd = conn.CreateCommand())
                 {
