@@ -127,14 +127,16 @@ namespace Mercury.WorkingScripts
 
             buttonRed.Click += (f, a) => 
             {
-                // Удаляем контрол
-                parent.Controls.Remove(control);
+                // Удаляем из списка на основной форме
+                ((parent as NotificationForm).Owner as Main).notificationCollection.Remove(notification);
                 // Удаляем из списка
                 (parent as NotificationForm).list.Remove(notification);
                 // Удаляем из базы
                 DateBase.DeleteNotification(notification.NotificationID);
                 // Очищаем и подгружаем
                 (parent as NotificationForm).LoadNotification();
+                // Удаляем контрол
+                parent.Controls.Remove(control);
             };
             buttonGreen.Click += (f, a) => 
             {
@@ -142,6 +144,8 @@ namespace Mercury.WorkingScripts
                 parent.Controls.Remove(control);
                 // Удаляем из списка
                 (parent as NotificationForm).list.Remove(notification);
+                // Удаляем из списка на основной форме
+                (parent as NotificationForm).RemoveFromMainNotificationList(notification);
                 // Удаляем из базы
                 DateBase.DeleteNotification(notification.NotificationID);
                 // Очищаем и подгружаем

@@ -68,25 +68,6 @@ namespace Mercury
 
         #region Вспомогательные методы
 
-        #region Подключение к базе
-
-        /// <summary>
-        /// Метод подключения к бд
-        /// </summary>
-        private void ConnectWithDB()
-        {
-            // Получаем путь до базы
-            string path = Directory.GetCurrentDirectory()
-                .Remove(Directory.GetCurrentDirectory().Length - 18) + @"\db\MercuryDB.mdf";
-            string conn = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"@\";Integrated Security=True;Connect Timeout=30";
-            conn = conn.Replace("@", path);
-            // Записываем путь в строку подключения
-            Properties.Settings.Default.stringConnection = conn;
-            Properties.Settings.Default.Save();
-        }
-
-        #endregion
-
         #region Использование шрифтов
 
         /// <summary>
@@ -1540,9 +1521,6 @@ namespace Mercury
         public Main()
         {
             InitializeComponent();
-
-            // Получаем строку подключения
-            ConnectWithDB();
             
             // Используем шрифты
             UseFonts();

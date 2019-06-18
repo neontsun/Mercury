@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="stringConnection" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Data Source=cedoci.xyz;Initial Catalog=u0588153_Mercury;Persist Security Info=True;User ID=u0588153_adminMerc;Password=4Tuo1?r1</Value>
     </Setting>
     <Setting Name="PathForFonts" Type="System.String" Scope="User">
       <Value Profile="(Default)">D:\\Программирование\\С#\\C# Project\\Mercury\\Mercury\\Fonts\\</Value>

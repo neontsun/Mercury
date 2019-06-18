@@ -195,6 +195,15 @@ namespace Mercury.CustomControls
 
                 this.Controls.Add(control);
             }
+            UpdateNotificationCount();
+        }
+
+        /// <summary>
+        /// Обновляет количество уведомлений
+        /// </summary>
+        public void RemoveFromMainNotificationList(Notification nf)
+        {
+            (this.Owner as Main).notificationCollection.Remove(nf);
         }
 
         /// <summary>
