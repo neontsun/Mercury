@@ -792,6 +792,47 @@ namespace Mercury
             invite.ShowDialog();
         }
 
+        /// <summary>
+        /// Получает количество элементов
+        /// </summary>
+        private int GetItemCount()
+        {
+            // REF: Аналогия для элементов
+            int i = 0;
+            foreach (var item in safeItemView_ItemPanel.Controls)
+            {
+                if ((item as Panel).Controls["Mark"].Text == "item")
+                    i++;
+            }
+            return i;
+        }
+
+
+        public void CreateItem()
+        {
+            safeItemView_ItemPanel.Controls.Add(
+                NewItem.CreateNewItem(safeItemView_ItemPanel,
+                GetItemCount(), GetFontForFolder(), new string[] { Properties.Settings.Default.userEmail, "Отчет от 21.02.2012"}, GetLocationForFolder())
+            );
+
+            //// Собираем и добавляем данные в базу
+            //var values = new string[]
+            //{
+            //    folder.FolderName,
+            //    DateBase.GetUserID(Properties.Settings.Default.userEmail).ToString()
+            //};
+            //DateBase.InsertData("Folder", new string[] { "FolderName", "User_ID" }, values);
+            //values = new string[]
+            //{
+            //    DateBase.GetLastIDFromFolder().ToString(),
+            //    activeSafe.SafeID.ToString()
+            //};
+            //DateBase.InsertData("Folder-Safe", new string[] { "Folder_ID", "Safe_ID" }, values);
+
+            //// Добавляем папку в список
+            //folderCollectionInActiveSafe.Add(folder);
+        }
+
         #endregion
 
         #endregion
@@ -1509,7 +1550,14 @@ namespace Mercury
                     CloseMembersMenu();
                 }
             };
-
+            safeItemView_AddItem.Click += (f, a) => 
+            {
+                CreateItem();
+                new AddItem()
+                {
+                    Owner = this
+                }.ShowDialog();
+            };
         }
 
         #endregion
@@ -1782,7 +1830,6 @@ namespace Mercury
             };
 
             #endregion
-
         }
 
 

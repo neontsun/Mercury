@@ -104,7 +104,7 @@ namespace Mercury.CustomControls
             InitializeComponent();
 
             // Используем шрифты
-            UseFonts();
+            //UseFonts();
 
             // Добавляем плейсхолдеры
             Animation.Placeholder.addPlaceholder(emailData, "Email", Color.FromArgb(210, 210, 210), Color.FromArgb(120, 120, 120));

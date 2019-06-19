@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.startPanel = new System.Windows.Forms.Panel();
+            this.registration = new Mercury.Registration();
+            this.login = new Mercury.CustomControls.Login();
             this.textLogo = new System.Windows.Forms.Label();
             this.loginButton = new System.Windows.Forms.Label();
             this.registrationButton = new pivyLab.Control.FlatEllButton();
@@ -69,10 +71,9 @@
             this.safeItemView_AddItem = new pivyLab.Control.FlatEllButton();
             this.safeItemView_SafeName = new System.Windows.Forms.Label();
             this.notificationImage = new System.Windows.Forms.PictureBox();
-            this.registration = new Mercury.Registration();
-            this.login = new Mercury.CustomControls.Login();
             this.notificationPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.notificationCount = new pivyLab.Control.FlatEllButton();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.startPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.searchIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchTextBreak)).BeginInit();
@@ -82,6 +83,7 @@
             this.createSafeButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.createSafeButtonIcon)).BeginInit();
             this.safeItemView.SuspendLayout();
+            this.safeItemView_ItemPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Hide)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Members)).BeginInit();
@@ -106,6 +108,23 @@
             this.startPanel.Size = new System.Drawing.Size(1192, 703);
             this.startPanel.TabIndex = 3;
             this.startPanel.Visible = false;
+            // 
+            // registration
+            // 
+            this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.registration.Location = new System.Drawing.Point(34, 58);
+            this.registration.Name = "registration";
+            this.registration.Size = new System.Drawing.Size(1120, 636);
+            this.registration.TabIndex = 7;
+            this.registration.Visible = false;
+            // 
+            // login
+            // 
+            this.login.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
+            this.login.Location = new System.Drawing.Point(34, 58);
+            this.login.Name = "login";
+            this.login.Size = new System.Drawing.Size(1120, 636);
+            this.login.TabIndex = 6;
             // 
             // textLogo
             // 
@@ -448,6 +467,7 @@
             // safeItemView_ItemPanel
             // 
             this.safeItemView_ItemPanel.AutoScroll = true;
+            this.safeItemView_ItemPanel.Controls.Add(this.panel1);
             this.safeItemView_ItemPanel.Location = new System.Drawing.Point(51, 178);
             this.safeItemView_ItemPanel.Name = "safeItemView_ItemPanel";
             this.safeItemView_ItemPanel.Size = new System.Drawing.Size(819, 418);
@@ -561,23 +581,6 @@
             this.notificationImage.TabIndex = 24;
             this.notificationImage.TabStop = false;
             // 
-            // registration
-            // 
-            this.registration.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.registration.Location = new System.Drawing.Point(34, 58);
-            this.registration.Name = "registration";
-            this.registration.Size = new System.Drawing.Size(1120, 636);
-            this.registration.TabIndex = 7;
-            this.registration.Visible = false;
-            // 
-            // login
-            // 
-            this.login.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(18)))), ((int)(((byte)(18)))), ((int)(((byte)(18)))));
-            this.login.Location = new System.Drawing.Point(34, 58);
-            this.login.Name = "login";
-            this.login.Size = new System.Drawing.Size(1120, 636);
-            this.login.TabIndex = 6;
-            // 
             // notificationPanel
             // 
             this.notificationPanel.Controls.Add(this.notificationImage);
@@ -601,6 +604,14 @@
             this.notificationCount.TabIndex = 26;
             this.notificationCount.Text = "1";
             this.notificationCount.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(8, 175);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(803, 50);
+            this.panel1.TabIndex = 0;
             // 
             // Main
             // 
@@ -658,6 +669,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.createSafeButtonIcon)).EndInit();
             this.safeItemView.ResumeLayout(false);
             this.safeItemView.PerformLayout();
+            this.safeItemView_ItemPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Hide)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Act)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.safeItemView_Members)).EndInit();
@@ -716,6 +728,7 @@
         private System.Windows.Forms.PictureBox notificationImage;
         private System.Windows.Forms.FlowLayoutPanel notificationPanel;
         private pivyLab.Control.FlatEllButton notificationCount;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

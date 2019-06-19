@@ -128,7 +128,7 @@ namespace Mercury
             InitializeComponent();
 
             // Используем шрифты
-            UseFonts();
+            //UseFonts();
 
 
             // Добавляем плейсхолдеры

@@ -99,6 +99,12 @@
     <Compile Include="CustomControls\AddFolder.Designer.cs">
       <DependentUpon>AddFolder.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControls\AddItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomControls\AddItem.Designer.cs">
+      <DependentUpon>AddItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControls\EditSafe.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +149,7 @@
     <Compile Include="WorkingScripts\Folder.cs" />
     <Compile Include="WorkingScripts\Member.cs" />
     <Compile Include="WorkingScripts\NewFolder.cs" />
+    <Compile Include="WorkingScripts\NewItem.cs" />
     <Compile Include="WorkingScripts\NewNotification.cs" />
     <Compile Include="WorkingScripts\Notification.cs" />
     <Compile Include="WorkingScripts\Safe.cs" />
@@ -192,6 +199,9 @@
     <Compile Include="WorkingScripts\ValidateEmail.cs" />
     <EmbeddedResource Include="CustomControls\AddFolder.resx">
       <DependentUpon>AddFolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControls\AddItem.resx">
+      <DependentUpon>AddItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\CreateSafeForm.resx">
       <DependentUpon>CreateSafeForm.cs</DependentUpon>
