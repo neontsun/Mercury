@@ -116,27 +116,11 @@ namespace Mercury.CustomControls
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-700.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-900.ttf");
-            pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
 
             // Надпись "Авторизироваться"
-            logoLabel.Font = new Font(fontFamilies[3], 20);
-
-            //// Кнопки сохранить и отмена
-            //saveButton.Font = new Font(fontFamilies[2], 11);
-            //cancel.Font = new Font(fontFamilies[2], 11);
-
-            //// Название сейфа
-            //safeName.Font = new Font(fontFamilies[2], 12);
-
-            //// Поля
-            //fieldText1.Font = new Font(fontFamilies[2], 12);
-            //fieldText2.Font = new Font(fontFamilies[2], 12);
-            //fieldText3.Font = new Font(fontFamilies[2], 12);
-            //fieldText4.Font = new Font(fontFamilies[2], 12);
-            //fieldText5.Font = new Font(fontFamilies[2], 12);
-            //fieldText6.Font = new Font(fontFamilies[2], 12);
+            logoLabel.Font = new Font(fontFamilies[1], 20);
         }
 
         /// <summary>
@@ -156,7 +140,7 @@ namespace Mercury.CustomControls
 
         #endregion
 
-        public AddItem()
+        public AddItem(List<string> Field)
         {
             InitializeComponent();
 
@@ -202,6 +186,60 @@ namespace Mercury.CustomControls
             };
 
             cancel.Click += (f, a) => this.Close();
+
+            this.Load += (f, a) => 
+            {
+                int index = 0;
+                foreach (var item in Field)
+                {
+                    this.Controls["fieldText" + (index + 1)].Text = item;
+                    this.Controls["fieldText" + (index + 1)].Visible = true;
+                    this.Controls["separator" + (index + 1)].Visible = true;
+                    this.Height += 40;
+                    index++;
+                }
+            };
+
+            saveButton.Click += (f, a) => 
+            {
+                int index = 0;
+                bool result = true;
+                List<string> rightField = new List<string>();
+
+                foreach (var item in this.Controls)
+                {
+                    if (item is TextBox)
+                    {
+                        if ((item as TextBox).Visible)
+                        {
+                            if ((item as TextBox).Text == string.Empty || (item as TextBox).Text == Field[index])
+                            {
+                                result = false;
+                            }
+
+                            index++;
+                        }
+                    }
+                }
+
+                rightField.Add(fieldText1.Visible ? fieldText1.Text : string.Empty);
+                rightField.Add(fieldText2.Visible ? fieldText2.Text : string.Empty);
+                rightField.Add(fieldText3.Visible ? fieldText3.Text : string.Empty);
+                rightField.Add(fieldText4.Visible ? fieldText4.Text : string.Empty);
+                rightField.Add(fieldText5.Visible ? fieldText5.Text : string.Empty);
+                rightField.Add(fieldText6.Visible ? fieldText6.Text : string.Empty);
+
+                if (!result)
+                {
+                    ShowError("Заполните поля");
+                }
+                else
+                {
+                    //rightField.OrderBy(n => n);
+                    (this.Owner as Main).CreateItem(new WorkingScripts.Item(Properties.Settings.Default.userEmail, rightField));
+                    this.Close();
+                }
+            };
         }
     }
 }

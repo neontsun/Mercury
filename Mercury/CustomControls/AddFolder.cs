@@ -134,17 +134,16 @@ namespace Mercury.CustomControls
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-700.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-900.ttf");
-            pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
 
             // Надпись "Авторизироваться"
-            logoLabel.Font = new Font(fontFamilies[3], 20);
+            logoLabel.Font = new Font(fontFamilies[1], 20);
             // Кнопки сохранить и отмена
-            saveButton.Font = new Font(fontFamilies[2], 11);
-            cancel.Font = new Font(fontFamilies[2], 11);
+            saveButton.Font = new Font(fontFamilies[1], 11);
+            cancel.Font = new Font(fontFamilies[1], 11);
             // Название сейфа
-            folderName.Font = new Font(fontFamilies[2], 12);
+            folderName.Font = new Font(fontFamilies[1], 12);
         }
 
         /// <summary>

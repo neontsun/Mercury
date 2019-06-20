@@ -124,7 +124,6 @@ namespace Mercury.CustomControls
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-700.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-900.ttf");
-            pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
 

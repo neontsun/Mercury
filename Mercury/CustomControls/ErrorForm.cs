@@ -103,15 +103,14 @@ namespace Mercury.CustomControls
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-700.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-900.ttf");
-            pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
 
             // Надпись "Авторизироваться"
-            okButton.Font = new Font(fontFamilies[2], 11);
+            okButton.Font = new Font(fontFamilies[1], 11);
 
             // Сообщение ошибки
-            message.Font = new Font(fontFamilies[3], 10);
+            message.Font = new Font(fontFamilies[1], 10);
         }
 
 

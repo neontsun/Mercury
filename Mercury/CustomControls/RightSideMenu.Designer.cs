@@ -59,7 +59,6 @@
             this.settings.Size = new System.Drawing.Size(83, 18);
             this.settings.TabIndex = 8;
             this.settings.Text = "Настройки";
-            this.settings.Click += new System.EventHandler(this.settings_Click);
             // 
             // separator1
             // 

@@ -660,5 +660,64 @@ namespace Mercury.WorkingScripts
                 }
             }
         }
+
+        /// <summary>
+        /// Возвращает ID последней записи
+        /// </summary>
+        /// <param name="Table">Таблица</param>
+        public static int GetLastIDFromItem()
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+
+                    cmd.CommandText = "SELECT TOP 1 * FROM [Item] ORDER BY Item_ID DESC";
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает список папок в активном сейфе
+        /// </summary>
+        /// <param name="safe"></param>
+        public static List<Item> GetItemsList(int safeID)
+        {
+            using (var conn = new SqlConnection(Properties.Settings.Default.connectWithServer))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    conn.Open();
+                    cmd.CommandText = "SELECT i.[Item_ID], FieldOne, FieldTwo, FieldThree, FieldFour, FieldFive, FieldSix " +
+                                      "FROM [Safe-Item] si " +
+                                      "INNER JOIN [Item] i ON i.[Item_ID] = si.[Item_ID] " +
+                                      "WHERE si.[Safe_ID] = @SafeID";
+                    cmd.Parameters.AddWithValue("@SafeID", safeID);
+
+                    List<Item> itemCollection = new List<Item>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var list = new List<string>();
+                        while (reader.Read())
+                        {
+                            list.Clear();
+                            list.Add(reader[1].ToString());
+                            list.Add(reader[2].ToString());
+                            list.Add(reader[3].ToString());
+                            list.Add(reader[4].ToString());
+                            list.Add(reader[5].ToString());
+                            list.Add(reader[6].ToString());
+                            var item = new Item(Properties.Settings.Default.userEmail, list);
+                            item.ItemID = (int)reader[0];
+                            itemCollection.Add(item);
+                        }
+                    }
+                    return itemCollection;
+                }
+            }
+        }
     }
 }

@@ -63,6 +63,7 @@ namespace Mercury
         public List<Safe> safeCollection = new List<Safe>();
         public List<Folder> folderCollectionInActiveSafe = new List<Folder>();
         public List<Notification> notificationCollection = new List<Notification>();
+        public List<Item> itemsCollectionInActiveSafe = new List<Item>();
 
         #endregion
 
@@ -85,45 +86,44 @@ namespace Mercury
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-700.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-900.ttf");
-            pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
 
             // Кнопка "Войти"
-            loginButton.Font = new Font(fontFamilies[2], 12);
+            loginButton.Font = new Font(fontFamilies[1], 12);
             // Кнопка "Регистрация"
-            registrationButton.Font = new Font(fontFamilies[2], 12);
+            registrationButton.Font = new Font(fontFamilies[1], 12);
             // Надпись / логотип
-            textLogo.Font = new Font(fontFamilies[4], 42);
+            textLogo.Font = new Font(fontFamilies[1], 42);
             // Надпись / логотип (Main)
-            textLogoMain.Font = new Font(fontFamilies[4], 27);
+            textLogoMain.Font = new Font(fontFamilies[1], 27);
             // Поле "Поиск"
-            searchText.Font = new Font(fontFamilies[2], 11);
+            searchText.Font = new Font(fontFamilies[1], 11);
             // Поле email'a
-            emailText.Font = new Font(fontFamilies[3], 11);
+            emailText.Font = new Font(fontFamilies[1], 11);
             // Поле лого-лейбла на левой панели
-            leftSideLogoLabel.Font = new Font(fontFamilies[2], 10);
+            leftSideLogoLabel.Font = new Font(fontFamilies[1], 10);
             // Надписть "Новый сейф"
-            createSafeButtonLabel.Font = new Font(fontFamilies[3], 10);
+            createSafeButtonLabel.Font = new Font(fontFamilies[1], 10);
             // Наименование сейфа на панеле отображения элементов сейфа
-            safeItemView_SafeName.Font = new Font(fontFamilies[4], 16);
+            safeItemView_SafeName.Font = new Font(fontFamilies[1], 16);
             // Кнопка "Добавить" элемент на панели элементов сейфа
-            safeItemView_AddItem.Font = new Font(fontFamilies[2], 10);
+            safeItemView_AddItem.Font = new Font(fontFamilies[1], 10);
             // Поле создателя сейфа
-            safeItemView_SafeCreator.Font = new Font(fontFamilies[2], 10);
+            safeItemView_SafeCreator.Font = new Font(fontFamilies[1], 10);
             // Поле создателя сейфа
-            safeItemView_SafeCreatorPerson.Font = new Font(fontFamilies[2], 10);
+            safeItemView_SafeCreatorPerson.Font = new Font(fontFamilies[1], 10);
             // Поля отображения на панели сейфа
-            safeItemView_Field1.Font = new Font(fontFamilies[3], 10);
-            safeItemView_Field2.Font = new Font(fontFamilies[3], 10);
-            safeItemView_Field3.Font = new Font(fontFamilies[3], 10);
-            safeItemView_Field4.Font = new Font(fontFamilies[3], 10);
-            safeItemView_Field5.Font = new Font(fontFamilies[3], 10);
-            safeItemView_Field6.Font = new Font(fontFamilies[3], 10);
+            safeItemView_Field1.Font = new Font(fontFamilies[1], 10);
+            safeItemView_Field2.Font = new Font(fontFamilies[1], 10);
+            safeItemView_Field3.Font = new Font(fontFamilies[1], 10);
+            safeItemView_Field4.Font = new Font(fontFamilies[1], 10);
+            safeItemView_Field5.Font = new Font(fontFamilies[1], 10);
+            safeItemView_Field6.Font = new Font(fontFamilies[1], 10);
             // Количество участников в сейфе
-            safeItemView_MembersCount.Font = new Font(fontFamilies[3], 11);
+            safeItemView_MembersCount.Font = new Font(fontFamilies[1], 11);
             // Количество уведомлений
-            notificationCount.Font = new Font(fontFamilies[2], 10);
+            notificationCount.Font = new Font(fontFamilies[1], 10);
         }
 
         #endregion
@@ -309,7 +309,7 @@ namespace Mercury
         /// <summary>
         /// Возвращает шрифт для сейфа
         /// </summary>
-        private Font GetFontForSafe() => new Font(pr.Families[2], 11);
+        private Font GetFontForSafe() => new Font(pr.Families[1], 11);
 
         /// <summary>
         ///  Получаем числовой показателя для следующего лейбла / Объекта сейфа
@@ -533,6 +533,8 @@ namespace Mercury
             this.activeSafe = safe;
             // Заполянем список папок в активном сейфе
             FillFolderList();
+            // Заполянем список элементов в активном сейфе
+            FillitemsList();
             // Показываем количество участников
             // REF: Заполнение количества участников в сейфе
             safeItemView_MembersCount.Text = DateBase.GetCountMembersInSafe(safe.SafeID).ToString();
@@ -590,7 +592,7 @@ namespace Mercury
         /// <summary>
         /// Возвращает шрифт для сейфа
         /// </summary>
-        private Font GetFontForFolder() => new Font(pr.Families[3], 11);
+        private Font GetFontForFolder() => new Font(pr.Families[1], 11);
 
         /// <summary>
         ///  Получаем числовой показателя для следующего лейбла / Объекта сейфа
@@ -643,6 +645,11 @@ namespace Mercury
             this.folderCollectionInActiveSafe = WorkingScripts.DateBase.GetFolderList(activeSafe);
 
             // TODO: Переделать, тк будут очищаться и итемы
+            //foreach (var item in safeItemView_ItemPanel.Controls)
+            //{
+            //    if ((item as Panel).Controls["Mark"].Text == "folder")
+            //        safeItemView_ItemPanel.Controls.Remove(item as Panel);
+            //}
             safeItemView_ItemPanel.Controls.Clear();
 
             // Создаем контролы на панели
@@ -808,29 +815,45 @@ namespace Mercury
         }
 
 
-        public void CreateItem()
+        public void CreateItem(Item item)
         {
             safeItemView_ItemPanel.Controls.Add(
-                NewItem.CreateNewItem(safeItemView_ItemPanel,
-                GetItemCount(), GetFontForFolder(), new string[] { Properties.Settings.Default.userEmail, "Отчет от 21.02.2012"}, GetLocationForFolder())
-            );
+                NewItem.CreateNewItem(safeItemView_ItemPanel, GetItemCount(), new Font(pr.Families[1], 10), item, GetLocationForFolder()));
 
-            //// Собираем и добавляем данные в базу
-            //var values = new string[]
-            //{
-            //    folder.FolderName,
-            //    DateBase.GetUserID(Properties.Settings.Default.userEmail).ToString()
-            //};
-            //DateBase.InsertData("Folder", new string[] { "FolderName", "User_ID" }, values);
-            //values = new string[]
-            //{
-            //    DateBase.GetLastIDFromFolder().ToString(),
-            //    activeSafe.SafeID.ToString()
-            //};
-            //DateBase.InsertData("Folder-Safe", new string[] { "Folder_ID", "Safe_ID" }, values);
+            // Собираем и добавляем данные в базу
+            var values = new string[]
+            {
+                item.ItemField[0],
+                item.ItemField[1],
+                item.ItemField[2],
+                item.ItemField[3],
+                item.ItemField[4],
+                item.ItemField[5]
+            };
+            DateBase.InsertData("Item", new string[] { "FieldOne", "FieldTwo", "FieldThree", "FieldFour", "FieldFive", "FieldSix" }, values);
+            values = new string[]
+            {
+                activeSafe.SafeID.ToString(),
+                DateBase.GetLastIDFromItem().ToString()
+            };
+            DateBase.InsertData("Safe-Item", new string[] { "Safe_ID", "Item_ID" }, values);
 
-            //// Добавляем папку в список
-            //folderCollectionInActiveSafe.Add(folder);
+            // Добавляем папку в список
+            itemsCollectionInActiveSafe.Add(item);
+        }
+
+        public void FillitemsList()
+        {
+            // Заполняем список папок
+            // Передаем в параметры запроса объект активного сейфа
+            this.itemsCollectionInActiveSafe = WorkingScripts.DateBase.GetItemsList(activeSafe.SafeID);
+            
+            // Создаем контролы на панели
+            foreach (var item in itemsCollectionInActiveSafe)
+            {
+                safeItemView_ItemPanel.Controls.Add(
+                    NewItem.CreateNewItem(safeItemView_ItemPanel, GetItemCount(), new Font(pr.Families[1], 10), item, GetLocationForFolder()));
+            }
         }
 
         #endregion
@@ -1552,8 +1575,7 @@ namespace Mercury
             };
             safeItemView_AddItem.Click += (f, a) => 
             {
-                CreateItem();
-                new AddItem()
+                new AddItem(activeSafe.Fields)
                 {
                     Owner = this
                 }.ShowDialog();

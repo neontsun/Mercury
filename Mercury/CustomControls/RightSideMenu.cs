@@ -117,13 +117,12 @@ namespace Mercury.CustomControls
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-700.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-900.ttf");
-            pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
 
             // Поле email'a
-            exit.Font = new Font(fontFamilies[3], 11);
-            settings.Font = new Font(fontFamilies[3], 11);
+            exit.Font = new Font(fontFamilies[1], 11);
+            settings.Font = new Font(fontFamilies[1], 11);
         }
 
         #endregion
@@ -188,12 +187,7 @@ namespace Mercury.CustomControls
             // Скрываем меню
             this.Hide();
         }
-
-        // Клик по кнопке "настройки"
-        private void settings_Click(object sender, EventArgs e)
-        {
-            new Settings().ShowDialog();
-        }
+        
 
         #endregion
     }

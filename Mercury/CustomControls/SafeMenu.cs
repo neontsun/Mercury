@@ -117,19 +117,19 @@ namespace Mercury.CustomControls
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-700.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-900.ttf");
-            pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
 
             // Поле email'a
-            deleteSafe.Font = new Font(fontFamilies[3], 11);
-            editSafe.Font = new Font(fontFamilies[3], 11);
-            inviteToSafe.Font = new Font(fontFamilies[3], 11);
-            label2.Font = new Font(fontFamilies[3], 10);
-            safeID.Font = new Font(fontFamilies[3], 10);
+            deleteSafe.Font = new Font(fontFamilies[1], 11);
+            editSafe.Font = new Font(fontFamilies[1], 11);
+            inviteToSafe.Font = new Font(fontFamilies[1], 11);
+            label2.Font = new Font(fontFamilies[1], 10);
+            safeID.Font = new Font(fontFamilies[1], 10);
         }
 
         #endregion
+
 
         /// <summary>
         /// Конструктор

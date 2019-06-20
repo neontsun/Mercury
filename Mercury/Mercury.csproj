@@ -135,18 +135,13 @@
     <Compile Include="CustomControls\SafeMenu.Designer.cs">
       <DependentUpon>SafeMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomControls\Settings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CustomControls\Settings.Designer.cs">
-      <DependentUpon>Settings.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="WorkingScripts\Folder.cs" />
+    <Compile Include="WorkingScripts\Item.cs" />
     <Compile Include="WorkingScripts\Member.cs" />
     <Compile Include="WorkingScripts\NewFolder.cs" />
     <Compile Include="WorkingScripts\NewItem.cs" />
@@ -229,9 +224,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControls\SafeMenu.resx">
       <DependentUpon>SafeMenu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CustomControls\Settings.resx">
-      <DependentUpon>Settings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

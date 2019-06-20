@@ -123,13 +123,12 @@ namespace Mercury.CustomControls
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-500.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-700.ttf");
             pr.AddFontFile(Properties.Settings.Default.PathForFonts + "MuseoSansCyrl-900.ttf");
-            pr.AddFontFile(Properties.Settings.Default.PathForFonts + "CircularStd-Black.otf");
 
             FontFamily[] fontFamilies = pr.Families;
 
             //// Надпись "Авторизироваться"
-            listView1.Font = new Font(fontFamilies[3], 10);
-            leave.Font = new Font(fontFamilies[3], 10);
+            listView1.Font = new Font(fontFamilies[1], 10);
+            leave.Font = new Font(fontFamilies[1], 10);
         }
 
         /// <summary>
