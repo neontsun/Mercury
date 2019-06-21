@@ -808,8 +808,7 @@ namespace Mercury
             int i = 0;
             foreach (var item in safeItemView_ItemPanel.Controls)
             {
-                if ((item as Panel).Controls["Mark"].Text == "item")
-                    i++;
+                i++;
             }
             return i;
         }

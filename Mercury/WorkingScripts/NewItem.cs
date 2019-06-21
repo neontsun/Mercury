@@ -27,7 +27,7 @@ namespace Mercury.WorkingScripts
             var field1 = new Label
             {
                 Location = new Point(40, 14),
-                Text =  item.ItemField[0].Length < 12 ? item.ItemField[0] : item.ItemField[0].Remove(12) + "...",
+                Text =  item.ItemField[0].Length <= 12 ? item.ItemField[0] : item.ItemField[0].Remove(12) + "...",
                 AutoSize = true,
                 ForeColor = Color.White,
                 Font = font
@@ -35,7 +35,7 @@ namespace Mercury.WorkingScripts
             var field2 = new Label
             {
                 Location = new Point(field1.Location.X + 130, 14),
-                Text = item.ItemField[1].Length < 12 ? item.ItemField[1] : item.ItemField[1].Remove(12) + "...",
+                Text = item.ItemField[1].Length <= 12 ? item.ItemField[1] : item.ItemField[1].Remove(12) + "...",
                 AutoSize = true,
                 ForeColor = Color.White,
                 Font = font
@@ -43,7 +43,7 @@ namespace Mercury.WorkingScripts
             var field3 = new Label
             {
                 Location = new Point(field2.Location.X + 130, 14),
-                Text = item.ItemField[2].Length < 12 ? item.ItemField[2] : item.ItemField[2].Remove(12) + "...",
+                Text = item.ItemField[2].Length <= 12 ? item.ItemField[2] : item.ItemField[2].Remove(12) + "...",
                 AutoSize = true,
                 ForeColor = Color.White,
                 Font = font
@@ -51,7 +51,7 @@ namespace Mercury.WorkingScripts
             var field4 = new Label
             {
                 Location = new Point(field3.Location.X + 130, 14),
-                Text = item.ItemField[3].Length < 12 ? item.ItemField[3] : item.ItemField[3].Remove(12) + "...",
+                Text = item.ItemField[3].Length <= 12 ? item.ItemField[3] : item.ItemField[3].Remove(12) + "...",
                 AutoSize = true,
                 ForeColor = Color.White,
                 Font = font
@@ -59,7 +59,7 @@ namespace Mercury.WorkingScripts
             var field5 = new Label
             {
                 Location = new Point(field4.Location.X + 130, 14),
-                Text = item.ItemField[4].Length < 12 ? item.ItemField[4] : item.ItemField[4].Remove(12) + "...",
+                Text = item.ItemField[4].Length <= 12 ? item.ItemField[4] : item.ItemField[4].Remove(12) + "...",
                 AutoSize = true,
                 ForeColor = Color.White,
                 Font = font
@@ -67,7 +67,7 @@ namespace Mercury.WorkingScripts
             var field6 = new Label
             {
                 Location = new Point(field5.Location.X + 130, 14),
-                Text = item.ItemField[5].Length < 12 ? item.ItemField[5] : item.ItemField[5].Remove(11) + "...",
+                Text = item.ItemField[5].Length <= 12 ? item.ItemField[5] : item.ItemField[5].Remove(11) + "...",
                 AutoSize = true,
                 ForeColor = Color.White,
                 Font = font
